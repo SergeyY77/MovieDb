@@ -182,7 +182,7 @@ const LoadMoreButton = styled.button`
   height: 3.125rem;
   width: 100%;
   background: #01b4e4;
-  color: #fff;
+  color: white;
   font-size: 1.5rem;
   border: none;
   border-radius: 0.3rem;
