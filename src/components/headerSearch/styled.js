@@ -108,6 +108,8 @@ export const ResultsList = styled.ul`
 
 export const ResultItem = styled.li`
   padding: 0.1875rem 2.5rem;
+  max-width: 84.6875rem;
+  margin: 0 auto;
   cursor: pointer;
   font-size: 1rem;
   line-height: normal;
@@ -121,6 +123,10 @@ export const ResultItem = styled.li`
 
   &:not(:last-child) {
     border-bottom: 0.0625rem solid #eee;
+  }
+
+  @media (max-width: 87.5rem) {
+    padding: 0.1875rem 3.5rem;
   }
 `;
 
