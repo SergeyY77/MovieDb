@@ -197,7 +197,6 @@ const LoadMoreButton = styled.button`
     width: 100%;
     margin: 0 auto;
     max-width: 63.875rem;
-    margin-top: 1.5rem;
   }
 `;
 
