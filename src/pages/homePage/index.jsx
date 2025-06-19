@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "../../components/Sidebar";
+import Sidebar from "../../components/sidebar";
 import MovieCard from "../../components/Moives";
 import { Container } from "./styled";
 
@@ -11,4 +11,3 @@ export default function HomePage() {
     </Container>
   );
 }
-``;

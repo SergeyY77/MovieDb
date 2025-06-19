@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import VoteRing from "../../shared/ring";
+import CustomVoteRingBase from "../../shared/ring";
 const SubHeader = styled.div`
   width: 100%;
   height: 2.875rem;
@@ -10,7 +11,7 @@ const SubHeader = styled.div`
   z-index: 100;
   position: relative;
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     display: flex;
     justify-content: center;
     gap: 1rem;
@@ -28,6 +29,9 @@ const HeaderSubButton = styled.div`
   position: relative;
   z-index: 100;
 `;
+const SubButton = styled.div`
+  position: relative;
+`;
 
 const Catalog = styled.span`
   font-size: 1rem;
@@ -35,21 +39,21 @@ const Catalog = styled.span`
   align-items: center;
   flex-wrap: nowrap;
   padding: 0.5rem;
-  gap: 6px;
+  gap: 0.375rem;
   z-index: 100;
 `;
 
 const Dropdown = styled.div`
   background-color: red;
   position: absolute;
-  top: 34px;
+  top: 2.125rem;
   left: 0;
-  max-height: 300px;
+  max-height: 18.75rem;
   background-color: #fff;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 0.0625rem solid #ddd;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
   z-index: 200;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   padding: 0.375rem 0;
 `;
 
@@ -62,12 +66,12 @@ const DropdownItem = styled.a`
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 400;
-  line-height: 24px;
-  padding: 4px 48px 4px 16px;
+  line-height: 1.5rem;
+  padding: 0.25rem 3rem 0.25rem 1rem;
   width: 100%;
   white-space: nowrap;
   box-sizing: border-box;
-  padding-top: ${(props) => (props.isDivider ? "20px" : "4px")};
+  padding-top: ${(props) => (props.isDivider ? "1.25rem" : ".25rem")};
 
   &:hover {
     background-color: #f4f4f4;
@@ -103,43 +107,54 @@ const VideoSidebarItem = styled(DropdownItem)`
   color: #333;
 `;
 
-// ---------------Movies----------------------
-
 const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
   z-index: 1;
+  border-bottom: 0.0625rem solid rgba(31.5, 31.5, 31.5, 1);
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     width: 100%;
-    height: 588px;
-    flex-direction: row;
-    padding: 30px 40px;
+    height: 36.75rem;
     background-size: cover;
     background-repeat: no-repeat;
     overflow: hidden;
+    background-position: center;
   }
 `;
+
+export const MainGradient = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  flex-wrap: wrap;
+  background-image: linear-gradient(
+    to right,
+    rgba(31.5, 31.5, 31.5, 1) calc((50vw - 10.625rem) - 21.25rem),
+    rgba(31.5, 31.5, 31.5, 0.84) 50%,
+    rgba(31.5, 31.5, 31.5, 0.84) 100%
+  );
+`;
+
+export const MainSubWrapper = styled.div`
+  display: flex;
+  max-width: 87.5rem;
+  padding: 2.5rem 1.875rem;
+  width: 100%;
+  z-index: 0;
+`;
+
 const MovieContainer = styled.div`
   width: 100%;
   height: auto;
   height: calc(100vw / 2.222222);
 
   z-index: 1;
-
-  @media (min-width: 768px) {
-    /* background-image: linear-gradient(
-      to right,
-      rgba(31.5, 31.5, 31.5, 1) calc((50vw - 170px) - 340px),
-      rgba(31.5, 31.5, 31.5, 0.84) 50%,
-      rgba(31.5, 31.5, 31.5, 0.84) 100%
-    ); */
-  }
 `;
 
 const MainContent = styled.div`
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
   }
 `;
 const MovieBackground = styled.div`
@@ -165,7 +180,7 @@ const MovieBackground = styled.div`
     z-index: 1;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     position: relative;
     &::after {
       display: none;
@@ -175,13 +190,12 @@ const MovieBackground = styled.div`
 
 const MovieImage = styled.div`
   position: absolute;
-  top: 20px;
-  left: 20px;
-  width: calc(((100vw / 2.222222) - 40px) / 1.5);
-  min-width: calc(((100vw / 2.222222) - 40px) / 1.5);
-  height: calc((100vw / 2.222222) - 40px);
-  min-height: calc((100vw / 2.222222) - 40px);
-  border-radius: var(--imageBorderRadius);
+  top: 1.25rem;
+  left: 1.25rem;
+  width: calc(((100vw / 2.222222) - 2.5rem) / 1.5);
+  min-width: calc(((100vw / 2.222222) - 2.5rem) / 1.5);
+  height: calc((100vw / 2.222222) - 2.5rem);
+  min-height: calc((100vw / 2.222222) - 2.5rem);
   z-index: 4;
   aspect-ratio: calc(2 / 3);
   background-position: 0 0;
@@ -189,7 +203,7 @@ const MovieImage = styled.div`
   overflow: hidden;
   border-radius: 0.5rem;
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     display: flex;
     position: unset;
     flex-direction: row;
@@ -210,10 +224,10 @@ const MovieImage = styled.div`
 
 export const MovieImageWrapper = styled.div`
   position: relative;
-  min-width: 300px;
-  min-height: 450px;
+  min-width: 18.75rem;
+  min-height: 28.125rem;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 0.75rem;
 
   &:hover .overlay {
     opacity: 0.7;
@@ -225,7 +239,7 @@ export const Overlay = styled.div`
   position: absolute;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(0.375rem);
   color: white;
   display: flex;
   align-items: center;
@@ -244,27 +258,33 @@ export const ExpandText = styled.span`
   gap: 0.5rem;
 `;
 
-// ---------------MovieCOntent-----------------
 const MovieContent = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   background-color: #73889e;
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     background-color: transparent;
     padding-left: 2.5rem;
   }
 `;
 const MovieTitle = styled.h1`
   padding: 1rem 1.25rem;
-
+  gap: 0.3125rem;
   display: flex;
   justify-content: center;
-  font-size: calc(0.7em + 3vw);
+  font-size: calc(0.7rem + 3vw);
   font-weight: 600;
   color: #fff;
   align-items: baseline;
+
+  @media (min-width: 48rem) {
+    font-size: 2.2rem;
+
+    span {
+      font-size: 2.2rem;
+    }
+  }
 
   span {
     font-size: calc(0.2em + 3vw);
@@ -272,11 +292,18 @@ const MovieTitle = styled.h1`
     opacity: 0.8;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     align-items: center;
     justify-content: flex-start;
     padding: 0;
     flex-wrap: wrap;
+
+    @media (min-width: 48rem) {
+      span {
+        font-size: 2.2rem;
+        padding-left: 0.5rem;
+      }
+    }
   }
 `;
 
@@ -293,75 +320,71 @@ const MovieScoreLeft = styled.div`
   color: #fff;
   gap: 0.5rem;
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     margin: 0 0 1rem 0;
   }
 `;
-
-const CustomVoteRing = styled(VoteRing)`
+const CustomVoteRing = styled(CustomVoteRingBase)`
   position: unset;
 
-  @media (min-width: 768px) {
-    width: 2.375rem;
-
+  @media (min-width: 48rem) {
     position: relative;
-    align-items: center;
-    justify-content: center;
     transition: transform 0.3s ease;
     cursor: pointer;
+
     &:hover {
-      transition-duration: 150ms;
       transform: scale(1.2);
     }
   }
 `;
 
-const UserScore = styled.span`
+export default CustomVoteRing;
+const UserScore = styled.div`
   font-size: 1rem;
   font-weight: 700;
   margin-left: 0.5rem;
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     width: 2.45rem;
-    line-height: 1.3rem;
+    line-height: 1.6rem;
   }
 `;
 
 const MovieEmojies = styled.div`
-  margin-left: 5px;
-  width: 60px;
+  margin-left: 0.3125rem;
+  width: 3.75rem;
   display: flex;
   align-items: center;
   cursor: pointer;
   position: relative;
+`;
 
-  img {
-    width: 28px;
-    height: 28px;
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out, z-index 0.2s;
-    &:hover {
-      transform: scale(1.2);
-      ${(props) =>
-        props.$active
-          ? `
+const EmojiIcon = styled.img`
+  width: 1.75rem;
+  height: 1.75rem;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, z-index 0.2s;
+  &:hover {
+    transform: scale(1.2);
+    ${(props) =>
+      props.$active
+        ? `
     z-index: 2;
   `
-          : `
+        : `
     z-index: 1;
   `}
-    }
+  }
 
-    &:last-child {
-      position: absolute;
-      left: 1rem;
-    }
+  &:last-child {
+    position: absolute;
+    left: 1rem;
   }
 `;
 
 const MiddleLine = styled.div`
-  width: 1px;
-  height: 24px;
+  width: 0.0625rem;
+  height: 1.5rem;
   background-color: #fff;
   opacity: 0.5;
 `;
@@ -372,14 +395,15 @@ const MovieScoreRight = styled.div`
   align-items: center;
   font-size: 1rem;
   color: #fff;
-  gap: 3px;
+  gap: 0.1875rem;
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     padding: 0.5rem 0.5rem 0.5rem 0.75rem;
-    border-radius: 16px;
+    border-radius: 2rem;
     background-color: #052541;
     transition: transform 0.3s ease;
     cursor: pointer;
+    height: 2.5rem;
 
     :hover {
       transition-duration: 150ms;
@@ -395,7 +419,7 @@ const Vibe1 = styled.span``;
 const Vibe2 = styled.span`
   text-decoration: underline;
   text-decoration-color: #29abe2;
-  text-decoration-thickness: 2px;
+  text-decoration-thickness: 0.125rem;
 `;
 
 const Vibe3 = styled.span``;
@@ -430,21 +454,21 @@ const MovieToggles = styled.div`
       transform: translateY(0);
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 48rem) {
     }
   }
   span {
     position: absolute;
     bottom: -2.5rem;
-    font-size: 10px;
+    font-size: 0.625rem;
     background-color: #052541;
     color: #fff;
     padding: 0.4rem 0.6rem;
-    border-radius: 6px;
+    border-radius: 0.375rem;
     font-size: 0.7rem;
     white-space: nowrap;
     opacity: 0;
-    transform: translateY(5px);
+    transform: translateY(0.3125rem);
     transition: all 0.2s ease;
     pointer-events: none;
     z-index: 1;
@@ -454,13 +478,13 @@ const MovieToggles = styled.div`
 const MovieDetails = styled.div`
   padding: 0.625rem;
   background-color: #687b8f;
-  border-top: 1px solid #546575;
-  border-bottom: 1px solid #546575;
+  border-top: 0.0625rem solid #546575;
+  border-bottom: 0.0625rem solid #546575;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     padding: 1.25rem;
     background-color: transparent;
     border: none;
@@ -482,13 +506,13 @@ const PlayTrailers = styled.p`
   }
 
   img {
-    width: 16px;
-    height: 16px;
+    width: 1rem;
+    height: 1rem;
     margin-right: 0.5rem;
     transition: transform 0.2s ease-in-out;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     color: #fff;
 
     &:hover {
@@ -506,13 +530,13 @@ const MovieFirstLine = styled.div`
   gap: 0.5rem;
   align-items: center;
   span:first-child {
-    border: 1px solid #fff;
-    padding: 1px 4px;
-    border-radius: 2px;
+    border: 0.0625rem solid #fff;
+    padding: 0.0625rem 0.25rem;
+    border-radius: 0.125rem;
     opacity: 0.7;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     color: #fff;
     margin-bottom: 1.5rem;
   }
@@ -534,8 +558,11 @@ const GenreTags = styled.div`
 const MovieOverview = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1.25rem 0;
+  padding: 1.25rem;
   color: #fff;
+  @media (min-width: 48rem) {
+    padding: 1.25rem 0 0 0;
+  }
 `;
 
 const TagLine = styled.h2`
@@ -568,9 +595,9 @@ const BottomBar = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 50px;
+  height: 3.125rem;
   background-color: rgba(3, 37, 65, 0.8);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(1.25rem);
   color: #ffffff;
   z-index: 10;
   margin-bottom: 0;
@@ -579,7 +606,7 @@ const BottomBar = styled.div`
   div {
     cursor: pointer;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     display: none;
   }
 `;
@@ -587,6 +614,7 @@ const BottomBar = styled.div`
 export {
   SubHeader,
   HeaderSubButton,
+  SubButton,
   Dropdown,
   Catalog,
   DropdownItem,
@@ -607,6 +635,7 @@ export {
   MovieScoreRight,
   UserScore,
   MovieEmojies,
+  EmojiIcon,
   MiddleLine,
   CustomVoteRing,
   Vibe1,

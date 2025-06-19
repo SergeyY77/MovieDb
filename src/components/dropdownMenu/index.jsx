@@ -10,17 +10,17 @@ import MENU_DATA from "../header/constant";
 const DropdownFullMenu = () => {
   return (
     <MenuWrapper>
-      {MENU_DATA.map((menu, index) => (
-        <MenuItem key={index}>
+      {MENU_DATA.map((menu) => (
+        <MenuItem key={menu.name}>
           <MenuLink href="#">{menu.name}</MenuLink>
           {menu.subMenu?.length > 0 && (
             <SubMenu className="sub-menu">
-              {menu.subMenu.map((item, subIndex) => (
+              {menu.subMenu.map((item) => (
                 <SubMenuItem
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  key={subIndex}
+                  key={item.name}
                 >
                   {item.name}
                 </SubMenuItem>

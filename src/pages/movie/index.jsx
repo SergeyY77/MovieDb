@@ -4,6 +4,7 @@ import { tmdbApi } from "../../api";
 import {
   SubHeader,
   HeaderSubButton,
+  SubButton,
   Dropdown,
   Catalog,
   DropdownItem,
@@ -23,6 +24,7 @@ import {
   MovieScoreLeft,
   UserScore,
   MovieEmojies,
+  EmojiIcon,
   MovieScoreRight,
   MiddleLine,
   Vibe1,
@@ -45,25 +47,24 @@ import {
   MovieImageWrapper,
   Overlay,
   ExpandText,
+  MainSubWrapper,
+  MainGradient,
 } from "./styled";
-import VoteRing from "../../shared/ring";
 import InfoIcon from "../../assets/icons/info-icon.svg";
 import ArrowDownIcon from "../../assets/icons/main-descending-arrow.svg";
 import CryEmoji from "../../assets/icons/emoji-cry.svg";
 import SmileEmoji from "../../assets/icons/emoji-smile.svg";
 import PlayTrailer from "../../assets/icons/play-trailer.svg";
-import minutesToHours from "../../hooks/runtime";
-import { actionMenuItems } from "../../components/Moives/actionMenu";
+import minutesToHours from "../../helper/runtime";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import useMobile from "../../hooks/useMobile";
 import { MOVIE_TABS } from "./constant";
+import { actionMenuItems } from "../../components/Moives/actionMenu/constant";
 function Movie() {
   const { id } = useParams();
   const [movie, setMovie] = useState([]);
   const [open, setOpen] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [hoveredVideos, setHoveredVideos] = useState(false);
-  const [hoveredDiscussions, setHoveredDiscussions] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
 
   const [activeImage, setActiveImage] = useState("image1");
@@ -85,18 +86,30 @@ function Movie() {
       })
       .catch(console.error);
   }, []);
+
+  const CustomVoteRingBase = ({ ...props }) => {
+    const [size, setSize] = useState(window.innerWidth >= 768 ? 4.8 : 3.2);
+
+    useEffect(() => {
+      const mediaQuery = window.matchMedia("(min-width: 48rem)");
+      const handler = (e) => setSize(e.matches ? 4.8 : 3.2);
+      mediaQuery.addEventListener("change", handler);
+      return () => mediaQuery.removeEventListener("change", handler);
+    }, []);
+
+    return <VoteRing {...props} size={size} />;
+  };
   return (
     <div>
       <SubHeader>
         {MOVIE_TABS.map((tab, index) => (
           <HeaderSubButton key={index}>
-            <div
+            <SubButton
               onMouseEnter={() => setOpen(index)}
               onMouseLeave={() => {
                 setOpen(null);
                 setHoveredVideos(false);
               }}
-              style={{ position: "relative" }}
             >
               <Catalog>
                 {tab.label}
@@ -146,7 +159,7 @@ function Movie() {
                   })}
                 </Dropdown>
               )}
-            </div>
+            </SubButton>
           </HeaderSubButton>
         ))}
       </SubHeader>
@@ -157,18 +170,7 @@ function Movie() {
               style={{
                 backgroundImage: `url(https://image.tmdb.org/t/p/original/${movie.backdrop_path})`,
               }}
-            >
-              {/* <img
-              src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-              alt="image"
-              width="200"
-              height="300"
-              style={{
-                height: "100%",
-                objectFit: "cover",
-              }}
-            /> */}
-            </MovieBackground>
+            ></MovieBackground>
           </MovieContainer>
           <MovieContent>
             <MovieImage
@@ -186,20 +188,21 @@ function Movie() {
                   <CustomVoteRing
                     percent={movie.vote_average * 10}
                     visible={true}
+                    size={2.8}
                   />
                 )}
                 <UserScore>User Score</UserScore>
                 <MovieEmojies>
-                  <img
+                  <EmojiIcon
                     src={CryEmoji}
                     alt="cry"
-                    active={activeImage === "image1"}
+                    $active={activeImage === "image1"}
                     onClick={() => setActiveImage("image1")}
                   />
-                  <img
+                  <EmojiIcon
                     src={SmileEmoji}
                     alt="smile"
-                    active={activeImage === "image2"}
+                    $active={activeImage === "image2"}
                     onClick={() => setActiveImage("image2")}
                   />
                 </MovieEmojies>
@@ -250,100 +253,112 @@ function Movie() {
         <MainWrapper
           style={{
             backgroundImage: `url(https://image.tmdb.org/t/p/original/${movie.backdrop_path})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
           }}
         >
-          <MovieImageWrapper>
-            <MovieImage>
-              <img
-                src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                alt="image"
-              />
-              <Overlay className="overlay">
-                <ExpandText>
-                  <AiOutlineFullscreen size={24} color="#fff" />
-                  Expand
-                </ExpandText>
-              </Overlay>
-            </MovieImage>
-          </MovieImageWrapper>
-          <MovieContent>
-            <MovieTitle>
-              {movie.title}
-              <span>({movie.release_date?.split("-")[0]})</span>
-            </MovieTitle>
-            <MovieFirstLine>
-              <span>PG</span>
-              <span>
-                {movie.release_date && formatDate(movie.release_date)} (US)
-              </span>
-              <GenreTags>
-                {movie.genres?.map((genre, index) => (
-                  <GenreTag key={index}>
-                    {genre.name} {index < movie.genres.length - 1 && `,`}
-                  </GenreTag>
-                ))}
-              </GenreTags>
-              <span> • {movie.runtime && minutesToHours(movie.runtime)}</span>
-            </MovieFirstLine>
-            <MovieScoreLeft>
-              {movie.vote_average && (
-                <CustomVoteRing
-                  percent={movie.vote_average * 10}
-                  visible={true}
-                  size={60}
-                />
-              )}
-              <UserScore>User Score</UserScore>
-              <MovieEmojies>
-                <img
-                  src={CryEmoji}
-                  alt="cry"
-                  active={activeImage === "image1"}
-                  onClick={() => setActiveImage("image1")}
-                />
-                <img
-                  src={SmileEmoji}
-                  alt="smile"
-                  active={activeImage === "image2"}
-                  onClick={() => setActiveImage("image2")}
-                />
-              </MovieEmojies>
-              <MovieScoreRight>
-                <Vibe1>What's your</Vibe1>
-                <Vibe2>Vibe</Vibe2>
-                <Vibe3>?</Vibe3>
-                <Vibe4>
-                  <img src={InfoIcon} alt="info" />
-                </Vibe4>
-              </MovieScoreRight>
-            </MovieScoreLeft>
-            <MovieToggles>
-              {actionMenuItems.slice(0, -1).map((item, index) => (
-                <div key={index}>
-                  {item.icon}
-                  <span>{item.label}</span>
-                </div>
-              ))}
-              <PlayTrailers>
-                <img src={PlayTrailer} alt="play trailer" />
-                Play Trailer
-              </PlayTrailers>
-            </MovieToggles>
-            <MovieOverview>
-              <TagLine>{movie.tagline}</TagLine>
-              <OverView>Overview</OverView>
-              <MovieOverviewText>{movie.overview}</MovieOverviewText>
-            </MovieOverview>
-          </MovieContent>
+          <MainGradient>
+            <MainSubWrapper>
+              <MovieImageWrapper>
+                <MovieImage>
+                  <img
+                    src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                    alt="image"
+                  />
+                  <Overlay className="overlay">
+                    <ExpandText>
+                      <AiOutlineFullscreen size={24} color="#fff" />
+                      Expand
+                    </ExpandText>
+                  </Overlay>
+                </MovieImage>
+              </MovieImageWrapper>
+              <MovieContent>
+                <MovieTitle>
+                  {movie.title}
+                  <span>({movie.release_date?.split("-")[0]})</span>
+                </MovieTitle>
+                <MovieFirstLine>
+                  <span>PG</span>
+                  <span>
+                    {movie.release_date && formatDate(movie.release_date)} (US)
+                  </span>
+                  <GenreTags>
+                    {movie.genres?.map((genre, index) => (
+                      <GenreTag key={index}>
+                        {genre.name} {index < movie.genres.length - 1 && `,`}
+                      </GenreTag>
+                    ))}
+                  </GenreTags>
+                  <span>
+                    {" "}
+                    • {movie.runtime && minutesToHours(movie.runtime)}
+                  </span>
+                </MovieFirstLine>
+                <MovieScoreLeft>
+                  {movie.vote_average && (
+                    <CustomVoteRing
+                      percent={movie.vote_average * 10}
+                      visible={true}
+                      size={3.8}
+                    />
+                  )}
+                  <UserScore>User Score</UserScore>
+                  <MovieEmojies>
+                    <EmojiIcon
+                      src={CryEmoji}
+                      alt="cry"
+                      $active={activeImage === "image1"}
+                      onClick={() => setActiveImage("image1")}
+                    />
+                    <EmojiIcon
+                      src={SmileEmoji}
+                      alt="smile"
+                      $active={activeImage === "image2"}
+                      onClick={() => setActiveImage("image2")}
+                    />
+                  </MovieEmojies>
+                  <MovieScoreRight>
+                    <Vibe1>What's your</Vibe1>
+                    <Vibe2>Vibe</Vibe2>
+                    <Vibe3>?</Vibe3>
+                    <Vibe4>
+                      <img src={InfoIcon} alt="info" />
+                    </Vibe4>
+                  </MovieScoreRight>
+                </MovieScoreLeft>
+                <MovieToggles>
+                  {actionMenuItems.slice(0, -1).map((item, index) => {
+                    const Icon = item.icon;
+                    return (
+                      <div key={index}>
+                        <Icon />
+                        <span>{item.label}</span>
+                      </div>
+                    );
+                  })}
+                  <PlayTrailers>
+                    <img src={PlayTrailer} alt="play trailer" />
+                    Play Trailer
+                  </PlayTrailers>
+                </MovieToggles>
+                <MovieOverview>
+                  <TagLine>{movie.tagline}</TagLine>
+                  <OverView>Overview</OverView>
+                  <MovieOverviewText>{movie.overview}</MovieOverviewText>
+                </MovieOverview>
+              </MovieContent>
+            </MainSubWrapper>
+          </MainGradient>
         </MainWrapper>
       )}
       <BottomBar>
-        {actionMenuItems.map((item, index) => (
-          <div key={index}>{item.icon}</div>
-        ))}
+        {actionMenuItems.map((item, index) => {
+          const Icon = item.icon;
+          return (
+            <div key={index}>
+              <Icon />
+            </div>
+          );
+        })}
       </BottomBar>
     </div>
   );

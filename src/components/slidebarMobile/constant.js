@@ -9,6 +9,7 @@ export const SIDEBAR_DATA = [
     title: "People",
     href: "https://www.themoviedb.org/person",
     primary: "true",
+    people: "true",
   },
   { title: "Contribution Bible", href: "https://www.themoviedb.org/bible" },
   { title: "Discussions", href: "https://www.themoviedb.org/discuss" },
@@ -16,5 +17,9 @@ export const SIDEBAR_DATA = [
   { title: "API", href: "https://www.themoviedb.org/documentation/api" },
   { title: "Support", href: "https://www.themoviedb.org/help" },
   { title: "About", href: "https://www.themoviedb.org/about" },
-  { title: "Login", href: "https://www.themoviedb.org/login" },
+  {
+    title: "Logout",
+    href: "https://www.themoviedb.org/logout",
+    logout: "true",
+  },
 ];

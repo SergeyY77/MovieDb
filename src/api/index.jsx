@@ -1,41 +1,21 @@
 import axios from "axios";
-import { headers, APP_API } from "./constant";
+import { HEADERS, APP_API } from "./constant";
 
 export const tmdbApi = axios.create({
   baseURL: `${APP_API}/`,
-  headers,
+  headers: HEADERS,
 });
 
-const API_KEY = "a8e20cd09d2713e69ef1cd7be2228c4f";
-
-export const getAccountData = async () => {
-  try {
-    const res = await axios.get(
-      "https://api.themoviedb.org/3/account/22050539",
-      {
-        headers,
-      }
-    );
-
-    if (!res.ok) throw new Error("Failed to fetch account");
-
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error("Account fetch error:", error);
-    return null;
-  }
-};
+const API_KEY = import.meta.env.VITE_APP_TMDB_API_KEY;
 
 export async function getKeywords(keyword) {
-  const url = `https://api.themoviedb.org/3/search/keyword?api_key=${API_KEY}&query=${encodeURIComponent(
+  const url = `${APP_API}/search/keyword?api_key=${API_KEY}&query=${encodeURIComponent(
     keyword
   )}`;
 
   try {
     const response = await fetch(url);
     const data = await response.json();
-    console.log("Keywords:", data);
     return data.results || [];
   } catch (error) {
     console.error("Failed to fetch keywords:", error);
@@ -45,7 +25,7 @@ export async function getKeywords(keyword) {
 
 export default async function getSearchResult(result) {
   const API_KEY = "a8e20cd09d2713e69ef1cd7be2228c4f";
-  const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(
+  const url = `${APP_API}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(
     result
   )}`;
 
@@ -80,7 +60,7 @@ export async function getMovieData({
   }
 
   try {
-    const res = await fetch(url, { headers });
+    const res = await fetch(url, { headers: HEADERS });
     if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
     const data = await res.json();
     return data || [];

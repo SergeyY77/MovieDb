@@ -13,16 +13,27 @@ import {
 } from "./styled";
 import { getKeywords } from "../../../api";
 
-const KeywordSearch = ({ onSelect }) => {
-  const [keyword, setKeyword] = useState("");
+const KeywordSearch = ({
+  keyword,
+  setKeyword,
+  selectedKeywords,
+  setSelectedKeywords,
+}) => {
   const [suggestions, setSuggestions] = useState([]);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const [wasSearched, setWasSearched] = useState(false);
   const wrapperRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedKeywords, setSelectedKeywords] = useState([]);
+  const [isFocused, setIsFocused] = useState(false);
 
   const inputRef = useRef(null);
+  const inputContainerRef = useRef(null);
+  useEffect(() => {
+    if (inputContainerRef.current) {
+      inputContainerRef.current.scrollTop =
+        inputContainerRef.current.scrollHeight;
+    }
+  }, [selectedKeywords]);
 
   const handleChange = async (e) => {
     const value = e.target.value;
@@ -61,33 +72,39 @@ const KeywordSearch = ({ onSelect }) => {
   const handleSelect = (item) => {
     if (!selectedKeywords.some((k) => k.id === item.id)) {
       setSelectedKeywords((prev) => [...prev, item]);
-      onSelect?.(item);
     }
 
     setKeyword("");
     setSuggestions([]);
-    onSelect?.(item);
     setIsOpen(false);
   };
-
   const handleKeyDown = (e) => {
     if (!suggestions.length) return;
 
-    if (e.key === "ArrowDown") {
-      setHighlightedIndex((prev) => (prev + 1) % suggestions.length);
-    } else if (e.key === "ArrowUp") {
-      setHighlightedIndex((prev) =>
-        prev === 0 ? suggestions.length - 1 : prev - 1
-      );
-    } else if (e.key === "Enter") {
-      handleSelect(suggestions[highlightedIndex]);
+    switch (e.key) {
+      case "ArrowDown":
+        setHighlightedIndex((prev) => (prev + 1) % suggestions.length);
+        break;
+
+      case "ArrowUp":
+        setHighlightedIndex((prev) =>
+          prev === 0 ? suggestions.length - 1 : prev - 1
+        );
+        break;
+
+      case "Enter":
+        handleSelect(suggestions[highlightedIndex]);
+        break;
+
+      default:
+        break;
     }
   };
 
   return (
     <KeywordsWrapper ref={wrapperRef}>
       <KeywordsLabel>Keywords</KeywordsLabel>
-      <InputContainer style={{ position: "relative" }}>
+      <InputContainer ref={inputContainerRef}>
         <TagList>
           {selectedKeywords.map((item) => (
             <TagItem key={item.id}>
@@ -109,44 +126,46 @@ const KeywordSearch = ({ onSelect }) => {
           ref={inputRef}
           value={keyword}
           type="text"
-          placeholder="Filter for keywords..."
+          placeholder={
+            !isFocused && keyword === "" && selectedKeywords.length === 0
+              ? "Filter for keywords..."
+              : ""
+          }
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
         />
-        {isOpen && wasSearched && (keyword.length >= 2 || keyword === "") && (
-          <SuggestionsList>
-            {suggestions.length > 0 ? (
-              suggestions.map((item, index) => (
-                <SuggestionItem
-                  key={item.id}
-                  onClick={() => {
-                    setKeyword("");
-                    handleSelect(item);
-                    onSelect(item);
-                  }}
-                  className={highlightedIndex === index ? "highlighted" : ""}
-                >
-                  {item.name}
-                </SuggestionItem>
-              ))
-            ) : (
-              <SuggestionItem
-                disabled
-                style={{ color: "#000", cursor: "default" }}
-              >
-                No data found.
-              </SuggestionItem>
-            )}
-          </SuggestionsList>
-        )}
       </InputContainer>
-      {keyword !== "" && (
+      {isOpen && wasSearched && (keyword.length >= 2 || keyword === "") && (
+        <SuggestionsList>
+          {suggestions.length > 0 ? (
+            suggestions.map((item, index) => (
+              <SuggestionItem
+                key={item.id}
+                onClick={() => {
+                  setKeyword("");
+                  handleSelect(item);
+                }}
+                className={highlightedIndex === index ? "highlighted" : ""}
+              >
+                {item.name}
+              </SuggestionItem>
+            ))
+          ) : (
+            <SuggestionItem disabled>No data found.</SuggestionItem>
+          )}
+        </SuggestionsList>
+      )}
+      {(keyword !== "" || selectedKeywords.length > 0) && (
         <KeywordCancel
           onClick={() => {
             setKeyword("");
             setSuggestions([]);
             setWasSearched(true);
             setIsOpen(true);
+            setIsFocused(false);
+            setSelectedKeywords([]);
             inputRef.current?.focus();
           }}
         >

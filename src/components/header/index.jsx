@@ -12,8 +12,7 @@ import {
   HeaderRight,
   PlusLogo,
   Lang,
-  Login,
-  Join,
+  Notification,
 } from "./styled";
 import menuIcon from "../../assets/icons/header-menu.svg";
 import headerLogo from "../../assets/icons/header-logo.svg";
@@ -44,7 +43,7 @@ const Header = ({ onMenuClick }) => {
   }, []);
 
   return (
-    <HeaderWrapper isVisible={isVisibleHeader}>
+    <HeaderWrapper $isVisible={isVisibleHeader}>
       {isMobile ? (
         <HeaderContainer>
           <HeaderMenu>
@@ -78,11 +77,9 @@ const Header = ({ onMenuClick }) => {
               <img src={headerPlus} alt="Plus Logo" />
             </PlusLogo>
             <Lang>EN</Lang>
-            <img
-              src={headerNotification}
-              alt="notification"
-              style={{ cursor: "pointer" }}
-            />
+            <Notification>
+              <img src={headerNotification} alt="notification" />
+            </Notification>
             <LoginDropdown>S</LoginDropdown>
 
             <SearchToggle isHeaderVisible={isVisibleHeader} />

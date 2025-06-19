@@ -1,25 +1,29 @@
 import styled from "styled-components";
 
 const Consensus = styled.div`
-  display: ${(props) => (props.visible ? "block" : "none")};
+  display: ${(props) => (props.$visible ? "block" : "none")};
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     display: flex;
-    position: absolute;
-    top: -19px;
-    left: 8px;
-    width: 2.375rem;
-    height: 2.375rem;
+    ${({ $position }) =>
+      $position &&
+      `
+        position: ${$position};
+        top: -1.1875rem;
+        left: .5rem;
+      `}
+    width: ${({ $size }) => $size}rem;
+    height: ${({ $size }) => $size}rem;
     align-items: center;
     justify-content: center;
   }
 `;
 
 const OuterRing = styled.div.withConfig({
-  shouldForwardProp: (prop) => prop !== "percent",
+  shouldForwardProp: (prop) => prop !== "percent" && prop !== "$size",
 })`
-  width: 2.375rem;
-  height: 2.375rem;
+  width: ${({ $size }) => $size}rem;
+  height: ${({ $size }) => $size}rem;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -36,8 +40,8 @@ const OuterRing = styled.div.withConfig({
 `;
 
 const InnerRing = styled.div`
-  width: 2rem;
-  height: 2rem;
+  width: ${({ $size }) => $size * 0.84}rem;
+  height: ${({ $size }) => $size * 0.84}rem;
   background: black;
   border-radius: 50%;
   display: flex;
@@ -47,8 +51,8 @@ const InnerRing = styled.div`
 
 const Circle = styled.div`
   position: relative;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: ${({ $size }) => $size * 0.74}rem;
+  height: ${({ $size }) => $size * 0.74}rem;
   background: black;
   border-radius: 50%;
   display: flex;
@@ -58,13 +62,13 @@ const Circle = styled.div`
 
 const PercentText = styled.span`
   color: white;
-  font-size: 0.85rem;
+  font-size: ${({ $size }) => $size * 0.36}rem;
   font-weight: 600;
 
   span {
-    font-size: 0.2rem;
+    font-size: ${({ $size }) => $size * 0.1}rem;
     position: absolute;
-    top: 0.5625rem;
+    top: ${({ $size }) => $size * 0.2}rem;
   }
 `;
 

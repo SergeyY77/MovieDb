@@ -9,14 +9,13 @@ export const MainContainer = styled.div`
 export const Main = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 64px;
+  margin-top: 4rem;
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     margin: 0 auto;
     width: 100%;
-    margin-top: 66px;
+    margin-top: 4.125rem;
   }
 `;

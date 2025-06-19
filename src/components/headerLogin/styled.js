@@ -10,7 +10,6 @@ const ProfileButton = styled.button`
   border: none;
   padding: 0;
   cursor: pointer;
-
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
@@ -43,23 +42,28 @@ const Dropdown = styled.div`
 const DropdownItem = styled.a`
   display: block;
   padding: ${(props) =>
-    props.highlight
+    props.$highlight
       ? "0.5rem 1.25rem 0"
-      : props.sub
+      : props.$sub
       ? "0 1.25rem 0.75rem"
       : "0.375rem 1.25rem"};
   font-size: ${(props) =>
-    props.highlight ? "0.85rem" : props.sub ? "0.7rem" : "0.875rem"};
-  font-weight: ${(props) => (props.highlight ? 600 : 600)};
+    props.$highlight ? "0.85rem" : props.$sub ? "0.7rem" : "0.875rem"};
+  font-weight: ${(props) => (props.$highlight ? 600 : 600)};
   color: ${(props) =>
-    props.highlight ? "#000" : props.sub ? "#888" : "rgba(0, 0, 0, 0.6)"};
+    props.$highlight ? "#000" : props.$sub ? "#888" : "rgba(0, 0, 0, 0.6)"};
   text-decoration: none;
   cursor: pointer;
 
-  &:hover {
-    background-color: rgba(3, 37, 65, 0.8);
-    color: #fff;
-  }
+  ${(props) =>
+    !props.$highlight &&
+    !props.$sub &&
+    `
+    &:hover {
+      background-color: rgba(3, 37, 65, 0.8);
+      color: #fff;
+    }
+  `}
 `;
 
 const Divider = styled.div`

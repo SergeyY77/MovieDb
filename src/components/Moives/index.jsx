@@ -6,11 +6,13 @@ import {
   Description,
   Overview,
   CardContainer,
+  LoadMoreRef,
   LoadMoreButton,
   LoadMoreText,
   Options,
+  CardHover,
 } from "./styled";
-import Option from "../../assets/icons/options.svg";
+
 import ActionDropdown from "./actionMenu";
 import VoteRing from "../../shared/ring";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +26,8 @@ const MovieCard = () => {
   const [autoLoadEnabled, setAutoLoadEnabled] = useState(false);
   const navigate = useNavigate();
   const cardRefs = useRef({});
+
+  const [hoveredCardId, setHoveredCardId] = useState(null);
 
   const handleCardClick = (id) => {
     navigate(`/movie/${id}`);
@@ -51,7 +55,10 @@ const MovieCard = () => {
         return ref && ref.contains(event.target);
       });
 
-      if (!anyOpen) setOpenDropdownId(null);
+      if (!anyOpen) {
+        setOpenDropdownId(null);
+        setHoveredCardId(null);
+      }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -62,20 +69,16 @@ const MovieCard = () => {
 
   return (
     <CardContainer>
-      {movies.map((movie) => (
+      {movies.map((movie, index) => (
         <Card
-          key={movie.id}
+          key={`${movie.id}-${index}`}
           ref={(el) => (cardRefs.current[movie.id] = el)}
           onClick={() => handleCardClick(movie.id)}
-          style={{
-            zIndex: openDropdownId === movie.id ? 10 : 1,
-          }}
+          $open={openDropdownId === movie.id}
         >
-          <ImageWrapper
-            style={{
-              filter: openDropdownId === movie.id ? "blur(20px)" : "none",
-            }}
-          >
+          <CardHover $active={hoveredCardId === movie.id} />
+
+          <ImageWrapper>
             <img
               loading="lazy"
               src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
@@ -84,15 +87,13 @@ const MovieCard = () => {
           </ImageWrapper>
           <ActionDropdown open={openDropdownId === movie.id} />
 
-          <Content
-            style={{
-              filter: openDropdownId === movie.id ? "blur(20px)" : "none",
-            }}
-          >
+          <Content>
             <Options
+              blur={hoveredCardId === movie.id}
               onClick={(e) => {
                 e.stopPropagation();
                 setOpenDropdownId(movie.id);
+                setHoveredCardId(movie.id);
               }}
             >
               <svg
@@ -109,6 +110,7 @@ const MovieCard = () => {
             </Options>
 
             <VoteRing
+              position="absolute"
               percent={movie.vote_average > 0 ? movie.vote_average * 10 : null}
             />
 
@@ -129,7 +131,8 @@ const MovieCard = () => {
           </Content>
         </Card>
       ))}
-      <div ref={lastElementRef} style={{ height: "1px" }} />
+
+      <LoadMoreRef ref={lastElementRef} />
       <LoadMoreButton
         onClick={() => {
           loadMore();

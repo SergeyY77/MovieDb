@@ -4,8 +4,8 @@ const Wrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  margin-left: 14px;
-  @media (min-width: 768px) {
+  margin-left: 0.875rem;
+  @media (min-width: 48rem) {
     margin-left: 0;
   }
 `;
@@ -21,30 +21,50 @@ const ToggleButton = styled.button`
 const SearchImage = styled.img`
   width: 1.5394rem;
   height: 1.5394rem;
+
+  @media (min-width: 48rem) {
+    width: 1.82rem;
+    height: 1.82rem;
+  }
 `;
 
 const SearchBar = styled.div`
   position: fixed;
-  top: ${({ isHeaderVisible }) => (isHeaderVisible ? "60px" : "0")};
+  top: ${({ $isHeaderVisible }) => ($isHeaderVisible ? "3.75rem" : "0")};
   left: 0;
   right: 0;
   width: 100vw;
   background: white;
-  padding: 12px 16px;
+
   border: none;
-  height: 44px;
+  height: 2.75rem;
   display: flex;
   align-items: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  z-index: 1001; // чуть выше хедера
+  box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.15);
+  z-index: 1001;
   transition: top 0.3s ease;
+  @media (min-width: 48rem) {
+    padding: 0.75rem 1rem;
+  }
+`;
+
+const SearchInputWrapper = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+  max-width: 85.625rem;
+  align-items: center;
+  position: relative;
+  @media (min-width: 48rem) {
+    margin: 0 auto;
+  }
 `;
 
 const SearchInput = styled.input`
-  position: absolute;
+  max-width: 87.5rem;
   width: 100%;
-  padding: 10px 0 10px 53px;
-  font-size: 16px;
+  padding: 0.625rem 0 0.625rem 1.625rem;
+  font-size: 1rem;
   outline: none;
   border: none;
   color: #888;
@@ -62,8 +82,11 @@ const InputSearch = styled.img`
   position: relative;
   width: 1.4rem;
   height: 1.4rem;
-  left: 1.375rem;
+  left: 1.4375rem;
   color: #888;
+
+  @media (min-width: 48rem) {
+  }
 `;
 
 export const ResultsList = styled.ul`
@@ -74,13 +97,13 @@ export const ResultsList = styled.ul`
   max-height: 15rem;
   overflow-y: auto;
   background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.5rem;
   z-index: 1000;
   padding: 0;
   margin: 0.25rem 0 0;
   list-style: none;
-  box-shadow: 0px 0.25rem 0.625rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1);
 `;
 
 export const ResultItem = styled.li`
@@ -97,16 +120,16 @@ export const ResultItem = styled.li`
   }
 
   &:not(:last-child) {
-    border-bottom: 1px solid #eee;
+    border-bottom: 0.0625rem solid #eee;
   }
 `;
 
 export const TagRemove = styled.button`
   position: absolute;
-  right: 40px;
-  padding: 4px;
+  right: 1.6875rem;
+  padding: 0.25rem;
   display: flex;
-  margin-left: 6px;
+  margin-left: 0.375rem;
   background: transparent;
   align-items: center;
   border: none;
@@ -114,8 +137,8 @@ export const TagRemove = styled.button`
   cursor: pointer;
   color: #555;
   svg {
-    width: 14px;
-    height: 14px;
+    width: 0.875rem;
+    height: 0.875rem;
     fill: #888;
     transition: fill 0.2s;
   }
@@ -131,4 +154,5 @@ export {
   SearchInput,
   SearchImage,
   InputSearch,
+  SearchInputWrapper,
 };

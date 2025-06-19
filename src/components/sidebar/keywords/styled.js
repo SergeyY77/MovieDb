@@ -10,45 +10,55 @@ export const KeywordsLabel = styled.p`
   font-size: 1rem;
   font-weight: 300;
   margin: 0.5rem 0;
+  opacity: 0.8;
 `;
 
 export const InputContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  white-space: nowrap;
   align-items: center;
-  padding: 6px 8px;
-  gap: 6px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  gap: 0.375rem;
+  padding-left: 0.25rem;
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.5rem;
   background-color: #fff;
-  min-height: 42px;
+  overflow-y: hidden;
+  overflow-x: auto;
   position: relative;
+  height: 2.375rem;
+  &:focus-within {
+    border-color: #aee3f5;
+  }
 `;
 
 export const KeywordInput = styled.input`
   flex: 1;
+  height: 33.8px;
   min-width: 7.5rem;
-  height: 2rem;
   border: none;
-  font-size: 0.875rem;
-  padding: 0.25rem 0.5rem;
+  font-size: 0.9rem;
+  padding: 0.25rem 0.5rem 0.25rem 0;
   outline: none;
   background: transparent;
+  &::placeholder {
+    color: #000;
+    opacity: 0.8;
+  }
 `;
 
 export const SuggestionsList = styled.ul`
   list-style: none;
   margin: 0;
   background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.5rem;
   position: absolute;
   top: 100%;
   left: 0;
   width: 100%;
   z-index: 10003;
   box-sizing: border-box;
-  max-height: 200px;
+  max-height: 12.5rem;
   overflow-y: auto;
 `;
 
@@ -56,6 +66,7 @@ export const SuggestionItem = styled.li`
   width: 100%;
   display: block;
   padding: 0.375rem 0.75rem;
+  height: 1.875rem;
   cursor: pointer;
   border-radius: 0.5rem 0.5rem 0 0;
 
@@ -72,7 +83,7 @@ export const SuggestionItem = styled.li`
 export const KeywordCancel = styled.div`
   position: absolute;
   right: 0.75rem;
-  top: 71%;
+  top: 75%;
   transform: translateY(-50%);
   cursor: pointer;
 
@@ -90,7 +101,7 @@ export const KeywordCancel = styled.div`
 
 export const TagList = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.375rem;
 `;
 export const TagItem = styled.div`
@@ -109,7 +120,7 @@ export const TagRemove = styled.button`
   background: transparent;
   align-items: center;
   border: none;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
   color: #555;
   svg {

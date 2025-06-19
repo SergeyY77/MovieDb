@@ -13,9 +13,6 @@ import {
   FooterLogo,
 } from "./styled";
 import { useEffect, useState } from "react";
-import { headers } from "../../api/constant";
-
-import getAccountData from "../../api";
 
 const Footer = () => {
   return (

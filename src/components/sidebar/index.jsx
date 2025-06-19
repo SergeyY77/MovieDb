@@ -1,25 +1,15 @@
 import {
+  RenderLi,
+  RenderLi2,
   Main,
   MainContainer,
   PopularMovies,
-  MainSort,
-  SortTable,
-  SortResults,
-  SortPopularity,
   MainFilter,
   FilterSort,
+  FilterArrow,
   ShowMeFilter,
   ShowMeInnerFilter,
   ShowMeOptions,
-  ReleaseFilter,
-  RealiseSearch,
-  DateFilter,
-  InputWrapper,
-  InputIcon,
-  GenreBox,
-  GenreTitle,
-  GenreList,
-  Genre,
   Certification,
   Language,
   LanguageInner,
@@ -38,20 +28,14 @@ import {
   CenterPoint,
   Numbers,
   KeywordsWrapper,
-  KeywordsLabel,
-  InputContainer,
-  KeywordInput,
-  DropdownOptions,
-  Option,
+  SearchRef,
   MobileSearchBar,
   MobileSearchButton,
-  SuggestionsList,
-  SuggestionItem,
-  SelectedKeyword,
-  RemoveIcon,
 } from "./styled";
-import { useState, useEffect, useRef } from "react";
 
+import ReleaseDateFilter from "./releaseDataFilter";
+import { useState, useEffect, useRef } from "react";
+import SortDropdown from "./sortDropdown";
 import {
   sortOptions,
   sortOptions2,
@@ -68,10 +52,9 @@ import {
 import sortArrow from "../../assets/icons/main-sort-arrow.svg";
 import descendingArrow from "../../assets/icons/main-descending-arrow.svg";
 import showMeIcon from "../../assets/icons/filter-show-me.svg";
-import calendarIcon from "../../assets/icons/filter-releases-data.svg";
 import { useMovies } from "../../context/MovieContext";
+import GenreFilter from "./genre";
 
-import { getKeywords } from "../../api";
 import { getMovieData } from "../../api";
 import KeywordSearch from "./keywords";
 
@@ -91,7 +74,8 @@ const Sidebar = () => {
   const { setMovies } = useMovies();
 
   const [showSortResults, setShowSortResults] = useState(false);
-  const [showFilter, setShowFilter] = useState(false);
+
+  const [showFilter, setShowFilter] = useState(window.innerWidth >= 768);
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(sortOptions2[0]);
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -102,6 +86,7 @@ const Sidebar = () => {
   const [keyword, setKeyword] = useState("");
   const [results, setResults] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   optionRefs.current = [];
 
@@ -110,6 +95,20 @@ const Sidebar = () => {
     selectedKeywords.length > 0 ||
     selected !== sortOptions2[0];
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setShowFilter(true);
+      } else {
+        setShowFilter(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const toggleSortResults = () => {
     setShowSortResults((prev) => !prev);
   };
@@ -125,6 +124,14 @@ const Sidebar = () => {
     );
   };
   const handleSearchClick = () => {
+    if (!isSearchEnabled || isLoading) return;
+
+    if (triggerRef.current) {
+      triggerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    setIsLoading(true);
+
     const genreIds = selectedGenres.map((g) => genreMap[g]).filter(Boolean);
     const sortParam = sortMapping[selected] || "popularity.desc";
     const keywordIds = selectedKeywords.map((k) => k.id).join(",");
@@ -136,6 +143,11 @@ const Sidebar = () => {
       keyword: keywordIds,
     }).then((data) => {
       setMovies(data.results || []);
+      setIsSticky(false);
+      setSelectedGenres([]);
+      setSelectedKeywords([]);
+      setIsLoading(false);
+      setSelected(sortOptions2[0]);
     });
   };
 
@@ -154,29 +166,21 @@ const Sidebar = () => {
 
   const renderLabels = (labels) =>
     labels.map((label, idx) => (
-      <li
-        key={idx}
-        style={{
-          left: `${(100 / (labels.length - 1)) * idx}%`,
-        }}
-      >
+      <RenderLi key={idx} $left={(100 / (labels.length - 1)) * idx}>
         {label}
-      </li>
+      </RenderLi>
     ));
 
   const renderLabels2 = (labels) =>
     labels.map((label, idx) => {
-      let left = `${(100 / (labels.length - 1)) * idx}%`;
-
-      if (idx === 1) left = "31%";
-      if (idx === 2) left = "61%";
-      if (idx === 3) left = "92%";
+      const positions = ["0%", "31%", "61%", "92%"];
       return (
-        <li key={idx} style={{ left }}>
+        <RenderLi2 key={idx} $left={positions[idx] || "0%"}>
           {label}
-        </li>
+        </RenderLi2>
       );
     });
+
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
@@ -197,20 +201,31 @@ const Sidebar = () => {
   }, [isOpen]);
 
   const handleKeyDown = (e, index) => {
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      const nextIndex = (index + 1) % sortOptions2.length;
-      optionRefs.current[nextIndex]?.focus();
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      const prevIndex = (index - 1 + sortOptions2.length) % sortOptions2.length;
-      optionRefs.current[prevIndex]?.focus();
-    } else if (e.key === "Enter") {
-      handleSelect(sortOptions2[index]);
-    } else if (e.key === "Escape") {
-      setIsOpen(false);
+    switch (e.key) {
+      case "ArrowDown": {
+        e.preventDefault();
+        const nextIndex = (index + 1) % sortOptions2.length;
+        optionRefs.current[nextIndex]?.focus();
+        break;
+      }
+      case "ArrowUp": {
+        e.preventDefault();
+        const prevIndex =
+          (index - 1 + sortOptions2.length) % sortOptions2.length;
+        optionRefs.current[prevIndex]?.focus();
+        break;
+      }
+      case "Enter":
+        handleSelect(sortOptions2[index]);
+        break;
+      case "Escape":
+        setIsOpen(false);
+        break;
+      default:
+        break;
     }
   };
+
   const handleKeywordClick = (item) => {
     if (!selectedKeywords.find((k) => k.id === item.id)) {
       setSelectedKeywords((prev) => [...prev, item]);
@@ -224,27 +239,23 @@ const Sidebar = () => {
 
   const triggerRef = useRef(null);
   const [isSticky, setIsSticky] = useState(false);
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsSticky(!entry.isIntersecting);
+        if (!isLoading) {
+          setIsSticky(!entry.isIntersecting);
+        }
       },
-      {
-        threshold: 0,
-      }
+      { threshold: 0 }
     );
 
-    if (triggerRef.current) {
-      observer.observe(triggerRef.current);
-    }
+    const currentTrigger = triggerRef.current;
+    if (currentTrigger) observer.observe(currentTrigger);
 
     return () => {
-      if (triggerRef.current) {
-        observer.unobserve(triggerRef.current);
-      }
+      if (currentTrigger) observer.unobserve(currentTrigger);
     };
-  }, []);
+  }, [isLoading]);
 
   return (
     <>
@@ -253,55 +264,25 @@ const Sidebar = () => {
           <h2>Popular Movies</h2>
         </PopularMovies>
         <MainContainer>
-          <MainSort>
-            <SortTable onClick={toggleSortResults}>
-              <span>Sort</span>
-              <img
-                src={sortArrow}
-                alt="filter-sort"
-                style={{
-                  transition: "transform 0.3s",
-                  transform: showSortResults ? "rotate(90deg)" : "rotate(0deg)",
-                }}
-              />
-            </SortTable>
-
-            {showSortResults && (
-              <SortResults>
-                <h3>Sort Results By</h3>
-                <SortPopularity onClick={() => setIsOpen(!isOpen)}>
-                  <span>{selected}</span>
-                  <img src={descendingArrow} alt="sort" />
-                  {isOpen && (
-                    <DropdownOptions>
-                      {sortOptions2.map((option, index) => (
-                        <Option
-                          key={option}
-                          ref={(el) => (optionRefs.current[index] = el)}
-                          onClick={() => handleSelect(option)}
-                          onKeyDown={(e) => handleKeyDown(e, index)}
-                          tabIndex={0}
-                        >
-                          {option}
-                        </Option>
-                      ))}
-                    </DropdownOptions>
-                  )}
-                </SortPopularity>
-              </SortResults>
-            )}
-          </MainSort>
+          <SortDropdown
+            selected={selected}
+            isOpen={isOpen}
+            showSortResults={showSortResults}
+            toggleSortResults={toggleSortResults}
+            toggleOpen={() => setIsOpen(!isOpen)}
+            handleSelect={handleSelect}
+            handleKeyDown={handleKeyDown}
+            optionRefs={optionRefs}
+            sortOptions={sortOptions2}
+          />
 
           <MainFilter>
             <FilterSort onClick={toggleFilter}>
               <span>Filters</span>
-              <img
+              <FilterArrow
                 src={sortArrow}
                 alt="filter-sort"
-                style={{
-                  transition: "transform 0.3s",
-                  transform: showFilter ? "rotate(90deg)" : "rotate(0deg)",
-                }}
+                $rotated={showFilter}
               />
             </FilterSort>
             {showFilter && (
@@ -325,53 +306,12 @@ const Sidebar = () => {
                   </ShowMeOptions>
                 </ShowMeFilter>
 
-                <ReleaseFilter>
-                  <h3>Release Dates</h3>
-                  <RealiseSearch>
-                    <label>
-                      <input type="checkbox" defaultChecked />
-                      <span>Search all releases?</span>
-                    </label>
-                  </RealiseSearch>
+                <ReleaseDateFilter />
 
-                  <DateFilter>
-                    <label>
-                      <p>from</p>
-                      <InputWrapper>
-                        <input type="text" placeholder="" />
-                        <InputIcon>
-                          <img src={calendarIcon} alt="calendar" />
-                        </InputIcon>
-                      </InputWrapper>
-                    </label>
-
-                    <label>
-                      <p>to</p>
-                      <InputWrapper>
-                        <input type="text" defaultValue="11/13/2025" />
-                        <InputIcon>
-                          <img src={calendarIcon} alt="calendar" />
-                        </InputIcon>
-                      </InputWrapper>
-                    </label>
-                  </DateFilter>
-                </ReleaseFilter>
-                <GenreBox>
-                  <GenreTitle>Genres</GenreTitle>
-                  <GenreList>
-                    {genreList.map((genre) => (
-                      <Genre
-                        key={genre}
-                        onClick={() => toggleGenre(genre)}
-                        className={
-                          selectedGenres.includes(genre) ? "selected" : ""
-                        }
-                      >
-                        {genre}
-                      </Genre>
-                    ))}
-                  </GenreList>
-                </GenreBox>
+                <GenreFilter
+                  selectedGenres={selectedGenres}
+                  toggleGenre={toggleGenre}
+                />
                 <Certification>
                   <p>Certification</p>
                 </Certification>
@@ -392,7 +332,7 @@ const Sidebar = () => {
                     <Bar>{renderBars(USER_SCORE_MARKERS, [0, 5, 10])}</Bar>
                     <Slider>
                       <LeftPoint />
-                      <Line percentage={100} />
+                      <Line $percentage={100} />
                       <RightPoint />
                     </Slider>
                     <Bar>
@@ -406,7 +346,7 @@ const Sidebar = () => {
                   <div>
                     <Bar>{renderBars(VOTES_MARKERS, [0, 2, 4, 6, 8, 10])}</Bar>
                     <Slider>
-                      <Line percentage={20} />
+                      <Line $percentage={20} />
                       <CenterPoint percentage={20} />
                     </Slider>
                     <Bar>
@@ -421,7 +361,7 @@ const Sidebar = () => {
                     <Bar>{renderBars(RUNTIME_MARKERS, [0, 8, 16, 24])}</Bar>
                     <Slider>
                       <LeftPoint />
-                      <Line percentage={100} />
+                      <Line $percentage={100} />
                       <RightPoint />
                     </Slider>
                     <Bar>
@@ -431,24 +371,29 @@ const Sidebar = () => {
                   <Numbers>{renderLabels2(RUNTIME_LABELS)}</Numbers>
                 </Section>
                 <KeywordsWrapper>
-                  <KeywordSearch onSelect={handleKeywordClick} />
+                  <KeywordSearch
+                    keyword={keyword}
+                    setKeyword={setKeyword}
+                    selectedKeywords={selectedKeywords}
+                    setSelectedKeywords={setSelectedKeywords}
+                  />
                 </KeywordsWrapper>
               </>
             )}
           </MainFilter>
-          <div ref={triggerRef} style={{ height: "1px" }} />
+          <SearchRef ref={triggerRef} />
 
           <MobileSearchBar
             onClick={handleSearchClick}
-            disabled={!isSearchEnabled}
-            $scrolled={isSticky ? "scrolled" : ""}
+            disabled={!isSearchEnabled || isLoading}
+            scrolled={isSticky ? "scrolled" : ""}
           >
             <MobileSearchButton
               onClick={handleSearchClick}
-              disabled={!isSearchEnabled}
-              $scrolled={isSticky ? "scrolled" : ""}
+              disabled={!isSearchEnabled || isLoading}
+              scrolled={isSticky ? "scrolled" : ""}
             >
-              <p>Search</p>
+              Search
             </MobileSearchButton>
           </MobileSearchBar>
         </MainContainer>

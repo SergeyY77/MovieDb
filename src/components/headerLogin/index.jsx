@@ -7,23 +7,7 @@ import {
   DropdownItem,
   Divider,
 } from "./styled";
-
-export const profileMenuItems = [
-  { label: "Sergey1234", highlight: true },
-  { label: "View profile", sub: true },
-  "divider",
-
-  { label: "Discussions" },
-  { label: "Lists" },
-  { label: "Ratings" },
-  { label: "Watchlist" },
-  "divider",
-  { label: "API Subscription" },
-  { label: "Edit Profile" },
-  { label: "Settings" },
-  "divider",
-  { label: "Logout" },
-];
+import { profileMenuItems } from "./constant";
 
 const LoginDropdown = () => {
   const [open, setOpen] = useState(false);
@@ -41,8 +25,8 @@ const LoginDropdown = () => {
               <DropdownItem
                 href={item.href}
                 key={idx}
-                highlight={item.highlight}
-                sub={item.sub}
+                $highlight={item.highlight}
+                $sub={item.sub}
               >
                 {item.label}
               </DropdownItem>

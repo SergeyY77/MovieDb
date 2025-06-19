@@ -4,13 +4,13 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-    max-width: 1400px;
+    max-width: 87.5rem;
     margin: 0 auto;
     width: 100%;
-    padding: 30px 40px;
+    padding: 1.875rem 2.5rem;
   }
 `;

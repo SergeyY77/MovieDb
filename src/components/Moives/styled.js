@@ -3,33 +3,51 @@ import styled from "styled-components";
 const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.3rem;
   padding: 0 1.375rem;
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     flex-wrap: wrap;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-top: 2.875rem;
     padding: 0 0 0 1.875rem;
+    gap: 1.9rem;
   }
 `;
 
 const Card = styled.div`
   display: flex;
-  border: 1px solid #e3e3e3;
+  border: 0.0625rem solid #e3e3e3;
   border-radius: 0.3rem;
   object-fit: cover;
+  z-index: ${({ $open }) => ($open ? 10 : 1)};
 
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  @media (min-width: 768px) {
-    border-radius: 5px !important;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
+  @media (min-width: 48rem) {
+    border-radius: 0.3125rem !important;
     position: relative;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     flex-direction: column;
-    width: 182px;
+    width: 11.375rem;
   }
+`;
+
+const CardHover = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(1.25rem);
+  backdrop-filter: blur(1.25rem);
+  width: 100%;
+  height: 100%;
+  border-radius: 0.3125rem;
+  z-index: 1;
+  transition: linear 0.1s;
+  opacity: ${({ $active }) => ($active ? 1 : 0)};
+  pointer-events: none;
 `;
 
 const ImageWrapper = styled.div`
@@ -39,12 +57,12 @@ const ImageWrapper = styled.div`
     object-fit: cover;
     display: block;
     cursor: pointer;
-    border-radius: 5px 0 0 5px;
+    border-radius: 0.3125rem 0 0 0.3125rem;
 
-    @media (min-width: 768px) {
+    @media (min-width: 48rem) {
       height: 17.0625rem;
       width: 100%;
-      border-radius: 5px 5px 0 0;
+      border-radius: 0.3125rem 0.3125rem 0 0;
     }
   }
 `;
@@ -59,8 +77,8 @@ const Content = styled.div`
     pointer-events: none;
   }
 
-  @media (min-width: 768px) {
-    width: 180px;
+  @media (min-width: 48rem) {
+    width: 11.25rem;
     padding: 1.625rem 0.625rem 0.75rem;
     display: flex;
     flex-direction: row;
@@ -69,34 +87,35 @@ const Content = styled.div`
     img {
       display: block;
       position: absolute;
-      width: 25.59px;
-      height: 25.59px;
-      top: -264px;
-      left: 145px;
+      width: 1.5994rem;
+      height: 1.5994rem;
+      top: -16.5rem;
+      left: 9.0625rem;
       opacity: 0.6;
       cursor: pointer;
-      z-index: 1;
       pointer-events: none;
     }
   }
 `;
-const Options = styled.div`
+const Options = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "blur",
+})`
   display: none;
 
-  @media (min-width: 768px) {
-    display: flex;
+  @media (min-width: 48rem) {
     position: absolute;
-    top: -265px;
-    right: 10px;
-    z-index: 999;
-    width: 24px;
-    height: 24px;
+    top: -16.5625rem;
+    right: 0.625rem;
+    z-index: 1;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: ${(props) => (props.blur ? "none" : "flex")};
 
     svg {
-      width: 24px;
-      height: 24px;
+      width: 1.5rem;
+      height: 1.5rem;
       color: white;
-      opacity: 0.6;
+      opacity: 0.8;
       transition: color 0.2s;
       cursor: pointer;
     }
@@ -122,12 +141,14 @@ const Description = styled.div`
   p {
     font-size: 1rem;
     color: #999;
+    margin-bottom: 1rem;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     display: flex;
     flex-direction: column;
     gap: 0.125rem;
+    margin-bottom: 0;
   }
 `;
 
@@ -141,13 +162,17 @@ const Overview = styled.div`
     font-size: 0.9rem;
     line-height: 1.2rem;
 
-    @media (min-width: 768px) {
+    @media (min-width: 48rem) {
       color: rgba(0, 0, 0, 0.6);
       margin: 0;
       padding: 0;
       display: none;
     }
   }
+`;
+
+const LoadMoreRef = styled.div`
+  height: 0.0625rem;
 `;
 
 const LoadMoreButton = styled.button`
@@ -168,7 +193,7 @@ const LoadMoreButton = styled.button`
     color: #222;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 48rem) {
     width: 100%;
     margin: 0 auto;
     max-width: 63.875rem;
@@ -178,7 +203,7 @@ const LoadMoreButton = styled.button`
 
 const LoadMoreText = styled.span`
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 600;
   color: #fff;
 `;
 
@@ -190,7 +215,9 @@ export {
   Description,
   Overview,
   CardContainer,
+  LoadMoreRef,
   LoadMoreButton,
   LoadMoreText,
   Options,
+  CardHover,
 };
