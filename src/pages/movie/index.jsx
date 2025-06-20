@@ -17,6 +17,7 @@ import {
   MainContent,
   MovieBackground,
   MovieImage,
+  MovieBlur,
   MovieContainer,
   MovieContent,
   MovieTitle,
@@ -259,10 +260,12 @@ function Movie() {
             <MainSubWrapper>
               <MovieImageWrapper>
                 <MovieImage>
-                  <img
-                    src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                    alt="image"
-                  />
+                  <MovieBlur>
+                    <img
+                      src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                      alt="image"
+                    />
+                  </MovieBlur>
                   <Overlay className="overlay">
                     <ExpandText>
                       <AiOutlineFullscreen size={24} color="#fff" />

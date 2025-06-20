@@ -204,6 +204,7 @@ const MovieImage = styled.div`
   border-radius: 0.5rem;
 
   @media (min-width: 48rem) {
+    z-index: 1;
     display: flex;
     position: unset;
     flex-direction: row;
@@ -229,9 +230,25 @@ export const MovieImageWrapper = styled.div`
   overflow: hidden;
   border-radius: 0.75rem;
 
-  &:hover .overlay {
-    opacity: 0.7;
+  &:hover {
     cursor: pointer;
+  }
+
+  &:hover .overlay {
+    opacity: 1;
+    z-index: 3;
+    pointer-events: auto;
+  }
+`;
+
+const MovieBlur = styled.div`
+  min-width: 18.75rem;
+  min-height: 28.125rem;
+
+  z-index: 2;
+  transition: filter 0.5s ease;
+  &:hover {
+    filter: blur(6px) brightness(0.1) saturate(120%);
   }
 `;
 
@@ -630,6 +647,7 @@ export {
   MainContent,
   MovieContent,
   MovieTitle,
+  MovieBlur,
   MovieScore,
   MovieScoreLeft,
   MovieScoreRight,
