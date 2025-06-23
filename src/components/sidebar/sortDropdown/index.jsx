@@ -19,7 +19,7 @@ const SortDropdown = ({
   handleSelect,
   handleKeyDown,
   optionRefs,
-  sortOptions,
+  SORT_OPTIONS,
 }) => (
   <MainSort>
     <SortTable onClick={toggleSortResults}>
@@ -39,7 +39,7 @@ const SortDropdown = ({
           <img src={descendingArrow} alt="sort" />
           {isOpen && (
             <DropdownOptions>
-              {sortOptions.map((option, index) => (
+              {SORT_OPTIONS.map((option, index) => (
                 <Option
                   key={option}
                   ref={(el) => (optionRefs.current[index] = el)}

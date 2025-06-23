@@ -37,9 +37,10 @@ import ReleaseDateFilter from "./releaseDataFilter";
 import { useState, useEffect, useRef } from "react";
 import SortDropdown from "./sortDropdown";
 import {
-  sortOptions,
-  sortOptions2,
+  SORT_OPTIONS,
+  SORT_OPTIONS2,
   genreList,
+  SORT_MAPPING,
   genreMap,
   USER_SCORE_LABELS,
   VOTES_LABELS,
@@ -58,17 +59,6 @@ import GenreFilter from "./genre";
 import { getMovieData } from "../../api";
 import KeywordSearch from "./keywords";
 
-const sortMapping = {
-  "Popularity Descending": "popularity.desc",
-  "Popularity Ascending": "popularity.asc",
-  "Rating Descending": "vote_average.desc",
-  "Rating Ascending": "vote_average.asc",
-  "Release Date Descending": "release_date.desc",
-  "Release Date Ascending": "release_date.asc",
-  "Title (A-Z)": "original_title.asc",
-  "Title (Z-A)": "original_title.desc",
-};
-
 const Sidebar = () => {
   const { sortMovies } = useMovies();
   const { setMovies } = useMovies();
@@ -77,7 +67,7 @@ const Sidebar = () => {
 
   const [showFilter, setShowFilter] = useState(window.innerWidth >= 768);
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState(sortOptions2[0]);
+  const [selected, setSelected] = useState(SORT_OPTIONS2[0]);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedKeywords, setSelectedKeywords] = useState([]);
 
@@ -94,7 +84,7 @@ const Sidebar = () => {
   const isSearchEnabled =
     selectedGenres.length > 0 ||
     selectedKeywords.length > 0 ||
-    selected !== sortOptions2[0];
+    selected !== SORT_OPTIONS2[0];
 
   useEffect(() => {
     const handleResize = () => {
@@ -134,7 +124,7 @@ const Sidebar = () => {
     setIsLoading(true);
 
     const genreIds = selectedGenres.map((g) => genreMap[g]).filter(Boolean);
-    const sortParam = sortMapping[selected] || "popularity.desc";
+    const sortParam = SORT_MAPPING[selected] || "popularity.desc";
     const keywordIds = selectedKeywords.map((k) => k.id).join(",");
 
     getMovieData({
@@ -148,7 +138,7 @@ const Sidebar = () => {
       setSelectedGenres([]);
       setSelectedKeywords([]);
       setIsLoading(false);
-      setSelected(sortOptions2[0]);
+      setSelected(SORT_OPTIONS2[0]);
       setHasSearched(true);
     });
   };
@@ -206,19 +196,19 @@ const Sidebar = () => {
     switch (e.key) {
       case "ArrowDown": {
         e.preventDefault();
-        const nextIndex = (index + 1) % sortOptions2.length;
+        const nextIndex = (index + 1) % SORT_OPTIONS2.length;
         optionRefs.current[nextIndex]?.focus();
         break;
       }
       case "ArrowUp": {
         e.preventDefault();
         const prevIndex =
-          (index - 1 + sortOptions2.length) % sortOptions2.length;
+          (index - 1 + SORT_OPTIONS2.length) % SORT_OPTIONS2.length;
         optionRefs.current[prevIndex]?.focus();
         break;
       }
       case "Enter":
-        handleSelect(sortOptions2[index]);
+        handleSelect(SORT_OPTIONS2[index]);
         break;
       case "Escape":
         setIsOpen(false);
@@ -272,7 +262,7 @@ const Sidebar = () => {
             handleSelect={handleSelect}
             handleKeyDown={handleKeyDown}
             optionRefs={optionRefs}
-            sortOptions={sortOptions2}
+            SORT_OPTIONS={SORT_OPTIONS2}
           />
 
           <MainFilter>
@@ -292,7 +282,7 @@ const Sidebar = () => {
                     <img src={showMeIcon} alt="question-mark" />
                   </ShowMeInnerFilter>
                   <ShowMeOptions>
-                    {sortOptions.map((option, idx) => (
+                    {SORT_OPTIONS.map((option, idx) => (
                       <label className="radio-css" key={idx}>
                         <input
                           type="radio"
