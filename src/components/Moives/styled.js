@@ -1,40 +1,58 @@
 import styled from "styled-components";
 
 const CardContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.3rem;
-  padding: 0 1.375rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11.375rem, 1fr));
+  gap: 2rem;
+  padding-top: 3rem;
+  padding-left: 1.875rem;
 
-  @media (min-width: 48rem) {
-    flex-wrap: wrap;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 2.875rem;
-    padding: 0 0 0 1.875rem;
-    gap: 1.9rem;
+  @media (min-width: 1282px) {
+    grid-template-columns: repeat(5, 1fr);
+    height: 100%;
+  }
+
+  @media (max-width: 1282px) {
+    grid-template-columns: repeat(4, 1fr);
+    height: 100%;
+  }
+
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(3, 1fr);
+    height: 100%;
+  }
+
+  @media (max-width: 920px) {
+    grid-template-columns: repeat(2, 1fr);
+    height: 100%;
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    padding: 1rem 1.25rem;
+    gap: 1rem;
   }
 `;
 
 const CardNoteFound = styled.p`
-  display: flex;
+  grid-column: 1 / -1;
 `;
 
 const Card = styled.div`
   display: flex;
+  flex-direction: row;
   border: 0.0625rem solid #e3e3e3;
   border-radius: 0.3rem;
   object-fit: cover;
   z-index: ${({ $open }) => ($open ? 10 : 1)};
-
   box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
+
   @media (min-width: 48rem) {
-    border-radius: 0.3125rem !important;
     position: relative;
     border-radius: 0.5rem;
+    height: 394px;
     flex-direction: column;
-    width: 11.375rem;
+    width: 100%;
   }
 `;
 
@@ -67,6 +85,8 @@ const ImageWrapper = styled.div`
       height: 17.0625rem;
       width: 100%;
       border-radius: 0.3125rem 0.3125rem 0 0;
+      object-position: center;
+      object-fit: cover;
     }
   }
 `;
@@ -82,7 +102,7 @@ const Content = styled.div`
   }
 
   @media (min-width: 48rem) {
-    width: 11.25rem;
+    width: 100%;
     padding: 1.625rem 0.625rem 0.75rem;
     display: flex;
     flex-direction: row;
@@ -191,7 +211,6 @@ const LoadMoreButton = styled.button`
   border: none;
   border-radius: 0.3rem;
   cursor: pointer;
-  margin-bottom: 1.25rem;
 
   &:hover span {
     color: #222;
@@ -202,6 +221,9 @@ const LoadMoreButton = styled.button`
     margin: 0 auto;
     max-width: 63.875rem;
   }
+`;
+const LoadMoreWrapper = styled.div`
+  grid-column: 1 / -1;
 `;
 
 const LoadMoreText = styled.span`
@@ -224,4 +246,5 @@ export {
   Options,
   CardHover,
   CardNoteFound,
+  LoadMoreWrapper,
 };

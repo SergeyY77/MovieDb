@@ -65,7 +65,6 @@ const DropdownItem = styled.a`
   color: #333;
   text-decoration: none;
   font-size: 0.9rem;
-  font-weight: 400;
   line-height: 1.5rem;
   padding: 0.25rem 3rem 0.25rem 1rem;
   width: 100%;
@@ -305,7 +304,6 @@ const MovieTitle = styled.h1`
 
   span {
     font-size: calc(0.2em + 3vw);
-    font-weight: 400;
     opacity: 0.8;
   }
 
@@ -585,7 +583,6 @@ const MovieOverview = styled.div`
 const TagLine = styled.h2`
   opacity: 0.7;
   font-size: 1.1rem;
-  font-weight: 400;
   font-style: italic;
 `;
 
@@ -598,7 +595,6 @@ const OverView = styled.h3`
 const MovieOverviewText = styled.p`
   font-size: 1rem;
   line-height: 1.5;
-  font-weight: 400;
   opacity: 0.8;
   margin-bottom: 0.625rem;
 `;

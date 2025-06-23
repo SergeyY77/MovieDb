@@ -113,7 +113,6 @@ export const ResultItem = styled.li`
   cursor: pointer;
   font-size: 1rem;
   line-height: normal;
-  font-weight: 400;
   color: #333;
   transition: background-color 0.2s ease;
 

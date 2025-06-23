@@ -7,6 +7,7 @@ import {
   Overview,
   CardContainer,
   LoadMoreRef,
+  LoadMoreWrapper,
   LoadMoreButton,
   LoadMoreText,
   Options,
@@ -138,16 +139,19 @@ const MovieCard = () => {
               </Content>
             </Card>
           ))}
-
-          <LoadMoreRef ref={lastElementRef} />
-          <LoadMoreButton
-            onClick={() => {
-              loadMore();
-              setAutoLoadEnabled(true);
-            }}
-          >
-            <LoadMoreText>Load More</LoadMoreText>
-          </LoadMoreButton>
+          {movies.length >= 20 && (
+            <LoadMoreWrapper>
+              <LoadMoreButton
+                onClick={() => {
+                  loadMore();
+                  setAutoLoadEnabled(true);
+                }}
+              >
+                <LoadMoreText>Load More</LoadMoreText>
+              </LoadMoreButton>
+              <LoadMoreRef ref={lastElementRef} />
+            </LoadMoreWrapper>
+          )}
         </>
       )}
     </CardContainer>

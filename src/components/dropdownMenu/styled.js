@@ -44,7 +44,6 @@ export const SubMenuItem = styled.a`
   padding: 0.36rem 1rem;
   font-size: 0.9rem;
   color: #000;
-  font-weight: 400;
   text-decoration: none;
   white-space: nowrap;
 
