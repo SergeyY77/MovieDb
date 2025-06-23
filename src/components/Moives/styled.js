@@ -17,6 +17,10 @@ const CardContainer = styled.div`
   }
 `;
 
+const CardNoteFound = styled.p`
+  display: flex;
+`;
+
 const Card = styled.div`
   display: flex;
   border: 0.0625rem solid #e3e3e3;
@@ -219,4 +223,5 @@ export {
   LoadMoreText,
   Options,
   CardHover,
+  CardNoteFound,
 };

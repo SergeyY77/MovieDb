@@ -87,6 +87,7 @@ const Sidebar = () => {
   const [results, setResults] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
 
   optionRefs.current = [];
 
@@ -148,6 +149,7 @@ const Sidebar = () => {
       setSelectedKeywords([]);
       setIsLoading(false);
       setSelected(sortOptions2[0]);
+      setHasSearched(true);
     });
   };
 
@@ -240,14 +242,11 @@ const Sidebar = () => {
   const triggerRef = useRef(null);
   const [isSticky, setIsSticky] = useState(false);
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!isLoading) {
-          setIsSticky(!entry.isIntersecting);
-        }
-      },
-      { threshold: 0 }
-    );
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!isLoading) {
+        setIsSticky(!entry.isIntersecting);
+      }
+    });
 
     const currentTrigger = triggerRef.current;
     if (currentTrigger) observer.observe(currentTrigger);

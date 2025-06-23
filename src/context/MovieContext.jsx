@@ -7,6 +7,7 @@ export const MovieProvider = ({ children }) => {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const fetchMovies = async (pageNumber = 1, query = "") => {
     setLoading(true);
@@ -81,6 +82,7 @@ export const MovieProvider = ({ children }) => {
         page,
         sortMovies,
         setMovies,
+        setHasSearched,
       }}
     >
       {children}
