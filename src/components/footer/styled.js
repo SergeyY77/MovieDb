@@ -5,7 +5,7 @@ export const SiteFooter = styled.footer`
   color: #ffffff;
   padding: 2.5rem 1.875rem;
 
-  @media (min-width: 48rem) {
+  @media (min-width: 925px) {
     padding-top: 5rem;
     padding-bottom: 5rem;
     display: flex;
@@ -19,7 +19,7 @@ export const FooterNav = styled.nav`
   margin-bottom: 3rem;
   gap: 0.5rem;
 
-  @media (min-width: 48rem) {
+  @media (min-width: 925px) {
     flex-direction: row;
     justify-content: space-between;
     max-width: 87.5rem;
@@ -34,7 +34,7 @@ export const FooterJoin = styled.div`
   margin-bottom: 2rem;
   width: 13.6875rem;
 
-  @media (min-width: 48rem) {
+  @media (min-width: 925px) {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -46,7 +46,7 @@ export const FooterLogo = styled.img`
   width: 8.125rem;
   height: 5.875rem;
 
-  @media (min-width: 48rem) {
+  @media (min-width: 925px) {
     display: block;
     position: absolute;
     top: -1.1875rem;
@@ -65,7 +65,7 @@ export const FooterJoinBtn = styled.a`
   text-decoration: none;
   text-transform: none;
 
-  @media (min-width: 48rem) {
+  @media (min-width: 925px) {
     position: absolute;
     bottom: 0;
   }
@@ -106,6 +106,6 @@ export const FooterLink = styled.a`
 
   &:hover {
     color: #ffffff;
-    text-decoration: underline;
+    text-decoration: none;
   }
 `;
