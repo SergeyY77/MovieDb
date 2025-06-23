@@ -10,13 +10,13 @@ import {
 import { profileMenuItems } from "./constant";
 
 const LoginDropdown = () => {
-  const [open, setOpen] = useState(false);
+  const [isOpen, isSetOpen] = useState(false);
 
   return (
     <Wrapper>
-      <ProfileButton onClick={() => setOpen(!open)}>S</ProfileButton>
+      <ProfileButton onClick={() => isSetOpen(!isOpen)}>S</ProfileButton>
 
-      {open && (
+      {isOpen && (
         <Dropdown>
           {profileMenuItems.map((item, idx) =>
             item === "divider" ? (

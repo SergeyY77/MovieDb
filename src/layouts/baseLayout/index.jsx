@@ -12,7 +12,7 @@ const BaseLayout = ({ children }) => {
     <MainContainer>
       <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
 
-      <SidebarMenu open={sidebarOpen} />
+      <SidebarMenu isOpen={sidebarOpen} />
       <Main>
         <Outlet />
       </Main>

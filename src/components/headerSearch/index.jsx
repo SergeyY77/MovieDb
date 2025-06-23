@@ -3,6 +3,7 @@ import searchIcon from "../../assets/icons/header-search.svg";
 import closeIcon from "../../assets/icons/header-close.svg";
 import inputSearch from "../../assets/icons/header-input-search.svg";
 import getSearchResult from "../../api";
+import useMobile from "../../hooks/useMobile";
 import {
   Wrapper,
   ToggleButton,
@@ -17,7 +18,8 @@ import {
 } from "./styled";
 
 const SearchToggle = ({ isHeaderVisible }) => {
-  const [open, setOpen] = useState(false);
+  const isMobile = useMobile();
+  const [isOpen, isSetOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [placeholder, setPlaceholder] = useState(
@@ -29,7 +31,7 @@ const SearchToggle = ({ isHeaderVisible }) => {
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
-        setOpen(false);
+        isSetOpen(false);
         setQuery("");
         setResults([]);
       }
@@ -40,20 +42,22 @@ const SearchToggle = ({ isHeaderVisible }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  useEffect(() => {
-    const isMobile = window.innerWidth <= 768;
-    if (isMobile) {
-      setPlaceholder("Search");
-    }
-  }, []);
 
   useEffect(() => {
-    if (open) {
+    if (isMobile) {
+      setPlaceholder("Search");
+    } else {
+      setPlaceholder("Search for a movie, tv show, person...");
+    }
+  }, [isMobile]);
+
+  useEffect(() => {
+    if (isOpen) {
       setTimeout(() => {
         inputRef.current?.focus();
       }, 0);
     }
-  }, [open]);
+  }, [isOpen]);
 
   const handleInputChange = async (e) => {
     const value = e.target.value;
@@ -69,11 +73,11 @@ const SearchToggle = ({ isHeaderVisible }) => {
 
   return (
     <Wrapper ref={wrapperRef}>
-      <ToggleButton onClick={() => setOpen(!open)}>
-        <SearchImage src={open ? closeIcon : searchIcon} alt="SearchIcon" />
+      <ToggleButton onClick={() => isSetOpen(!isOpen)}>
+        <SearchImage src={isOpen ? closeIcon : searchIcon} alt="SearchIcon" />
       </ToggleButton>
 
-      {open && (
+      {isOpen && (
         <SearchBar $isHeaderVisible={isHeaderVisible}>
           <SearchInputWrapper>
             <SearchInput

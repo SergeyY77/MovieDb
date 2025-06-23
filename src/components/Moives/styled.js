@@ -44,7 +44,7 @@ const Card = styled.div`
   border: 0.0625rem solid #e3e3e3;
   border-radius: 0.3rem;
   object-fit: cover;
-  z-index: ${({ $open }) => ($open ? 10 : 1)};
+  z-index: ${({ $isOpen }) => ($isOpen ? 10 : 1)};
   box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
 
   @media (min-width: 48rem) {

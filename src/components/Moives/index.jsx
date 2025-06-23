@@ -80,7 +80,7 @@ const MovieCard = () => {
               key={`${movie.id}-${index}`}
               ref={(el) => (cardRefs.current[movie.id] = el)}
               onClick={() => handleCardClick(movie.id)}
-              $open={openDropdownId === movie.id}
+              $isOpen={openDropdownId === movie.id}
             >
               <CardHover $active={hoveredCardId === movie.id} />
 
@@ -91,7 +91,7 @@ const MovieCard = () => {
                   alt={movie.title}
                 />
               </ImageWrapper>
-              <ActionDropdown open={openDropdownId === movie.id} />
+              <ActionDropdown isOpen={openDropdownId === movie.id} />
 
               <Content>
                 <Options

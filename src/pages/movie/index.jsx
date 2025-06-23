@@ -64,7 +64,7 @@ import { actionMenuItems } from "../../components/Moives/actionMenu/constant";
 function Movie() {
   const { id } = useParams();
   const [movie, setMovie] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [isOpen, isSetOpen] = useState(false);
   const [hoveredVideos, setHoveredVideos] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
 
@@ -106,9 +106,9 @@ function Movie() {
         {MOVIE_TABS.map((tab, index) => (
           <HeaderSubButton key={index}>
             <SubButton
-              onMouseEnter={() => setOpen(index)}
+              onMouseEnter={() => isSetOpen(index)}
               onMouseLeave={() => {
-                setOpen(null);
+                isSetOpen(null);
                 setHoveredVideos(false);
               }}
             >
@@ -117,7 +117,7 @@ function Movie() {
                 <img src={ArrowDownIcon} alt="Arrow Down" />
               </Catalog>
 
-              {open === index && (
+              {isOpen === index && (
                 <Dropdown>
                   {tab.subItems.map((item, idx) => {
                     const hasChildren = Array.isArray(item.children);

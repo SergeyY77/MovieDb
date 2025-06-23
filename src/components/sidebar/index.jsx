@@ -39,9 +39,9 @@ import SortDropdown from "./sortDropdown";
 import {
   SORT_OPTIONS,
   SORT_OPTIONS2,
-  genreList,
+  GENRE_LIST,
   SORT_MAPPING,
-  genreMap,
+  GENRE_MAP,
   USER_SCORE_LABELS,
   VOTES_LABELS,
   RUNTIME_LABELS,
@@ -60,7 +60,6 @@ import { getMovieData } from "../../api";
 import KeywordSearch from "./keywords";
 
 const Sidebar = () => {
-  const { sortMovies } = useMovies();
   const { setMovies } = useMovies();
 
   const [showSortResults, setShowSortResults] = useState(false);
@@ -123,7 +122,7 @@ const Sidebar = () => {
 
     setIsLoading(true);
 
-    const genreIds = selectedGenres.map((g) => genreMap[g]).filter(Boolean);
+    const genreIds = selectedGenres.map((g) => GENRE_MAP[g]).filter(Boolean);
     const sortParam = SORT_MAPPING[selected] || "popularity.desc";
     const keywordIds = selectedKeywords.map((k) => k.id).join(",");
 

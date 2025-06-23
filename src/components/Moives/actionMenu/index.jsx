@@ -1,8 +1,8 @@
 import { ActDropdown, MenuItem } from "./styled";
 import { actionMenuItems } from "./constant";
 
-const ActionDropdown = ({ open }) => {
-  if (!open) return null;
+const ActionDropdown = ({ isOpen }) => {
+  if (!isOpen) return null;
 
   return (
     <ActDropdown>

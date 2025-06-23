@@ -24,7 +24,7 @@ export const SORT_OPTIONS2 = [
   "Title (A-Z)",
   "Title (Z-A)",
 ];
-export const genreList = [
+export const GENRE_LIST = [
   "Action",
   "Adventure",
   "Animation",
@@ -46,7 +46,7 @@ export const genreList = [
   "Western",
 ];
 
-export const genreMap = {
+export const GENRE_MAP = {
   Action: 28,
   Adventure: 12,
   Animation: 16,

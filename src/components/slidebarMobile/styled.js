@@ -1,9 +1,11 @@
 import styled from "styled-components";
 
-export const Sidebar = styled.div`
+export const Sidebar = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isOpen",
+})`
   position: fixed;
   top: 4rem;
-  left: ${({ open }) => (open ? "0" : "-90%")};
+  left: ${({ isOpen }) => (isOpen ? "0" : "-90%")};
   width: 90%;
   height: 100vh;
   background-color: rgba(3, 37, 65, 0.9);
@@ -12,7 +14,7 @@ export const Sidebar = styled.div`
   padding-left: 1.375rem;
   padding-top: 1.25rem;
   transition: 0.3s ease;
-  z-index: 1002;
+  z-index: 100;
 `;
 
 export const MenuItem = styled.a`
