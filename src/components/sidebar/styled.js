@@ -91,6 +91,11 @@ export const ShowMeInnerFilter = styled.div`
   }
 `;
 
+export const ShowFilterImg = styled.img`
+  width: 1rem;
+  height: 1rem;
+`;
+
 export const ShowMeOptions = styled.div`
   display: flex;
   flex-direction: column;
@@ -183,12 +188,13 @@ export const LanguageOptions = styled.div`
   &:hover {
     background-color: gray;
   }
+`;
 
-  img {
-    width: 1rem;
-    height: 1rem;
-    padding-right: 0.1875rem;
-  }
+export const LanguageArrow = styled.img`
+  width: 1rem;
+  height: 1rem;
+  padding-right: 0.2rem;
+  cursor: pointer;
 `;
 
 export const Section = styled.div`
@@ -330,6 +336,8 @@ export const SuggestionItem = styled.li`
 
 export const SearchRef = styled.div`
   height: 0.0625rem;
+  position: relative;
+  top: 3.75rem;
 `;
 
 export const MobileSearchBar = styled.div`

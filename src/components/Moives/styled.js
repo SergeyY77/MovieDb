@@ -91,6 +91,11 @@ const ImageWrapper = styled.div`
   }
 `;
 
+const ImagePoster = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+
 const Content = styled.div`
   padding: 0.875rem;
   align-content: center;
@@ -235,6 +240,7 @@ const LoadMoreText = styled.span`
 export {
   Card,
   ImageWrapper,
+  ImagePoster,
   Content,
   Title,
   Description,

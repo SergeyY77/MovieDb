@@ -96,3 +96,8 @@ export const InputIcon = styled.div`
     height: 1.5rem;
   }
 `;
+
+export const CalendarIcon = styled.img`
+  width: 1rem;
+  height: 1.5rem;
+`;

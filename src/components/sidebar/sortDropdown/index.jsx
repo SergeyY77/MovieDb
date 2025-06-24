@@ -4,6 +4,7 @@ import {
   SortImage,
   SortResults,
   SortPopularity,
+  SortArrow,
   DropdownOptions,
   Option,
 } from "./styled";
@@ -36,7 +37,7 @@ const SortDropdown = ({
         <h3>Sort Results By</h3>
         <SortPopularity onClick={toggleOpen}>
           <span>{selected}</span>
-          <img src={descendingArrow} alt="sort" />
+          <SortArrow src={descendingArrow} alt="sort" />
           {isOpen && (
             <DropdownOptions>
               {SORT_OPTIONS.map((option, index) => (

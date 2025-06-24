@@ -1,9 +1,14 @@
 import {
   HeaderWrapper,
   HeaderContainer,
+  HeaderDesktopIcon,
   HeaderMenu,
+  NotificationIcon,
   MenuLink,
+  MenuIcon,
   HeaderLogo,
+  PlusIcon,
+  HeaderIcon,
   HeaderLink,
   HeaderDesktopContainer,
   HeaderLeft,
@@ -48,16 +53,16 @@ const Header = ({ onMenuClick }) => {
         <HeaderContainer>
           <HeaderMenu>
             <MenuLink onClick={onMenuClick}>
-              <img src={menuIcon} alt="Menu Icon" />
+              <MenuIcon src={menuIcon} alt="Menu Icon" />
             </MenuLink>
           </HeaderMenu>
           <HeaderLogo>
             <HeaderLink href="#">
-              <img src={headerLogo} alt="Header Logo" />
+              <HeaderIcon src={headerLogo} alt="Header Logo" />
             </HeaderLink>
           </HeaderLogo>
           <HeaderMenu>
-            <img src={headerNotification} alt="notification" />
+            <NotificationIcon src={headerNotification} alt="notification" />
             <LoginDropdown />
             <SearchToggle isHeaderVisible={isVisibleHeader} />
           </HeaderMenu>
@@ -66,7 +71,7 @@ const Header = ({ onMenuClick }) => {
         <HeaderDesktopContainer>
           <HeaderLeft>
             <HeaderDesktopLogo href="#">
-              <img src={headerDesktopLogo} alt="Desktop Logo" />
+              <HeaderDesktopIcon src={headerDesktopLogo} alt="Desktop Logo" />
             </HeaderDesktopLogo>
             <HeaderDesktopMenu>
               <DropdownFullMenu />
@@ -74,11 +79,11 @@ const Header = ({ onMenuClick }) => {
           </HeaderLeft>
           <HeaderRight>
             <PlusLogo>
-              <img src={headerPlus} alt="Plus Logo" />
+              <PlusIcon src={headerPlus} alt="Plus Logo" />
             </PlusLogo>
             <Lang>EN</Lang>
             <Notification>
-              <img src={headerNotification} alt="notification" />
+              <NotificationIcon src={headerNotification} alt="notification" />
             </Notification>
             <LoginDropdown>S</LoginDropdown>
 

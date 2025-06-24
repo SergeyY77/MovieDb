@@ -7,6 +7,7 @@ import {
   SubButton,
   Dropdown,
   Catalog,
+  CatalogArrow,
   DropdownItem,
   ItemCount,
   ItemLabel,
@@ -35,6 +36,7 @@ import {
   MovieToggles,
   MovieDetails,
   MovieInnerDetails,
+  PlayTrailersImg,
   MovieFirstLine,
   GenreTag,
   GenreTags,
@@ -56,11 +58,11 @@ import ArrowDownIcon from "../../assets/icons/main-descending-arrow.svg";
 import CryEmoji from "../../assets/icons/emoji-cry.svg";
 import SmileEmoji from "../../assets/icons/emoji-smile.svg";
 import PlayTrailer from "../../assets/icons/play-trailer.svg";
-import minutesToHours from "../../helper/runtime";
+import minutesToHours from "../../utils/runtime";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import useMobile from "../../hooks/useMobile";
 import { MOVIE_TABS } from "./constant";
-import { actionMenuItems } from "../../components/Moives/actionMenu/constant";
+import { ACTION_MENU_ITEM } from "../../components/Moives/actionMenu/constant";
 function Movie() {
   const { id } = useParams();
   const [movie, setMovie] = useState([]);
@@ -114,7 +116,7 @@ function Movie() {
             >
               <Catalog>
                 {tab.label}
-                <img src={ArrowDownIcon} alt="Arrow Down" />
+                <CatalogArrow src={ArrowDownIcon} alt="Arrow Down" />
               </Catalog>
 
               {isOpen === index && (
@@ -138,9 +140,7 @@ function Movie() {
                           <ItemCount>{item.count}</ItemCount>
                         )}
                         {hasChildren && (
-                          <VideoImage>
-                            <img src={ArrowDownIcon} alt="arrow" />
-                          </VideoImage>
+                          <VideoImage src={ArrowDownIcon} alt="arrow" />
                         )}
 
                         {isHovered && hasChildren && (
@@ -213,9 +213,7 @@ function Movie() {
                 <Vibe1>What's your</Vibe1>
                 <Vibe2>Vibe</Vibe2>
                 <Vibe3>?</Vibe3>
-                <Vibe4>
-                  <img src={InfoIcon} alt="info" />
-                </Vibe4>
+                <Vibe4 src={InfoIcon} alt="info" />
               </MovieScoreRight>
             </MovieScore>
             <MovieDetails>
@@ -230,7 +228,7 @@ function Movie() {
                     • {movie.runtime && minutesToHours(movie.runtime)}
                   </span>
                   <PlayTrailers>
-                    <img src={PlayTrailer} alt="play trailer" />
+                    <PlayTrailersImg src={PlayTrailer} alt="play trailer" />
                     Play Trailer
                   </PlayTrailers>
                 </MovieFirstLine>
@@ -260,12 +258,10 @@ function Movie() {
             <MainSubWrapper>
               <MovieImageWrapper>
                 <MovieImage>
-                  <MovieBlur>
-                    <img
-                      src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                      alt="image"
-                    />
-                  </MovieBlur>
+                  <MovieBlur
+                    src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                    alt="image"
+                  />
                   <Overlay className="overlay">
                     <ExpandText>
                       <AiOutlineFullscreen size={24} color="#fff" />
@@ -323,13 +319,11 @@ function Movie() {
                     <Vibe1>What's your</Vibe1>
                     <Vibe2>Vibe</Vibe2>
                     <Vibe3>?</Vibe3>
-                    <Vibe4>
-                      <img src={InfoIcon} alt="info" />
-                    </Vibe4>
+                    <Vibe4 src={InfoIcon} alt="info" />
                   </MovieScoreRight>
                 </MovieScoreLeft>
                 <MovieToggles>
-                  {actionMenuItems.slice(0, -1).map((item, index) => {
+                  {ACTION_MENU_ITEM.slice(0, -1).map((item, index) => {
                     const Icon = item.icon;
                     return (
                       <div key={index}>
@@ -339,7 +333,7 @@ function Movie() {
                     );
                   })}
                   <PlayTrailers>
-                    <img src={PlayTrailer} alt="play trailer" />
+                    <PlayTrailersImg src={PlayTrailer} alt="play trailer" />
                     Play Trailer
                   </PlayTrailers>
                 </MovieToggles>
@@ -354,7 +348,7 @@ function Movie() {
         </MainWrapper>
       )}
       <BottomBar>
-        {actionMenuItems.map((item, index) => {
+        {ACTION_MENU_ITEM.map((item, index) => {
           const Icon = item.icon;
           return (
             <div key={index}>

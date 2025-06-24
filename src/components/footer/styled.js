@@ -88,13 +88,12 @@ export const FooterList = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
+`;
 
-  li {
-    margin-bottom: 0.5rem;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
+export const FooterItem = styled.li`
+  margin-bottom: 0.5rem;
+  &:last-child {
+    margin-bottom: 0;
   }
 `;
 

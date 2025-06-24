@@ -62,11 +62,11 @@ export const SortPopularity = styled.div`
   span {
     font-size: 0.9rem;
   }
+`;
 
-  img {
-    font-size: 1rem;
-    font-weight: 300;
-  }
+export const SortArrow = styled.img`
+  font-size: 1rem;
+  font-weight: 300;
 `;
 
 export const DropdownOptions = styled.ul`

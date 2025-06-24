@@ -6,6 +6,7 @@ import {
   PopularMovies,
   MainFilter,
   FilterSort,
+  ShowFilterImg,
   FilterArrow,
   ShowMeFilter,
   ShowMeInnerFilter,
@@ -13,6 +14,7 @@ import {
   Certification,
   Language,
   LanguageInner,
+  LanguageArrow,
   LanguageOptions,
   Section,
   Label,
@@ -278,7 +280,7 @@ const Sidebar = () => {
                 <ShowMeFilter>
                   <ShowMeInnerFilter>
                     <span>Show Me</span>
-                    <img src={showMeIcon} alt="question-mark" />
+                    <ShowFilterImg src={showMeIcon} alt="question-mark" />
                   </ShowMeInnerFilter>
                   <ShowMeOptions>
                     {SORT_OPTIONS.map((option, idx) => (
@@ -307,11 +309,11 @@ const Sidebar = () => {
                 <Language>
                   <LanguageInner>
                     <p>Language</p>
-                    <img src={showMeIcon} alt="question-mark" />
+                    <ShowFilterImg src={showMeIcon} alt="question-mark" />
                   </LanguageInner>
                   <LanguageOptions>
                     <p>None Selected</p>
-                    <img src={descendingArrow} alt="arrow" />
+                    <LanguageArrow src={descendingArrow} alt="arrow" />
                   </LanguageOptions>
                 </Language>
                 <Section>

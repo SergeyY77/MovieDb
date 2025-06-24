@@ -9,6 +9,7 @@ import {
   FooterSection,
   FooterTitle,
   FooterList,
+  FooterItem,
   FooterLink,
   FooterLogo,
 } from "./styled";
@@ -28,9 +29,9 @@ const Footer = () => {
             <FooterTitle>{section.title}</FooterTitle>
             <FooterList>
               {section.links.map((link, i) => (
-                <li key={i}>
+                <FooterItem key={i}>
                   <FooterLink href={link.href}>{link.label}</FooterLink>
-                </li>
+                </FooterItem>
               ))}
             </FooterList>
           </FooterSection>

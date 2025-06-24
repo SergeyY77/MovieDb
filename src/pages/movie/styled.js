@@ -43,6 +43,11 @@ const Catalog = styled.span`
   z-index: 100;
 `;
 
+const CatalogArrow = styled.img`
+  width: 1rem;
+  height: 1rem;
+`;
+
 const Dropdown = styled.div`
   background-color: red;
   position: absolute;
@@ -90,7 +95,7 @@ const ItemCount = styled.span`
   color: rgba(0, 0, 0, 0.6);
 `;
 
-const VideoImage = styled.div`
+const VideoImage = styled.img`
   transform: rotate(-90deg);
   position: absolute;
   right: 0.5625rem;
@@ -240,7 +245,7 @@ export const MovieImageWrapper = styled.div`
   }
 `;
 
-const MovieBlur = styled.div`
+const MovieBlur = styled.img`
   min-width: 18.75rem;
   min-height: 28.125rem;
 
@@ -439,7 +444,7 @@ const Vibe2 = styled.span`
 
 const Vibe3 = styled.span``;
 
-const Vibe4 = styled.span`
+const Vibe4 = styled.img`
   display: flex;
   align-items: center;
 `;
@@ -520,22 +525,26 @@ const PlayTrailers = styled.p`
     opacity: 0.8;
   }
 
-  img {
-    width: 1rem;
-    height: 1rem;
-    margin-right: 0.5rem;
-    transition: transform 0.2s ease-in-out;
+  @media (min-width: 48rem) {
+    color: #fff;
+
+    &:hover {
+      color: gray;
+    }
   }
+`;
+
+const PlayTrailersImg = styled.img`
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  transition: transform 0.2s ease-in-out;
 
   @media (min-width: 48rem) {
     color: #fff;
 
     &:hover {
       color: gray;
-
-      img {
-        color: gray;
-      }
     }
   }
 `;
@@ -630,6 +639,7 @@ export {
   SubButton,
   Dropdown,
   Catalog,
+  CatalogArrow,
   DropdownItem,
   ItemLabel,
   ItemCount,
@@ -660,6 +670,7 @@ export {
   MovieDetails,
   MovieInnerDetails,
   PlayTrailers,
+  PlayTrailersImg,
   GenreTag,
   GenreTags,
   MovieFirstLine,
