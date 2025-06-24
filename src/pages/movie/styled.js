@@ -252,29 +252,19 @@ const MovieTitle = styled.h1`
 
   @media (min-width: 48rem) {
     font-size: 2.2rem;
-
-    span {
-      font-size: 2.2rem;
-    }
-  }
-
-  span {
-    font-size: calc(0.2em + 3vw);
-    opacity: 0.8;
-  }
-
-  @media (min-width: 48rem) {
     align-items: center;
     justify-content: flex-start;
     padding: 0;
     flex-wrap: wrap;
+  }
+`;
 
-    @media (min-width: 48rem) {
-      span {
-        font-size: 2.2rem;
-        padding-left: 0.5rem;
-      }
-    }
+const ReleaseDate = styled.span`
+  font-size: calc(0.2em + 3vw);
+  opacity: 0.8;
+  @media (min-width: 48rem) {
+    font-size: 2.2rem;
+    padding-left: 0.5rem;
   }
 `;
 
@@ -403,47 +393,46 @@ const Vibe4 = styled.img`
 const MovieToggles = styled.div`
   display: flex;
   gap: 1rem;
-  div {
-    position: relative;
-    width: 2.875rem;
-    height: 2.875rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border-radius: 50%;
-    background-color: #052541;
+`;
 
-    svg {
-      fill: #fff;
-      width: 0.7rem;
-      height: 0.7rem;
-    }
-    &:hover span {
-      opacity: 1;
-      transform: translateY(0);
-    }
+const MovieToggleItem = styled.div`
+  position: relative;
+  width: 2.875rem;
+  height: 2.875rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: #052541;
 
-    @media (min-width: 48rem) {
-    }
+  svg {
+    fill: #fff;
+    width: 0.7rem;
+    height: 0.7rem;
   }
-  span {
-    position: absolute;
-    bottom: -2.5rem;
-    font-size: 0.625rem;
-    background-color: #052541;
-    color: #fff;
-    padding: 0.4rem 0.6rem;
-    border-radius: 0.375rem;
-    font-size: 0.7rem;
-    white-space: nowrap;
-    opacity: 0;
-    transform: translateY(0.3125rem);
-    transition: all 0.2s ease;
-    pointer-events: none;
-    z-index: 1;
+  &:hover span {
+    opacity: 1;
+    transform: translateY(0);
   }
+`;
+
+const MovieToggleLabel = styled.span`
+  position: absolute;
+  bottom: -2.5rem;
+  font-size: 0.625rem;
+  background-color: #052541;
+  color: #fff;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.375rem;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(0.3125rem);
+  transition: all 0.2s ease;
+  pointer-events: none;
+  z-index: 1;
 `;
 
 const MovieDetails = styled.div`
@@ -504,17 +493,28 @@ const MovieFirstLine = styled.div`
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  span:first-child {
-    border: 0.0625rem solid #fff;
-    padding: 0.0625rem 0.25rem;
-    border-radius: 0.125rem;
-    opacity: 0.7;
-  }
 
   @media (min-width: 48rem) {
     color: #fff;
     margin-bottom: 1.5rem;
   }
+`;
+
+const MovieCategory = styled.span`
+  &:first-child {
+    border: 0.0625rem solid #fff;
+    padding: 0.0625rem 0.25rem;
+    border-radius: 0.125rem;
+    opacity: 0.7;
+  }
+`;
+
+const MovieReleaseDate = styled.span`
+  color: #fff;
+`;
+
+const MovieTime = styled.span`
+  color: #fff;
 `;
 
 const GenreTag = styled.p`
@@ -576,12 +576,13 @@ const BottomBar = styled.div`
   margin-bottom: 0;
   transition: padding-bottom 0.3s;
 
-  div {
-    cursor: pointer;
-  }
   @media (min-width: 48rem) {
     display: none;
   }
+`;
+
+const BarItem = styled.div`
+  cursor: pointer;
 `;
 
 export {
@@ -598,6 +599,7 @@ export {
   MainContent,
   MovieContent,
   MovieTitle,
+  ReleaseDate,
   MovieBlur,
   MovieScore,
   MovieScoreLeft,
@@ -612,6 +614,8 @@ export {
   Vibe3,
   Vibe4,
   MovieToggles,
+  MovieToggleItem,
+  MovieToggleLabel,
   MovieDetails,
   MovieInnerDetails,
   PlayTrailers,
@@ -619,9 +623,13 @@ export {
   GenreTag,
   GenreTags,
   MovieFirstLine,
+  MovieCategory,
+  MovieReleaseDate,
+  MovieTime,
   MovieOverview,
   TagLine,
   OverView,
   MovieOverviewText,
   BottomBar,
+  BarItem,
 };

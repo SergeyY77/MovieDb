@@ -14,11 +14,11 @@ export const SortTable = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
 
-  span {
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
+export const SortSpan = styled.span`
+  font-size: 1.1rem;
+  font-weight: 600;
 `;
 
 export const SortImage = styled.img`
@@ -36,14 +36,14 @@ export const SortResults = styled.div`
   padding: 0.875rem 1rem 1rem;
   width: 100%;
   border-top: 0.0625rem solid #eee;
+`;
 
-  h3 {
-    font-size: 1rem;
-    font-weight: 300;
-    align-self: flex-start;
-    margin-bottom: 0.625rem;
-    color: #000;
-  }
+export const SortName = styled.h3`
+  font-size: 1rem;
+  font-weight: 300;
+  align-self: flex-start;
+  margin-bottom: 0.625rem;
+  color: #000;
 `;
 
 export const SortPopularity = styled.div`
@@ -58,10 +58,10 @@ export const SortPopularity = styled.div`
   border-radius: 0.3rem;
   position: relative;
   z-index: 201;
+`;
 
-  span {
-    font-size: 0.9rem;
-  }
+export const SortSelected = styled.span`
+  font-size: 0.9rem;
 `;
 
 export const SortArrow = styled.img`

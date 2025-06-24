@@ -29,7 +29,7 @@ const Footer = () => {
             <FooterTitle>{section.title}</FooterTitle>
             <FooterList>
               {section.links.map((link) => (
-                <FooterItem key={link.href}>
+                <FooterItem key={`${link.href}-${link.label}`}>
                   <FooterLink href={link.href}>{link.label}</FooterLink>
                 </FooterItem>
               ))}

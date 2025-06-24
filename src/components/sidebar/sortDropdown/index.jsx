@@ -2,8 +2,11 @@ import {
   MainSort,
   SortTable,
   SortImage,
+  SortSpan,
   SortResults,
+  SortName,
   SortPopularity,
+  SortSelected,
   SortArrow,
   DropdownOptions,
   Option,
@@ -24,7 +27,7 @@ const SortDropdown = ({
 }) => (
   <MainSort>
     <SortTable onClick={toggleSortResults}>
-      <span>Sort</span>
+      <SortSpan>Sort</SortSpan>
       <SortImage
         src={sortArrow}
         alt="filter-sort"
@@ -34,9 +37,9 @@ const SortDropdown = ({
 
     {showSortResults && (
       <SortResults>
-        <h3>Sort Results By</h3>
+        <SortName>Sort Results By</SortName>
         <SortPopularity onClick={toggleOpen}>
-          <span>{selected}</span>
+          <SortSelected>{selected}</SortSelected>
           <SortArrow src={descendingArrow} alt="sort" />
           {isOpen && (
             <DropdownOptions>

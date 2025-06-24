@@ -167,12 +167,6 @@ const Title = styled.a`
 `;
 
 const Description = styled.div`
-  p {
-    font-size: 1rem;
-    color: #999;
-    margin-bottom: 1rem;
-  }
-
   @media (min-width: 48rem) {
     display: flex;
     flex-direction: column;
@@ -181,22 +175,26 @@ const Description = styled.div`
   }
 `;
 
-const Overview = styled.div`
-  p {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 0.9rem;
-    line-height: 1.2rem;
+const OriginDate = styled.p`
+  font-size: 1rem;
+  color: #999;
+  margin-bottom: 1rem;
+`;
 
-    @media (min-width: 48rem) {
-      color: rgba(0, 0, 0, 0.6);
-      margin: 0;
-      padding: 0;
-      display: none;
-    }
+const Overview = styled.div`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+
+  @media (min-width: 48rem) {
+    color: rgba(0, 0, 0, 0.6);
+    margin: 0;
+    padding: 0;
+    display: none;
   }
 `;
 
@@ -243,6 +241,7 @@ export {
   ImagePoster,
   Content,
   Title,
+  OriginDate,
   Description,
   Overview,
   CardContainer,

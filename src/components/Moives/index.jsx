@@ -4,6 +4,7 @@ import {
   ImagePoster,
   Content,
   Title,
+  OriginDate,
   Description,
   Overview,
   CardContainer,
@@ -125,18 +126,16 @@ const MovieCard = () => {
 
                 <Description>
                   <Title>{movie.title}</Title>
-                  <p>
+                  <OriginDate>
                     {new Date(movie.release_date).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "short",
                       day: "numeric",
                     })}
-                  </p>
+                  </OriginDate>
                 </Description>
 
-                <Overview>
-                  <p>{movie.overview}</p>
-                </Overview>
+                <Overview>{movie.overview}</Overview>
               </Content>
             </Card>
           ))}

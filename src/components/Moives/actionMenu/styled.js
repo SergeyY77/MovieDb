@@ -21,11 +21,6 @@ const MenuItem = styled.div`
   align-items: center;
   gap: 0.3125rem;
 
-  span {
-    opacity: 0.7;
-    font-weight: 600;
-  }
-
   &:hover {
     background-color: rgb(0, 33, 56);
     color: white;
@@ -41,4 +36,9 @@ const MenuItem = styled.div`
   }
 `;
 
-export { ActDropdown, MenuItem };
+const MenuLabel = styled.span`
+  opacity: 0.7;
+  font-weight: 600;
+`;
+
+export { ActDropdown, MenuItem, MenuLabel };

@@ -16,6 +16,7 @@ import {
   MovieContainer,
   MovieContent,
   MovieTitle,
+  ReleaseDate,
   MovieScore,
   MovieScoreLeft,
   UserScore,
@@ -28,10 +29,15 @@ import {
   Vibe3,
   Vibe4,
   MovieToggles,
+  MovieToggleItem,
+  MovieToggleLabel,
   MovieDetails,
   MovieInnerDetails,
   PlayTrailersImg,
   MovieFirstLine,
+  MovieCategory,
+  MovieReleaseDate,
+  MovieTime,
   GenreTag,
   GenreTags,
   PlayTrailers,
@@ -41,6 +47,7 @@ import {
   MovieOverviewText,
   CustomVoteRing,
   BottomBar,
+  BarItem,
   MovieImageWrapper,
   Overlay,
   ExpandText,
@@ -98,7 +105,7 @@ function Movie() {
     return <VoteRing {...props} size={size} />;
   };
   return (
-    <div>
+    <>
       <SubHeader>
         {MOVIE_TABS.map((tab, index) => (
           <HeaderSubButton key={index}>
@@ -149,7 +156,7 @@ function Movie() {
             />
             <MovieTitle>
               {movie.title}
-              <span>({movie.release_date?.split("-")[0]})</span>
+              <ReleaseDate>({movie.release_date?.split("-")[0]})</ReleaseDate>
             </MovieTitle>
             <MovieScore>
               <MovieScoreLeft>
@@ -187,14 +194,14 @@ function Movie() {
             <MovieDetails>
               <MovieInnerDetails>
                 <MovieFirstLine>
-                  <span>PG</span>
-                  <span>
+                  <MovieCategory>PG</MovieCategory>
+                  <MovieReleaseDate>
                     {movie.release_date && formatDate(movie.release_date)} (US)
-                  </span>
-                  <span>
+                  </MovieReleaseDate>
+                  <MovieTime>
                     {" "}
                     • {movie.runtime && minutesToHours(movie.runtime)}
-                  </span>
+                  </MovieTime>
                   <PlayTrailers>
                     <PlayTrailersImg src={PlayTrailer} alt="play trailer" />
                     Play Trailer
@@ -241,13 +248,15 @@ function Movie() {
               <MovieContent>
                 <MovieTitle>
                   {movie.title}
-                  <span>({movie.release_date?.split("-")[0]})</span>
+                  <ReleaseDate>
+                    ({movie.release_date?.split("-")[0]})
+                  </ReleaseDate>
                 </MovieTitle>
                 <MovieFirstLine>
-                  <span>PG</span>
-                  <span>
+                  <MovieCategory>PG</MovieCategory>
+                  <MovieReleaseDate>
                     {movie.release_date && formatDate(movie.release_date)} (US)
-                  </span>
+                  </MovieReleaseDate>
                   <GenreTags>
                     {movie.genres?.map((genre, index) => (
                       <GenreTag key={index}>
@@ -255,10 +264,10 @@ function Movie() {
                       </GenreTag>
                     ))}
                   </GenreTags>
-                  <span>
+                  <MovieTime>
                     {" "}
                     • {movie.runtime && minutesToHours(movie.runtime)}
-                  </span>
+                  </MovieTime>
                 </MovieFirstLine>
                 <MovieScoreLeft>
                   {movie.vote_average && (
@@ -294,10 +303,10 @@ function Movie() {
                   {ACTION_MENU_ITEM.slice(0, -1).map((item, index) => {
                     const Icon = item.icon;
                     return (
-                      <div key={index}>
+                      <MovieToggleItem key={index}>
                         <Icon />
-                        <span>{item.label}</span>
-                      </div>
+                        <MovieToggleLabel>{item.label}</MovieToggleLabel>
+                      </MovieToggleItem>
                     );
                   })}
                   <PlayTrailers>
@@ -319,13 +328,13 @@ function Movie() {
         {ACTION_MENU_ITEM.map((item, index) => {
           const Icon = item.icon;
           return (
-            <div key={index}>
+            <BarItem key={index}>
               <Icon />
-            </div>
+            </BarItem>
           );
         })}
       </BottomBar>
-    </div>
+    </>
   );
 }
 

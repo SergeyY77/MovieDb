@@ -1,4 +1,4 @@
-import { ActDropdown, MenuItem } from "./styled";
+import { ActDropdown, MenuItem, MenuLabel } from "./styled";
 import { ACTION_MENU_ITEM } from "./constant";
 
 const ActionDropdown = ({ isOpen }) => {
@@ -11,7 +11,7 @@ const ActionDropdown = ({ isOpen }) => {
         return (
           <MenuItem key={idx}>
             <Icon />
-            <span>{item.label}</span>
+            <MenuLabel>{item.label}</MenuLabel>
           </MenuItem>
         );
       })}
