@@ -24,12 +24,12 @@ const Footer = () => {
           <FooterJoinBtn href="#">Hi Sergey1234!</FooterJoinBtn>
         </FooterJoin>
 
-        {FOOTER_SECTIONS.map((section, index) => (
-          <FooterSection key={index}>
+        {FOOTER_SECTIONS.map((section) => (
+          <FooterSection key={section.title}>
             <FooterTitle>{section.title}</FooterTitle>
             <FooterList>
-              {section.links.map((link, i) => (
-                <FooterItem key={i}>
+              {section.links.map((link) => (
+                <FooterItem key={link.href}>
                   <FooterLink href={link.href}>{link.label}</FooterLink>
                 </FooterItem>
               ))}
