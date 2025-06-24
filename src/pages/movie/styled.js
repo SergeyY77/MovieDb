@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import VoteRing from "../../shared/ring";
-import CustomVoteRingBase from "../../shared/ring";
+import VoteRing from "../../components/shared/ring";
+import CustomVoteRingBase from "../../components/shared/ring";
 const SubHeader = styled.div`
   width: 100%;
   height: 2.875rem;

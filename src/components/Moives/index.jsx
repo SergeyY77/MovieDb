@@ -18,7 +18,7 @@ import {
 } from "./styled";
 
 import ActionDropdown from "./actionMenu";
-import VoteRing from "../../shared/ring";
+import VoteRing from "../shared/ring";
 import { useNavigate } from "react-router-dom";
 import { useRef, useEffect, useState, useCallback } from "react";
 import { useMovies } from "../../context/MovieContext";

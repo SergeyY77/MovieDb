@@ -9,7 +9,6 @@ import {
   Catalog,
   CatalogArrow,
   MainWrapper,
-  MainContent,
   MovieBackground,
   MovieImage,
   MovieBlur,
@@ -65,6 +64,7 @@ import useMobile from "../../hooks/useMobile";
 import { MOVIE_TABS } from "./constant";
 import { ACTION_MENU_ITEM } from "../../components/Moives/actionMenu/constant";
 import DropdownMenuItem from "./dropdownMenuItem";
+
 function Movie() {
   const { id } = useParams();
   const [movie, setMovie] = useState([]);

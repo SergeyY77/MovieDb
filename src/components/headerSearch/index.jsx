@@ -64,8 +64,13 @@ const SearchToggle = ({ isHeaderVisible }) => {
     setQuery(value);
 
     if (value.length >= 2) {
-      const res = await getSearchResult(value);
-      setResults(res);
+      try {
+        const res = await getSearchResult(value);
+        setResults(res);
+      } catch (error) {
+        console.error("error", error);
+        setResults([]);
+      }
     } else {
       setResults([]);
     }

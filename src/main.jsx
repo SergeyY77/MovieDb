@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import BaseLayout from "./layouts/baseLayout";
-import GlobalStyles from "./shared/GlobalStyles";
+import GlobalStyles from "./components/shared/GlobalStyles";
 import HomePage from "./pages/homePage";
 import Movie from "./pages/movie";
 import { MovieProvider } from "./context/MovieContext";

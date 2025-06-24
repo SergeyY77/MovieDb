@@ -42,9 +42,14 @@ const KeywordSearch = ({
     setIsOpen(true);
 
     if (value.length >= 2) {
-      const results = await getKeywords(value);
-      setSuggestions(results.slice(0, 6));
-      setHighlightedIndex(0);
+      try {
+        const results = await getKeywords(value);
+        setSuggestions(results.slice(0, 6));
+        setHighlightedIndex(0);
+      } catch (error) {
+        console.error("Error fetching suggestions:", error);
+        setSuggestions([]); // fallback в случае сбоя
+      }
     } else {
       setSuggestions([]);
     }
