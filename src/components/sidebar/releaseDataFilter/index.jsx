@@ -2,6 +2,7 @@ import {
   ReleaseFilter,
   RealiseSearch,
   DateFilter,
+  CalendarIcon,
   InputWrapper,
   InputIcon,
 } from "./styled";
@@ -25,7 +26,7 @@ const ReleaseDateFilter = () => {
           <InputWrapper>
             <input type="text" placeholder="" />
             <InputIcon>
-              <img src={calendarIcon} alt="calendar" />
+              <CalendarIcon src={calendarIcon} alt="calendar" />
             </InputIcon>
           </InputWrapper>
         </label>
@@ -35,7 +36,7 @@ const ReleaseDateFilter = () => {
           <InputWrapper>
             <input type="text" defaultValue="11/13/2025" />
             <InputIcon>
-              <img src={calendarIcon} alt="calendar" />
+              <CalendarIcon src={calendarIcon} alt="calendar" />
             </InputIcon>
           </InputWrapper>
         </label>

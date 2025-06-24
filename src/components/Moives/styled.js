@@ -92,7 +92,7 @@ const ImageWrapper = styled.div`
 `;
 
 const ImagePoster = styled.img`
-  width: 100%;
+  width: 5.875rem;
   height: 100%;
 `;
 

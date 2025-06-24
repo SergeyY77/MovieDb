@@ -66,3 +66,14 @@ export async function getMovieData({
     return [];
   }
 }
+
+export const loadMoviesWithSort = async (sortParam) => {
+  try {
+    const res = await axios.get(
+      `https://api.themoviedb.org/3/discover/movie?sort_by=${sortParam}&api_key=${API_KEY}`
+    );
+    setMovies(res.data.results || []);
+  } catch (error) {
+    console.error(error);
+  }
+};

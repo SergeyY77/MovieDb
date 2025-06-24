@@ -8,12 +8,6 @@ import {
   Dropdown,
   Catalog,
   CatalogArrow,
-  DropdownItem,
-  ItemCount,
-  ItemLabel,
-  VideoImage,
-  VideoSidebar,
-  VideoSidebarItem,
   MainWrapper,
   MainContent,
   MovieBackground,
@@ -63,6 +57,7 @@ import { AiOutlineFullscreen } from "react-icons/ai";
 import useMobile from "../../hooks/useMobile";
 import { MOVIE_TABS } from "./constant";
 import { ACTION_MENU_ITEM } from "../../components/Moives/actionMenu/constant";
+import DropdownMenuItem from "./dropdownMenuItem";
 function Movie() {
   const { id } = useParams();
   const [movie, setMovie] = useState([]);
@@ -121,43 +116,16 @@ function Movie() {
 
               {isOpen === index && (
                 <Dropdown>
-                  {tab.subItems.map((item, idx) => {
-                    const hasChildren = Array.isArray(item.children);
-                    const isHovered = hoveredItem === `${index}-${idx}`;
-
-                    return (
-                      <DropdownItem
-                        key={idx}
-                        isDivider={item.isDivider}
-                        onMouseEnter={() =>
-                          hasChildren && setHoveredItem(`${index}-${idx}`)
-                        }
-                        onMouseLeave={() => hasChildren && setHoveredItem(null)}
-                        className={isHovered ? "hovered-nested" : ""}
-                      >
-                        <ItemLabel>{item.label}</ItemLabel>
-                        {item.count !== undefined && (
-                          <ItemCount>{item.count}</ItemCount>
-                        )}
-                        {hasChildren && (
-                          <VideoImage src={ArrowDownIcon} alt="arrow" />
-                        )}
-
-                        {isHovered && hasChildren && (
-                          <VideoSidebar>
-                            {item.children.map((elem, elemIdx) => (
-                              <VideoSidebarItem key={elemIdx}>
-                                {elem.label}
-                                {elem.count !== undefined && (
-                                  <ItemCount>{elem.count}</ItemCount>
-                                )}
-                              </VideoSidebarItem>
-                            ))}
-                          </VideoSidebar>
-                        )}
-                      </DropdownItem>
-                    );
-                  })}
+                  {tab.subItems.map((item, idx) => (
+                    <DropdownMenuItem
+                      key={idx}
+                      item={item}
+                      index={idx}
+                      parentIndex={index}
+                      hoveredItem={hoveredItem}
+                      setHoveredItem={setHoveredItem}
+                    />
+                  ))}
                 </Dropdown>
               )}
             </SubButton>

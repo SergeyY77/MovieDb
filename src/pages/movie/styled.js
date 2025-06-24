@@ -62,55 +62,6 @@ const Dropdown = styled.div`
   padding: 0.375rem 0;
 `;
 
-const DropdownItem = styled.a`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: #333;
-  text-decoration: none;
-  font-size: 0.9rem;
-  line-height: 1.5rem;
-  padding: 0.25rem 3rem 0.25rem 1rem;
-  width: 100%;
-  white-space: nowrap;
-  box-sizing: border-box;
-  padding-top: ${(props) => (props.isDivider ? "1.25rem" : ".25rem")};
-
-  &:hover {
-    background-color: #f4f4f4;
-  }
-  &.hovered-nested {
-    background-color: #01b4e4;
-    color: #fff;
-  }
-`;
-
-const ItemLabel = styled.span``;
-
-const ItemCount = styled.span`
-  position: absolute;
-  right: 0.5625rem;
-  font-weight: 300;
-  color: rgba(0, 0, 0, 0.6);
-`;
-
-const VideoImage = styled.img`
-  transform: rotate(-90deg);
-  position: absolute;
-  right: 0.5625rem;
-`;
-
-const VideoSidebar = styled(Dropdown)`
-  position: absolute;
-  top: 0;
-  left: 8rem;
-`;
-
-const VideoSidebarItem = styled(DropdownItem)`
-  color: #333;
-`;
-
 const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -640,12 +591,6 @@ export {
   Dropdown,
   Catalog,
   CatalogArrow,
-  DropdownItem,
-  ItemLabel,
-  ItemCount,
-  VideoImage,
-  VideoSidebar,
-  VideoSidebarItem,
   MainWrapper,
   MovieBackground,
   MovieImage,

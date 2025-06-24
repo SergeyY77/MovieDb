@@ -35,6 +35,7 @@ import {
   MobileSearchButton,
 } from "./styled";
 
+import loadMoviesWithSort from "../../api";
 import ReleaseDateFilter from "./releaseDataFilter";
 import { useState, useEffect, useRef } from "react";
 import SortDropdown from "./sortDropdown";
@@ -51,7 +52,7 @@ import {
   VOTES_MARKERS,
   RUNTIME_MARKERS,
 } from "./constant";
-
+import useMobile from "../../hooks/useMobile";
 import sortArrow from "../../assets/icons/main-sort-arrow.svg";
 import descendingArrow from "../../assets/icons/main-descending-arrow.svg";
 import showMeIcon from "../../assets/icons/filter-show-me.svg";
@@ -81,6 +82,7 @@ const Sidebar = () => {
   const [hasSearched, setHasSearched] = useState(false);
 
   optionRefs.current = [];
+  const isMobile = useMobile();
 
   const isSearchEnabled =
     selectedGenres.length > 0 ||
@@ -88,19 +90,8 @@ const Sidebar = () => {
     selected !== SORT_OPTIONS2[0];
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setShowFilter(true);
-      } else {
-        setShowFilter(false);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    setShowFilter(!isMobile);
+  }, [isMobile]);
   const toggleSortResults = () => {
     setShowSortResults((prev) => !prev);
   };
@@ -108,6 +99,8 @@ const Sidebar = () => {
   const handleSelect = (option) => {
     setSelected(option);
     setIsOpen(false);
+    const sortParam = SORT_MAPPING[option];
+    loadMoviesWithSort(sortParam, setMovies);
   };
 
   const toggleGenre = (genre) => {

@@ -34,44 +34,6 @@ export const MovieProvider = ({ children }) => {
 
   const loadMore = () => fetchMovies(page + 1);
 
-  const sortMovies = (option) => {
-    const sorted = [...movies];
-    switch (option) {
-      case "Popularity Descending":
-        sorted.sort((a, b) => b.popularity - a.popularity);
-        break;
-      case "Popularity Ascending":
-        sorted.sort((a, b) => a.popularity - b.popularity);
-        break;
-      case "Rating Descending":
-        sorted.sort((a, b) => b.vote_average - a.vote_average);
-        break;
-      case "Rating Ascending":
-        sorted.sort((a, b) => a.vote_average - b.vote_average);
-        break;
-      case "Release Date Descending":
-        sorted.sort(
-          (a, b) => new Date(b.release_date) - new Date(a.release_date)
-        );
-        break;
-      case "Release Date Ascending":
-        sorted.sort(
-          (a, b) => new Date(a.release_date) - new Date(b.release_date)
-        );
-        break;
-      case "Title (A-Z)":
-        sorted.sort((a, b) => a.title.localeCompare(b.title));
-        break;
-      case "Title (Z-A)":
-        sorted.sort((a, b) => b.title.localeCompare(a.title));
-        break;
-      default:
-        break;
-    }
-
-    setMovies(sorted);
-  };
-
   return (
     <MovieContext.Provider
       value={{
@@ -80,7 +42,6 @@ export const MovieProvider = ({ children }) => {
         loadMore,
         loading,
         page,
-        sortMovies,
         setMovies,
         setHasSearched,
       }}

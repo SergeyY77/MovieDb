@@ -1,6 +1,7 @@
 import {
   Card,
   ImageWrapper,
+  ImagePoster,
   Content,
   Title,
   Description,
@@ -85,7 +86,7 @@ const MovieCard = () => {
               <CardHover $active={hoveredCardId === movie.id} />
 
               <ImageWrapper>
-                <img
+                <ImagePoster
                   loading="lazy"
                   src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
                   alt={movie.title}
