@@ -8,6 +8,7 @@ export const MovieProvider = ({ children }) => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  const [autoLoadEnabled, setAutoLoadEnabled] = useState(false);
 
   const fetchMovies = async (pageNumber = 1, query = "") => {
     setLoading(true);
@@ -32,7 +33,11 @@ export const MovieProvider = ({ children }) => {
     fetchMovies(1);
   }, []);
 
-  const loadMore = () => fetchMovies(page + 1);
+  const loadMore = async () => {
+    setLoading(true);
+    await fetchMovies(page + 1);
+    setLoading(false);
+  };
 
   return (
     <MovieContext.Provider
@@ -40,10 +45,15 @@ export const MovieProvider = ({ children }) => {
         movies,
         fetchMovies,
         loadMore,
-        loading,
         page,
         setMovies,
+        setPage,
         setHasSearched,
+        loading,
+        hasSearched,
+        setLoading,
+        autoLoadEnabled,
+        setAutoLoadEnabled,
       }}
     >
       {children}

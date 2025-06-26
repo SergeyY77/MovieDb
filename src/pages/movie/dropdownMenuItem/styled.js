@@ -1,7 +1,7 @@
 import styled from "styled-components";
-
 import { Dropdown } from "../styled";
-export const DropdownItem = styled.a`
+
+export const DropdownItem = styled.div`
   position: relative;
   display: flex;
   align-items: center;
@@ -14,7 +14,7 @@ export const DropdownItem = styled.a`
   width: 100%;
   white-space: nowrap;
   box-sizing: border-box;
-  padding-top: ${(props) => (props.isDivider ? "1.25rem" : ".25rem")};
+  padding-top: ${({ $isDivider }) => ($isDivider ? "1.25rem" : ".25rem")};
 
   &:hover {
     background-color: #f4f4f4;
@@ -46,6 +46,8 @@ export const VideoSidebar = styled(Dropdown)`
   left: 8rem;
 `;
 
-export const VideoSidebarItem = styled(DropdownItem)`
+export const VideoSidebarItem = styled(DropdownItem).withConfig({
+  shouldForwardProp: (prop) => prop !== "$isDivider",
+})`
   color: #333;
 `;

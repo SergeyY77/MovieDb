@@ -1,5 +1,3 @@
-// GenreFilter.jsx
-import React from "react";
 import { GenreBox, GenreTitle, GenreList, Genre } from "./styled";
 import { GENRE_LIST } from "../constant";
 

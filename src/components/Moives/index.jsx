@@ -24,10 +24,10 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import { useMovies } from "../../context/MovieContext";
 
 const MovieCard = () => {
-  const { movies, loadMore, page, hasSearched } = useMovies();
+  const { movies, loadMore, page, autoLoadEnabled, setAutoLoadEnabled } =
+    useMovies();
   const [openDropdownId, setOpenDropdownId] = useState(null);
   const observerRef = useRef();
-  const [autoLoadEnabled, setAutoLoadEnabled] = useState(false);
   const navigate = useNavigate();
   const cardRefs = useRef({});
 

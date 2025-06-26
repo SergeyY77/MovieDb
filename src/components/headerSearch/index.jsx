@@ -3,7 +3,9 @@ import searchIcon from "../../assets/icons/header-search.svg";
 import closeIcon from "../../assets/icons/header-close.svg";
 import inputSearch from "../../assets/icons/header-input-search.svg";
 import getSearchResult from "../../api";
+import LoadingSpinner from "../shared/loading";
 import useMobile from "../../hooks/useMobile";
+import { debounce } from "../../utils/debounce";
 import {
   Wrapper,
   ToggleButton,
@@ -17,6 +19,12 @@ import {
   SearchInputWrapper,
 } from "./styled";
 
+const fetchData = async (value) => {
+  const response = await getSearchResult(value);
+  return response;
+};
+const debouncedFetch = debounce(fetchData, 500);
+
 const SearchToggle = ({ isHeaderVisible }) => {
   const isMobile = useMobile();
   const [isOpen, isSetOpen] = useState(false);
@@ -25,6 +33,8 @@ const SearchToggle = ({ isHeaderVisible }) => {
   const [placeholder, setPlaceholder] = useState(
     "Search for a movie, tv show, person..."
   );
+
+  const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef(null);
   const wrapperRef = useRef(null);
 
@@ -58,21 +68,27 @@ const SearchToggle = ({ isHeaderVisible }) => {
       }, 0);
     }
   }, [isOpen]);
-
   const handleInputChange = async (e) => {
     const value = e.target.value;
     setQuery(value);
 
     if (value.length >= 2) {
+      setIsLoading(true);
       try {
-        const res = await getSearchResult(value);
+        const res = await debouncedFetch(value);
+
         setResults(res);
       } catch (error) {
         console.error("error", error);
         setResults([]);
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
       }
     } else {
       setResults([]);
+      setIsLoading(false);
     }
   };
 
@@ -96,7 +112,9 @@ const SearchToggle = ({ isHeaderVisible }) => {
               alt="InputSearch"
               onClick={() => inputRef.current?.focus()}
             />
-            {query.length > 0 && (
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : query.length > 0 ? (
               <TagRemove
                 onClick={() => {
                   setQuery("");
@@ -118,7 +136,7 @@ const SearchToggle = ({ isHeaderVisible }) => {
                   />
                 </svg>
               </TagRemove>
-            )}
+            ) : null}
           </SearchInputWrapper>
           {results.length > 0 && (
             <ResultsList>

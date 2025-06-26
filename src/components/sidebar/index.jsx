@@ -1,56 +1,41 @@
 import {
-  RenderLi,
-  RenderLi2,
   Main,
   MainContainer,
   PopularMovies,
+  PopularMoviesName,
   MainFilter,
   FilterSort,
   ShowFilterImg,
   FilterArrow,
+  FilterSortName,
+  ShowMeInnerFilterName,
   ShowMeFilter,
   ShowMeInnerFilter,
   ShowMeOptions,
+  RadioLabel,
+  RadioInput,
+  RadioText,
   Certification,
+  LanguageName,
   Language,
   LanguageInner,
   LanguageArrow,
   LanguageOptions,
-  Section,
-  Label,
-  Bar,
-  Small,
-  Big,
-  BottomSmall,
-  BottomBig,
-  Slider,
-  Line,
-  LeftPoint,
-  RightPoint,
-  CenterPoint,
-  Numbers,
+  LanguageOptionsName,
   KeywordsWrapper,
   SearchRef,
   MobileSearchBar,
   MobileSearchButton,
 } from "./styled";
-
-import loadMoviesWithSort from "../../api";
+import ScoreFilters from "./Scorses";
 import ReleaseDateFilter from "./releaseDataFilter";
 import { useState, useEffect, useRef } from "react";
 import SortDropdown from "./sortDropdown";
 import {
   SORT_OPTIONS,
   SORT_OPTIONS2,
-  GENRE_LIST,
   SORT_MAPPING,
   GENRE_MAP,
-  USER_SCORE_LABELS,
-  VOTES_LABELS,
-  RUNTIME_LABELS,
-  USER_SCORE_MARKERS,
-  VOTES_MARKERS,
-  RUNTIME_MARKERS,
 } from "./constant";
 import useMobile from "../../hooks/useMobile";
 import sortArrow from "../../assets/icons/main-sort-arrow.svg";
@@ -58,15 +43,12 @@ import descendingArrow from "../../assets/icons/main-descending-arrow.svg";
 import showMeIcon from "../../assets/icons/filter-show-me.svg";
 import { useMovies } from "../../context/MovieContext";
 import GenreFilter from "./genre";
-
 import { getMovieData } from "../../api";
 import KeywordSearch from "./keywords";
 
 const Sidebar = () => {
-  const { setMovies } = useMovies();
-
+  const { setPage, setMovies, setAutoLoadEnabled } = useMovies();
   const [showSortResults, setShowSortResults] = useState(false);
-
   const [showFilter, setShowFilter] = useState(window.innerWidth >= 768);
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(SORT_OPTIONS2[0]);
@@ -74,20 +56,17 @@ const Sidebar = () => {
   const [selectedKeywords, setSelectedKeywords] = useState([]);
 
   const optionRefs = useRef([]);
-
   const [keyword, setKeyword] = useState("");
   const [results, setResults] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
 
   optionRefs.current = [];
   const isMobile = useMobile();
 
-  const isSearchEnabled =
-    selectedGenres.length > 0 ||
-    selectedKeywords.length > 0 ||
-    selected !== SORT_OPTIONS2[0];
+  const isSearchEnabled = hasChanges && !isLoading;
 
   useEffect(() => {
     setShowFilter(!isMobile);
@@ -98,9 +77,9 @@ const Sidebar = () => {
 
   const handleSelect = (option) => {
     setSelected(option);
+    setHasSearched(false);
+    setHasChanges(true);
     setIsOpen(false);
-    const sortParam = SORT_MAPPING[option];
-    loadMoviesWithSort(sortParam, setMovies);
   };
 
   const toggleGenre = (genre) => {
@@ -108,64 +87,54 @@ const Sidebar = () => {
       prev.includes(genre) ? prev.filter((g) => g !== genre) : [...prev, genre]
     );
   };
-  const handleSearchClick = () => {
-    if (!isSearchEnabled || isLoading) return;
+
+  useEffect(() => {
+    if (selectedGenres.length > 0 || selectedKeywords.length > 0) {
+      setHasChanges(true); // ← теперь Search включается!
+      setHasSearched(false);
+    }
+  }, [selectedGenres, selectedKeywords]);
+
+  useEffect(() => {
+    setHasSearched(false);
+  }, [selectedGenres, selectedKeywords, selected]);
+
+  const handleSearchClick = async () => {
+    if (!isSearchEnabled || isLoading) {
+      return;
+    }
+    setIsLoading(true);
 
     if (triggerRef.current) {
       triggerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    setIsLoading(true);
-
     const genreIds = selectedGenres.map((g) => GENRE_MAP[g]).filter(Boolean);
     const sortParam = SORT_MAPPING[selected] || "popularity.desc";
     const keywordIds = selectedKeywords.map((k) => k.id).join(",");
-
-    getMovieData({
-      page: 1,
-      selectedGenres: genreIds,
-      sortBy: sortParam,
-      keyword: keywordIds,
-    }).then((data) => {
+    try {
+      setAutoLoadEnabled(false);
+      setPage(1);
+      const data = await getMovieData({
+        page: 1,
+        selectedGenres: genreIds,
+        sortBy: sortParam,
+        keyword: keywordIds,
+      });
       setMovies(data.results || []);
-      setIsSticky(false);
-      setSelectedGenres([]);
-      setSelectedKeywords([]);
-      setIsLoading(false);
-      setSelected(SORT_OPTIONS2[0]);
       setHasSearched(true);
-    });
+      setKeyword("");
+      setSuggestions([]);
+    } catch (err) {
+      console.error("Error fetching data:", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const toggleFilter = () => {
     setShowFilter((prev) => !prev);
   };
-  const renderBars = (count, bigIndexes = []) =>
-    Array.from({ length: count }, (_, i) =>
-      bigIndexes.includes(i) ? <Big key={i} /> : <Small key={i} />
-    );
-
-  const renderBottomBars = (count, bigIndexes = []) =>
-    Array.from({ length: count }, (_, i) =>
-      bigIndexes.includes(i) ? <BottomBig key={i} /> : <BottomSmall key={i} />
-    );
-
-  const renderLabels = (labels) =>
-    labels.map((label, idx) => (
-      <RenderLi key={idx} $left={(100 / (labels.length - 1)) * idx}>
-        {label}
-      </RenderLi>
-    ));
-
-  const renderLabels2 = (labels) =>
-    labels.map((label, idx) => {
-      const positions = ["0%", "31%", "61%", "92%"];
-      return (
-        <RenderLi2 key={idx} $left={positions[idx] || "0%"}>
-          {label}
-        </RenderLi2>
-      );
-    });
 
   const [scrollY, setScrollY] = useState(0);
 
@@ -244,7 +213,7 @@ const Sidebar = () => {
     <>
       <Main>
         <PopularMovies>
-          <h2>Popular Movies</h2>
+          <PopularMoviesName>Popular Movies</PopularMoviesName>
         </PopularMovies>
         <MainContainer>
           <SortDropdown
@@ -261,7 +230,7 @@ const Sidebar = () => {
 
           <MainFilter>
             <FilterSort onClick={toggleFilter}>
-              <span>Filters</span>
+              <FilterSortName>Filters</FilterSortName>
               <FilterArrow
                 src={sortArrow}
                 alt="filter-sort"
@@ -272,87 +241,35 @@ const Sidebar = () => {
               <>
                 <ShowMeFilter>
                   <ShowMeInnerFilter>
-                    <span>Show Me</span>
+                    <ShowMeInnerFilterName>Show Me</ShowMeInnerFilterName>
                     <ShowFilterImg src={showMeIcon} alt="question-mark" />
                   </ShowMeInnerFilter>
                   <ShowMeOptions>
                     {SORT_OPTIONS.map((option, idx) => (
-                      <label className="radio-css" key={idx}>
-                        <input
-                          type="radio"
-                          name="choice"
-                          defaultChecked={idx === 0}
-                        />
-                        <span>{option}</span>
-                      </label>
+                      <RadioLabel key={idx}>
+                        <RadioInput name="choice" defaultChecked={idx === 0} />
+                        <RadioText>{option}</RadioText>
+                      </RadioLabel>
                     ))}
                   </ShowMeOptions>
                 </ShowMeFilter>
-
                 <ReleaseDateFilter />
-
                 <GenreFilter
                   selectedGenres={selectedGenres}
                   toggleGenre={toggleGenre}
                 />
-                <Certification>
-                  <p>Certification</p>
-                </Certification>
-
+                <Certification>Certification</Certification>
                 <Language>
                   <LanguageInner>
-                    <p>Language</p>
+                    <LanguageName>Language</LanguageName>
                     <ShowFilterImg src={showMeIcon} alt="question-mark" />
                   </LanguageInner>
                   <LanguageOptions>
-                    <p>None Selected</p>
+                    <LanguageOptionsName>None Selected</LanguageOptionsName>
                     <LanguageArrow src={descendingArrow} alt="arrow" />
                   </LanguageOptions>
                 </Language>
-                <Section>
-                  <Label>User Score</Label>
-                  <div>
-                    <Bar>{renderBars(USER_SCORE_MARKERS, [0, 5, 10])}</Bar>
-                    <Slider>
-                      <LeftPoint />
-                      <Line $percentage={100} />
-                      <RightPoint />
-                    </Slider>
-                    <Bar>
-                      {renderBottomBars(USER_SCORE_MARKERS, [0, 5, 10])}
-                    </Bar>
-                  </div>
-                  <Numbers>{renderLabels(USER_SCORE_LABELS)}</Numbers>
-                </Section>
-                <Section>
-                  <Label>Minimum User Votes</Label>
-                  <div>
-                    <Bar>{renderBars(VOTES_MARKERS, [0, 2, 4, 6, 8, 10])}</Bar>
-                    <Slider>
-                      <Line $percentage={20} />
-                      <CenterPoint percentage={20} />
-                    </Slider>
-                    <Bar>
-                      {renderBottomBars(VOTES_MARKERS, [0, 2, 4, 6, 8, 10])}
-                    </Bar>
-                  </div>
-                  <Numbers>{renderLabels(VOTES_LABELS)}</Numbers>
-                </Section>
-                <Section>
-                  <Label>Runtime</Label>
-                  <div>
-                    <Bar>{renderBars(RUNTIME_MARKERS, [0, 8, 16, 24])}</Bar>
-                    <Slider>
-                      <LeftPoint />
-                      <Line $percentage={100} />
-                      <RightPoint />
-                    </Slider>
-                    <Bar>
-                      {renderBottomBars(RUNTIME_MARKERS, [0, 8, 16, 24])}
-                    </Bar>
-                  </div>
-                  <Numbers>{renderLabels2(RUNTIME_LABELS)}</Numbers>
-                </Section>
+                <ScoreFilters />
                 <KeywordsWrapper>
                   <KeywordSearch
                     keyword={keyword}
@@ -367,13 +284,12 @@ const Sidebar = () => {
           <SearchRef ref={triggerRef} />
 
           <MobileSearchBar
-            onClick={handleSearchClick}
-            disabled={!isSearchEnabled || isLoading}
+            disabled={!isSearchEnabled || isLoading || hasSearched}
             scrolled={isSticky ? "scrolled" : ""}
           >
             <MobileSearchButton
               onClick={handleSearchClick}
-              disabled={!isSearchEnabled || isLoading}
+              disabled={!isSearchEnabled || isLoading || hasSearched}
               scrolled={isSticky ? "scrolled" : ""}
             >
               Search

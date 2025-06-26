@@ -28,12 +28,6 @@ export const MainContainer = styled.div`
 export const PopularMovies = styled.div`
   margin-left: 1.375rem;
   margin-top: 1rem;
-  h2 {
-    font-size: 1.6rem;
-    line-height: 1.6rem;
-    font-weight: 600;
-    width: 100%;
-  }
 
   @media (min-width: 48rem) {
     margin-left: 0;
@@ -41,12 +35,19 @@ export const PopularMovies = styled.div`
   }
 `;
 
+export const PopularMoviesName = styled.h2`
+  font-size: 1.6rem;
+  line-height: 1.6rem;
+  font-weight: 600;
+  width: 100%;
+`;
+
 export const MainFilter = styled.section`
   margin-top: 0.6875rem;
   border: 0.0625rem solid #e3e3e3;
   border-radius: 0.3rem;
   width: 100%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
 `;
 
 export const FilterSort = styled.div`
@@ -57,11 +58,11 @@ export const FilterSort = styled.div`
   height: 3.125rem;
   padding: 0.875rem 1rem;
   border-bottom: 0.0625rem solid #e3e3e3;
+`;
 
-  span {
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
+export const FilterSortName = styled.span`
+  font-size: 1.1rem;
+  font-weight: 600;
 `;
 
 export const FilterArrow = styled.img`
@@ -83,12 +84,12 @@ export const ShowMeInnerFilter = styled.div`
   width: 100%;
   gap: 0.1rem;
   margin-bottom: 0.625rem;
+`;
 
-  span {
-    font-size: 1rem;
-    font-weight: 300;
-    opacity: 0.7;
-  }
+export const ShowMeInnerFilterName = styled.span`
+  font-size: 1rem;
+  font-weight: 300;
+  opacity: 0.7;
 `;
 
 export const ShowFilterImg = styled.img`
@@ -99,45 +100,49 @@ export const ShowFilterImg = styled.img`
 export const ShowMeOptions = styled.div`
   display: flex;
   flex-direction: column;
+`;
 
-  label {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.2rem;
+export const RadioLabel = styled.label`
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.2rem;
+  cursor: pointer;
+`;
 
-    input[type="radio"] {
-      appearance: none;
-      width: 1rem;
-      height: 1rem;
-      border: 0.125rem solid rgba(33, 37, 41, 0.2);
-      background-color: #fff;
-      opacity: 0.25;
-      border-radius: 50%;
-      margin-right: 0.25rem;
-      position: relative;
-      cursor: pointer;
-      outline: none;
-    }
+export const RadioInput = styled.input.attrs({ type: "radio" })`
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border: 0.125rem solid rgba(33, 37, 41, 0.2);
+  background-color: #fff;
+  opacity: 0.25;
+  border-radius: 50%;
+  margin-right: 0.25rem;
+  position: relative;
+  cursor: pointer;
+  outline: none;
 
-    input[type="radio"]:checked {
-      opacity: 1;
-      border-color: #29abe2;
-      background-color: #29abe2;
-    }
-
-    input[type="radio"]:checked::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 0.5rem;
-      height: 0.5rem;
-      background: white;
-      border-radius: 50%;
-      border-color: rgba(33, 37, 41, 0.2);
-    }
+  &:checked {
+    opacity: 1;
+    border-color: #29abe2;
+    background-color: #29abe2;
   }
+
+  &:checked::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0.5rem;
+    height: 0.5rem;
+    background: white;
+    border-radius: 50%;
+  }
+`;
+
+export const RadioText = styled.span`
+  font-size: 1rem;
 `;
 
 export const Certification = styled.div`
@@ -163,10 +168,10 @@ export const LanguageInner = styled.div`
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.7rem;
+`;
 
-  p {
-    opacity: 0.7;
-  }
+export const LanguageName = styled.p`
+  opacity: 0.7;
 `;
 
 export const LanguageOptions = styled.div`
@@ -180,14 +185,14 @@ export const LanguageOptions = styled.div`
   border-radius: 0.3125rem;
   cursor: pointer;
 
-  p {
-    font-size: 0.9rem;
-    font-weight: 300;
-  }
-
   &:hover {
     background-color: gray;
   }
+`;
+
+export const LanguageOptionsName = styled.p`
+  font-size: 0.9rem;
+  font-weight: 300;
 `;
 
 export const LanguageArrow = styled.img`
@@ -197,99 +202,6 @@ export const LanguageArrow = styled.img`
   cursor: pointer;
 `;
 
-export const Section = styled.div`
-  padding: 0.875rem 1rem 2rem;
-  border-bottom: 0.0625rem solid #eee;
-`;
-
-export const Label = styled.p`
-  font-size: 1rem;
-  font-weight: 300;
-  margin-bottom: 0.5rem;
-`;
-
-export const Bar = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const Small = styled.div`
-  width: 0.072rem;
-  height: 0.3125rem;
-  background-color: rgba(0, 0, 0, 0.3);
-`;
-
-export const Big = styled.div`
-  width: 0.072rem;
-  height: 0.75rem;
-  background-color: rgba(0, 0, 0, 0.3);
-  margin-bottom: 0.125rem;
-`;
-
-export const BottomSmall = styled(Small)`
-  height: 0.3rem;
-`;
-
-export const BottomBig = styled(Big)`
-  margin-top: 0.125rem;
-`;
-
-export const Slider = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-`;
-
-export const Line = styled.div`
-  width: 100%;
-  height: 0.4rem;
-  background: ${({ $percentage }) =>
-    `linear-gradient(
-      to right,
-      #29abe2 ${$percentage}%,
-      rgba(178, 179, 180) ${$percentage}%
-    )`};
-  border-radius: 0.2rem;
-`;
-
-export const Point = styled.div`
-  width: 1rem;
-  height: 1rem;
-  background-color: #29abe2;
-  border-radius: 50%;
-  position: absolute;
-`;
-
-export const LeftPoint = styled(Point)`
-  left: -0.5rem;
-`;
-
-export const RightPoint = styled(Point)`
-  right: -0.5rem;
-`;
-
-export const CenterPoint = styled(Point)`
-  left: ${({ percentage }) => `${percentage}%`};
-  transform: translateX(-50%);
-`;
-
-export const Numbers = styled.ul`
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-  position: relative;
-  opacity: 0.5;
-  padding: 0;
-  margin-top: 0.375rem;
-
-  li {
-    position: absolute;
-    transform: translateX(-50%);
-    font-size: 0.75rem;
-  }
-`;
 export const KeywordsWrapper = styled.div`
   padding: 0 1rem;
   margin-bottom: 1rem;

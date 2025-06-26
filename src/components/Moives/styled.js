@@ -7,27 +7,27 @@ const CardContainer = styled.div`
   padding-top: 3rem;
   padding-left: 1.875rem;
 
-  @media (min-width: 1282px) {
+  @media (min-width: 80.125rem) {
     grid-template-columns: repeat(5, 1fr);
     height: 100%;
   }
 
-  @media (max-width: 1282px) {
+  @media (max-width: 80.125rem) {
     grid-template-columns: repeat(4, 1fr);
     height: 100%;
   }
 
-  @media (max-width: 1100px) {
+  @media (max-width: 68.75rem) {
     grid-template-columns: repeat(3, 1fr);
     height: 100%;
   }
 
-  @media (max-width: 920px) {
+  @media (max-width: 57.5rem) {
     grid-template-columns: repeat(2, 1fr);
     height: 100%;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 47.9375rem) {
     grid-template-columns: 1fr;
     padding: 1rem 1.25rem;
     gap: 1rem;
@@ -50,7 +50,7 @@ const Card = styled.div`
   @media (min-width: 48rem) {
     position: relative;
     border-radius: 0.5rem;
-    height: 394px;
+    min-height: 24.5rem;
     flex-direction: column;
     width: 100%;
   }

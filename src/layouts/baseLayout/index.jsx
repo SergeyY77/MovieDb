@@ -4,9 +4,12 @@ import SidebarMenu from "../../components/slidebarMobile";
 import { Outlet } from "react-router-dom";
 import Footer from "../../components/footer";
 import { MainContainer, Main } from "./styled";
+import { useMovies } from "../../context/MovieContext";
 
 const BaseLayout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const { loading } = useMovies();
 
   return (
     <MainContainer>

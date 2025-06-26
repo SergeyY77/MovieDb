@@ -203,7 +203,7 @@ const MovieBlur = styled.img`
   z-index: 2;
   transition: filter 0.5s ease;
   &:hover {
-    filter: blur(6px) brightness(0.1) saturate(120%);
+    filter: blur(0.375rem) brightness(0.1) saturate(120%);
   }
 `;
 

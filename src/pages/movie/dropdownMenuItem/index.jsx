@@ -29,7 +29,7 @@ const DropdownMenuItem = ({
 
   return (
     <DropdownItem
-      isDivider={item.isDivider}
+      $isDivider={item.isDivider}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={isHovered ? "hovered-nested" : ""}

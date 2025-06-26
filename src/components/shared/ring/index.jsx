@@ -1,4 +1,11 @@
-import { OuterRing, InnerRing, Circle, PercentText, Consensus } from "./styled";
+import {
+  OuterRing,
+  InnerRing,
+  Circle,
+  PercentText,
+  Consensus,
+  MainRing,
+} from "./styled";
 import React from "react";
 
 const VoteRing = ({
@@ -13,7 +20,7 @@ const VoteRing = ({
   const rounded = isValid ? Math.round(percent) : null;
 
   return (
-    <div className={className} style={style}>
+    <MainRing className={className} style={style}>
       <Consensus $visible={visible} $size={size} $position={position}>
         <OuterRing percent={rounded || 0} $size={size}>
           <InnerRing $size={size}>
@@ -32,7 +39,7 @@ const VoteRing = ({
           </InnerRing>
         </OuterRing>
       </Consensus>
-    </div>
+    </MainRing>
   );
 };
 
