@@ -1,12 +1,10 @@
 import axios from "axios";
-import { HEADERS, APP_API } from "./constant";
+import { HEADERS, APP_API, API_KEY } from "./constant";
 
 export const tmdbApi = axios.create({
   baseURL: `${APP_API}/`,
   headers: HEADERS,
 });
-
-const API_KEY = import.meta.env.VITE_APP_TMDB_API_KEY;
 
 export async function getKeywords(keyword) {
   const url = `${APP_API}/search/keyword?api_key=${API_KEY}&query=${encodeURIComponent(
@@ -24,7 +22,6 @@ export async function getKeywords(keyword) {
 }
 
 export default async function getSearchResult(result) {
-  const API_KEY = "a8e20cd09d2713e69ef1cd7be2228c4f";
   const url = `${APP_API}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(
     result
   )}`;

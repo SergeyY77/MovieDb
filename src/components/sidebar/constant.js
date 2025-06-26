@@ -1,9 +1,20 @@
-export const sortOptions = [
+export const SORT_MAPPING = {
+  "Popularity Descending": "popularity.desc",
+  "Popularity Ascending": "popularity.asc",
+  "Rating Descending": "vote_average.desc",
+  "Rating Ascending": "vote_average.asc",
+  "Release Date Descending": "release_date.desc",
+  "Release Date Ascending": "release_date.asc",
+  "Title (A-Z)": "original_title.asc",
+  "Title (Z-A)": "original_title.desc",
+};
+
+export const SORT_OPTIONS = [
   "Everything",
   "Movies I Haven't Seen",
   "Movies I Have Seen",
 ];
-export const sortOptions2 = [
+export const SORT_OPTIONS2 = [
   "Popularity Descending",
   "Popularity Ascending",
   "Rating Descending",
@@ -13,7 +24,7 @@ export const sortOptions2 = [
   "Title (A-Z)",
   "Title (Z-A)",
 ];
-export const genreList = [
+export const GENRE_LIST = [
   "Action",
   "Adventure",
   "Animation",
@@ -35,7 +46,7 @@ export const genreList = [
   "Western",
 ];
 
-export const genreMap = {
+export const GENRE_MAP = {
   Action: 28,
   Adventure: 12,
   Animation: 16,

@@ -3,6 +3,9 @@ import searchIcon from "../../assets/icons/header-search.svg";
 import closeIcon from "../../assets/icons/header-close.svg";
 import inputSearch from "../../assets/icons/header-input-search.svg";
 import getSearchResult from "../../api";
+import LoadingSpinner from "../shared/loading";
+import useMobile from "../../hooks/useMobile";
+import { debounce } from "../../utils/debounce";
 import {
   Wrapper,
   ToggleButton,
@@ -16,20 +19,29 @@ import {
   SearchInputWrapper,
 } from "./styled";
 
+const fetchData = async (value) => {
+  const response = await getSearchResult(value);
+  return response;
+};
+const debouncedFetch = debounce(fetchData, 500);
+
 const SearchToggle = ({ isHeaderVisible }) => {
-  const [open, setOpen] = useState(false);
+  const isMobile = useMobile();
+  const [isOpen, isSetOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [placeholder, setPlaceholder] = useState(
     "Search for a movie, tv show, person..."
   );
+
+  const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef(null);
   const wrapperRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
-        setOpen(false);
+        isSetOpen(false);
         setQuery("");
         setResults([]);
       }
@@ -40,40 +52,53 @@ const SearchToggle = ({ isHeaderVisible }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  useEffect(() => {
-    const isMobile = window.innerWidth <= 768;
-    if (isMobile) {
-      setPlaceholder("Search");
-    }
-  }, []);
 
   useEffect(() => {
-    if (open) {
+    if (isMobile) {
+      setPlaceholder("Search");
+    } else {
+      setPlaceholder("Search for a movie, tv show, person...");
+    }
+  }, [isMobile]);
+
+  useEffect(() => {
+    if (isOpen) {
       setTimeout(() => {
         inputRef.current?.focus();
       }, 0);
     }
-  }, [open]);
-
+  }, [isOpen]);
   const handleInputChange = async (e) => {
     const value = e.target.value;
     setQuery(value);
 
     if (value.length >= 2) {
-      const res = await getSearchResult(value);
-      setResults(res);
+      setIsLoading(true);
+      try {
+        const res = await debouncedFetch(value);
+
+        setResults(res);
+      } catch (error) {
+        console.error("error", error);
+        setResults([]);
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
+      }
     } else {
       setResults([]);
+      setIsLoading(false);
     }
   };
 
   return (
     <Wrapper ref={wrapperRef}>
-      <ToggleButton onClick={() => setOpen(!open)}>
-        <SearchImage src={open ? closeIcon : searchIcon} alt="SearchIcon" />
+      <ToggleButton onClick={() => isSetOpen(!isOpen)}>
+        <SearchImage src={isOpen ? closeIcon : searchIcon} alt="SearchIcon" />
       </ToggleButton>
 
-      {open && (
+      {isOpen && (
         <SearchBar $isHeaderVisible={isHeaderVisible}>
           <SearchInputWrapper>
             <SearchInput
@@ -87,7 +112,9 @@ const SearchToggle = ({ isHeaderVisible }) => {
               alt="InputSearch"
               onClick={() => inputRef.current?.focus()}
             />
-            {query.length > 0 && (
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : query.length > 0 ? (
               <TagRemove
                 onClick={() => {
                   setQuery("");
@@ -109,7 +136,7 @@ const SearchToggle = ({ isHeaderVisible }) => {
                   />
                 </svg>
               </TagRemove>
-            )}
+            ) : null}
           </SearchInputWrapper>
           {results.length > 0 && (
             <ResultsList>

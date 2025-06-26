@@ -7,18 +7,18 @@ import {
   DropdownItem,
   Divider,
 } from "./styled";
-import { profileMenuItems } from "./constant";
+import { PROFILE_MENU_ITEM } from "./constant";
 
 const LoginDropdown = () => {
-  const [open, setOpen] = useState(false);
+  const [isOpen, isSetOpen] = useState(false);
 
   return (
     <Wrapper>
-      <ProfileButton onClick={() => setOpen(!open)}>S</ProfileButton>
+      <ProfileButton onClick={() => isSetOpen(!isOpen)}>S</ProfileButton>
 
-      {open && (
+      {isOpen && (
         <Dropdown>
-          {profileMenuItems.map((item, idx) =>
+          {PROFILE_MENU_ITEM.map((item, idx) =>
             item === "divider" ? (
               <Divider key={idx} />
             ) : (

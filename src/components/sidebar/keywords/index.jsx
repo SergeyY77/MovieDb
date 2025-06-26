@@ -10,8 +10,19 @@ import {
   TagList,
   TagItem,
   TagRemove,
+  KeywordSpinner,
 } from "./styled";
 import { getKeywords } from "../../../api";
+import { debounce } from "../../../utils/debounce";
+
+const fetchData = async (value) => {
+  const response = await getKeywords(value);
+  console.log({ response });
+
+  return response;
+};
+
+const debouncedFetch = debounce(fetchData, 500);
 
 const KeywordSearch = ({
   keyword,
@@ -25,6 +36,7 @@ const KeywordSearch = ({
   const wrapperRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const inputRef = useRef(null);
   const inputContainerRef = useRef(null);
@@ -42,11 +54,20 @@ const KeywordSearch = ({
     setIsOpen(true);
 
     if (value.length >= 2) {
-      const results = await getKeywords(value);
-      setSuggestions(results.slice(0, 6));
-      setHighlightedIndex(0);
+      setIsLoading(true);
+      try {
+        const results = await debouncedFetch(value);
+        setSuggestions(results.slice(0, 6));
+        setHighlightedIndex(0);
+      } catch (error) {
+        console.error("Error fetching suggestions:", error);
+        setSuggestions([]);
+      } finally {
+        setIsLoading(false);
+      }
     } else {
       setSuggestions([]);
+      setIsLoading(false);
     }
   };
 
@@ -78,6 +99,7 @@ const KeywordSearch = ({
     setSuggestions([]);
     setIsOpen(false);
   };
+
   const handleKeyDown = (e) => {
     if (!suggestions.length) return;
 
@@ -121,6 +143,7 @@ const KeywordSearch = ({
             </TagItem>
           ))}
         </TagList>
+        {isLoading && <KeywordSpinner />}
 
         <KeywordInput
           ref={inputRef}
@@ -157,7 +180,7 @@ const KeywordSearch = ({
           )}
         </SuggestionsList>
       )}
-      {(keyword !== "" || selectedKeywords.length > 0) && (
+      {(keyword !== "" || selectedKeywords.length > 0) && !isLoading && (
         <KeywordCancel
           onClick={() => {
             setKeyword("");

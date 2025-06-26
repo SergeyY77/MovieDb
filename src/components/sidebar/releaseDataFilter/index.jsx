@@ -1,7 +1,14 @@
 import {
   ReleaseFilter,
+  ReleaseName,
   RealiseSearch,
   DateFilter,
+  RealeaseLabel,
+  SearchInput,
+  SearchSpan,
+  CalendarIcon,
+  DateType,
+  DateInput,
   InputWrapper,
   InputIcon,
 } from "./styled";
@@ -10,35 +17,35 @@ import calendarIcon from "../../../assets/icons/filter-releases-data.svg";
 const ReleaseDateFilter = () => {
   return (
     <ReleaseFilter>
-      <h3>Release Dates</h3>
+      <ReleaseName>Release Dates</ReleaseName>
 
       <RealiseSearch>
-        <label>
-          <input type="checkbox" defaultChecked />
-          <span>Search all releases?</span>
-        </label>
+        <RealeaseLabel>
+          <SearchInput type="checkbox" defaultChecked />
+          <SearchSpan>Search all releases?</SearchSpan>
+        </RealeaseLabel>
       </RealiseSearch>
 
       <DateFilter>
-        <label>
-          <p>from</p>
+        <RealeaseLabel>
+          <DateType>from</DateType>
           <InputWrapper>
-            <input type="text" placeholder="" />
+            <DateInput type="text" placeholder="" />
             <InputIcon>
-              <img src={calendarIcon} alt="calendar" />
+              <CalendarIcon src={calendarIcon} alt="calendar" />
             </InputIcon>
           </InputWrapper>
-        </label>
+        </RealeaseLabel>
 
-        <label>
-          <p>to</p>
+        <RealeaseLabel>
+          <DateType>to</DateType>
           <InputWrapper>
-            <input type="text" defaultValue="11/13/2025" />
+            <DateInput type="text" defaultValue="11/13/2025" />
             <InputIcon>
-              <img src={calendarIcon} alt="calendar" />
+              <CalendarIcon src={calendarIcon} alt="calendar" />
             </InputIcon>
           </InputWrapper>
-        </label>
+        </RealeaseLabel>
       </DateFilter>
     </ReleaseFilter>
   );

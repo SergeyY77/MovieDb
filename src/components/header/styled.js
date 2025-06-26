@@ -34,11 +34,19 @@ export const MenuLink = styled.a`
   height: 1.4rem;
 `;
 
+export const MenuIcon = styled.img`
+  width: 100%;
+`;
+
 export const HeaderLogo = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 6.67rem;
   height: 2.5rem;
+`;
+
+export const HeaderIcon = styled.img`
+  width: 100%;
 `;
 
 export const HeaderLink = styled.a`
@@ -83,11 +91,13 @@ export const HeaderDesktopLogo = styled.a`
     height: 1.25rem;
     margin-right: 1rem;
     cursor: pointer;
+  }
+`;
 
-    img {
-      width: 100%;
-      height: auto;
-    }
+export const HeaderDesktopIcon = styled.img`
+  @media (min-width: 48rem) {
+    width: 100%;
+    height: auto;
   }
 `;
 
@@ -120,11 +130,14 @@ export const PlusLogo = styled.div`
     width: 1.3994rem;
     height: 1.3994rem;
     cursor: pointer;
+  }
+`;
 
-    img {
-      width: 100%;
-      height: auto;
-    }
+export const PlusIcon = styled.img`
+  @media (min-width: 48rem) {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
   }
 `;
 
@@ -150,8 +163,10 @@ export const Lang = styled.div`
 export const Notification = styled.div`
   display: flex;
   align-items: center;
+`;
 
-  img {
+export const NotificationIcon = styled.img`
+  @media (min-width: 48rem) {
     cursor: pointer;
   }
 `;

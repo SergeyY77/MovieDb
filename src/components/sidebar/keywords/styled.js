@@ -1,4 +1,13 @@
 import styled from "styled-components";
+import { Spinner as BaseSpinner } from "../../shared/loading/styled";
+
+export const KeywordSpinner = styled(BaseSpinner)`
+  position: absolute;
+  right: 0.6rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-top-color: #01b4e4;
+`;
 
 export const KeywordsWrapper = styled.div`
   position: relative;
@@ -33,7 +42,7 @@ export const InputContainer = styled.div`
 
 export const KeywordInput = styled.input`
   flex: 1;
-  height: 33.8px;
+  height: 2.1125rem;
   min-width: 7.5rem;
   border: none;
   font-size: 0.9rem;

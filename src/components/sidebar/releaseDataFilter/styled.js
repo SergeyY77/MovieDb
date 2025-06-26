@@ -2,67 +2,68 @@ import styled from "styled-components";
 
 export const ReleaseFilter = styled.div`
   align-items: center;
-  padding: 0.875rem 1rem 1rem;
+  padding: 0.875rem 1.375rem 1rem;
   width: 100%;
   border-bottom: 0.0625rem solid #eee;
+`;
 
-  h3 {
-    font-size: 1rem;
-    font-weight: 300;
-    margin-bottom: 0.625rem;
-  }
+export const ReleaseName = styled.h3`
+  font-size: 1rem;
+  font-weight: 300;
+  margin-bottom: 0.625rem;
 `;
 
 export const RealiseSearch = styled.div`
   margin-bottom: 0.625rem;
+`;
 
-  label {
-    display: flex;
-    align-items: center;
+export const RealeaseLabel = styled.label`
+  display: flex;
+  align-items: center;
+`;
 
-    input[type="checkbox"] {
-      appearance: none;
-      width: 1rem;
-      height: 1rem;
-      border: 0.125rem solid #01b4e4;
-      background-color: #01b4e4;
-      position: relative;
-      cursor: pointer;
-    }
+export const SearchInput = styled.input.attrs({ type: "checkbox" })`
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border: 0.125rem solid #01b4e4;
+  background-color: #01b4e4;
+  position: relative;
+  cursor: pointer;
 
-    input[type="checkbox"]:checked::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0.24rem;
-      width: 0.25rem;
-      height: 0.5625rem;
-      border: solid white;
-      border-width: 0 0.15rem 0.15rem 0;
-      transform: rotate(38deg);
-    }
-
-    span {
-      margin-left: 0.25rem;
-    }
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0.1rem;
+    left: 0.28rem;
+    width: 0.25rem;
+    height: 0.5625rem;
+    border: solid white;
+    border-width: 0 0.15rem 0.15rem 0;
+    transform: rotate(38deg);
+    display: none;
   }
+
+  &:checked::after {
+    display: block;
+  }
+`;
+
+export const SearchSpan = styled.span`
+  margin-left: 0.25rem;
 `;
 
 export const DateFilter = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+`;
 
-  label {
-    display: flex;
-
-    p {
-      width: 5.25rem;
-      align-self: center;
-      color: #a4a4a4;
-      font-size: 0.9rem;
-    }
-  }
+export const DateType = styled.p`
+  width: 5.25rem;
+  align-self: center;
+  color: #a4a4a4;
+  font-size: 0.9rem;
 `;
 
 export const InputWrapper = styled.div`
@@ -73,14 +74,14 @@ export const InputWrapper = styled.div`
   width: 100%;
   background-color: white;
   padding-left: 0.6875rem;
+`;
 
-  input {
-    flex: 1;
-    border: none;
-    font-size: 0.8rem;
-    outline: none;
-    height: 2.375rem;
-  }
+export const DateInput = styled.input`
+  flex: 1;
+  border: none;
+  font-size: 0.8rem;
+  outline: none;
+  height: 2.375rem;
 `;
 
 export const InputIcon = styled.div`
@@ -90,9 +91,9 @@ export const InputIcon = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 0 0.375rem 0.375rem 0;
+`;
 
-  img {
-    width: 1rem;
-    height: 1.5rem;
-  }
+export const CalendarIcon = styled.img`
+  width: 1rem;
+  height: 1.5rem;
 `;

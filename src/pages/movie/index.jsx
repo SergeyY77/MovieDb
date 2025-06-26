@@ -7,20 +7,15 @@ import {
   SubButton,
   Dropdown,
   Catalog,
-  DropdownItem,
-  ItemCount,
-  ItemLabel,
-  VideoImage,
-  VideoSidebar,
-  VideoSidebarItem,
+  CatalogArrow,
   MainWrapper,
-  MainContent,
   MovieBackground,
   MovieImage,
   MovieBlur,
   MovieContainer,
   MovieContent,
   MovieTitle,
+  ReleaseDate,
   MovieScore,
   MovieScoreLeft,
   UserScore,
@@ -33,9 +28,15 @@ import {
   Vibe3,
   Vibe4,
   MovieToggles,
+  MovieToggleItem,
+  MovieToggleLabel,
   MovieDetails,
   MovieInnerDetails,
+  PlayTrailersImg,
   MovieFirstLine,
+  MovieCategory,
+  MovieReleaseDate,
+  MovieTime,
   GenreTag,
   GenreTags,
   PlayTrailers,
@@ -45,6 +46,7 @@ import {
   MovieOverviewText,
   CustomVoteRing,
   BottomBar,
+  BarItem,
   MovieImageWrapper,
   Overlay,
   ExpandText,
@@ -56,15 +58,17 @@ import ArrowDownIcon from "../../assets/icons/main-descending-arrow.svg";
 import CryEmoji from "../../assets/icons/emoji-cry.svg";
 import SmileEmoji from "../../assets/icons/emoji-smile.svg";
 import PlayTrailer from "../../assets/icons/play-trailer.svg";
-import minutesToHours from "../../helper/runtime";
+import minutesToHours from "../../utils/runtime";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import useMobile from "../../hooks/useMobile";
 import { MOVIE_TABS } from "./constant";
-import { actionMenuItems } from "../../components/Moives/actionMenu/constant";
+import { ACTION_MENU_ITEM } from "../../components/Moives/actionMenu/constant";
+import DropdownMenuItem from "./dropdownMenuItem";
+
 function Movie() {
   const { id } = useParams();
   const [movie, setMovie] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [isOpen, isSetOpen] = useState(false);
   const [hoveredVideos, setHoveredVideos] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
 
@@ -101,63 +105,34 @@ function Movie() {
     return <VoteRing {...props} size={size} />;
   };
   return (
-    <div>
+    <>
       <SubHeader>
         {MOVIE_TABS.map((tab, index) => (
           <HeaderSubButton key={index}>
             <SubButton
-              onMouseEnter={() => setOpen(index)}
+              onMouseEnter={() => isSetOpen(index)}
               onMouseLeave={() => {
-                setOpen(null);
+                isSetOpen(null);
                 setHoveredVideos(false);
               }}
             >
               <Catalog>
                 {tab.label}
-                <img src={ArrowDownIcon} alt="Arrow Down" />
+                <CatalogArrow src={ArrowDownIcon} alt="Arrow Down" />
               </Catalog>
 
-              {open === index && (
+              {isOpen === index && (
                 <Dropdown>
-                  {tab.subItems.map((item, idx) => {
-                    const hasChildren = Array.isArray(item.children);
-                    const isHovered = hoveredItem === `${index}-${idx}`;
-
-                    return (
-                      <DropdownItem
-                        key={idx}
-                        isDivider={item.isDivider}
-                        onMouseEnter={() =>
-                          hasChildren && setHoveredItem(`${index}-${idx}`)
-                        }
-                        onMouseLeave={() => hasChildren && setHoveredItem(null)}
-                        className={isHovered ? "hovered-nested" : ""}
-                      >
-                        <ItemLabel>{item.label}</ItemLabel>
-                        {item.count !== undefined && (
-                          <ItemCount>{item.count}</ItemCount>
-                        )}
-                        {hasChildren && (
-                          <VideoImage>
-                            <img src={ArrowDownIcon} alt="arrow" />
-                          </VideoImage>
-                        )}
-
-                        {isHovered && hasChildren && (
-                          <VideoSidebar>
-                            {item.children.map((elem, elemIdx) => (
-                              <VideoSidebarItem key={elemIdx}>
-                                {elem.label}
-                                {elem.count !== undefined && (
-                                  <ItemCount>{elem.count}</ItemCount>
-                                )}
-                              </VideoSidebarItem>
-                            ))}
-                          </VideoSidebar>
-                        )}
-                      </DropdownItem>
-                    );
-                  })}
+                  {tab.subItems.map((item, idx) => (
+                    <DropdownMenuItem
+                      key={idx}
+                      item={item}
+                      index={idx}
+                      parentIndex={index}
+                      hoveredItem={hoveredItem}
+                      setHoveredItem={setHoveredItem}
+                    />
+                  ))}
                 </Dropdown>
               )}
             </SubButton>
@@ -181,7 +156,7 @@ function Movie() {
             />
             <MovieTitle>
               {movie.title}
-              <span>({movie.release_date?.split("-")[0]})</span>
+              <ReleaseDate>({movie.release_date?.split("-")[0]})</ReleaseDate>
             </MovieTitle>
             <MovieScore>
               <MovieScoreLeft>
@@ -213,24 +188,22 @@ function Movie() {
                 <Vibe1>What's your</Vibe1>
                 <Vibe2>Vibe</Vibe2>
                 <Vibe3>?</Vibe3>
-                <Vibe4>
-                  <img src={InfoIcon} alt="info" />
-                </Vibe4>
+                <Vibe4 src={InfoIcon} alt="info" />
               </MovieScoreRight>
             </MovieScore>
             <MovieDetails>
               <MovieInnerDetails>
                 <MovieFirstLine>
-                  <span>PG</span>
-                  <span>
+                  <MovieCategory>PG</MovieCategory>
+                  <MovieReleaseDate>
                     {movie.release_date && formatDate(movie.release_date)} (US)
-                  </span>
-                  <span>
+                  </MovieReleaseDate>
+                  <MovieTime>
                     {" "}
                     • {movie.runtime && minutesToHours(movie.runtime)}
-                  </span>
+                  </MovieTime>
                   <PlayTrailers>
-                    <img src={PlayTrailer} alt="play trailer" />
+                    <PlayTrailersImg src={PlayTrailer} alt="play trailer" />
                     Play Trailer
                   </PlayTrailers>
                 </MovieFirstLine>
@@ -260,12 +233,10 @@ function Movie() {
             <MainSubWrapper>
               <MovieImageWrapper>
                 <MovieImage>
-                  <MovieBlur>
-                    <img
-                      src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-                      alt="image"
-                    />
-                  </MovieBlur>
+                  <MovieBlur
+                    src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                    alt="image"
+                  />
                   <Overlay className="overlay">
                     <ExpandText>
                       <AiOutlineFullscreen size={24} color="#fff" />
@@ -277,13 +248,15 @@ function Movie() {
               <MovieContent>
                 <MovieTitle>
                   {movie.title}
-                  <span>({movie.release_date?.split("-")[0]})</span>
+                  <ReleaseDate>
+                    ({movie.release_date?.split("-")[0]})
+                  </ReleaseDate>
                 </MovieTitle>
                 <MovieFirstLine>
-                  <span>PG</span>
-                  <span>
+                  <MovieCategory>PG</MovieCategory>
+                  <MovieReleaseDate>
                     {movie.release_date && formatDate(movie.release_date)} (US)
-                  </span>
+                  </MovieReleaseDate>
                   <GenreTags>
                     {movie.genres?.map((genre, index) => (
                       <GenreTag key={index}>
@@ -291,10 +264,10 @@ function Movie() {
                       </GenreTag>
                     ))}
                   </GenreTags>
-                  <span>
+                  <MovieTime>
                     {" "}
                     • {movie.runtime && minutesToHours(movie.runtime)}
-                  </span>
+                  </MovieTime>
                 </MovieFirstLine>
                 <MovieScoreLeft>
                   {movie.vote_average && (
@@ -323,23 +296,21 @@ function Movie() {
                     <Vibe1>What's your</Vibe1>
                     <Vibe2>Vibe</Vibe2>
                     <Vibe3>?</Vibe3>
-                    <Vibe4>
-                      <img src={InfoIcon} alt="info" />
-                    </Vibe4>
+                    <Vibe4 src={InfoIcon} alt="info" />
                   </MovieScoreRight>
                 </MovieScoreLeft>
                 <MovieToggles>
-                  {actionMenuItems.slice(0, -1).map((item, index) => {
+                  {ACTION_MENU_ITEM.slice(0, -1).map((item, index) => {
                     const Icon = item.icon;
                     return (
-                      <div key={index}>
+                      <MovieToggleItem key={index}>
                         <Icon />
-                        <span>{item.label}</span>
-                      </div>
+                        <MovieToggleLabel>{item.label}</MovieToggleLabel>
+                      </MovieToggleItem>
                     );
                   })}
                   <PlayTrailers>
-                    <img src={PlayTrailer} alt="play trailer" />
+                    <PlayTrailersImg src={PlayTrailer} alt="play trailer" />
                     Play Trailer
                   </PlayTrailers>
                 </MovieToggles>
@@ -354,16 +325,16 @@ function Movie() {
         </MainWrapper>
       )}
       <BottomBar>
-        {actionMenuItems.map((item, index) => {
+        {ACTION_MENU_ITEM.map((item, index) => {
           const Icon = item.icon;
           return (
-            <div key={index}>
+            <BarItem key={index}>
               <Icon />
-            </div>
+            </BarItem>
           );
         })}
       </BottomBar>
-    </div>
+    </>
   );
 }
 

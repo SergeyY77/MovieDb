@@ -1,17 +1,17 @@
-import { ActDropdown, MenuItem } from "./styled";
-import { actionMenuItems } from "./constant";
+import { ActDropdown, MenuItem, MenuLabel } from "./styled";
+import { ACTION_MENU_ITEM } from "./constant";
 
-const ActionDropdown = ({ open }) => {
-  if (!open) return null;
+const ActionDropdown = ({ isOpen }) => {
+  if (!isOpen) return null;
 
   return (
     <ActDropdown>
-      {actionMenuItems.map((item, idx) => {
+      {ACTION_MENU_ITEM.map((item, idx) => {
         const Icon = item.icon;
         return (
           <MenuItem key={idx}>
             <Icon />
-            <span>{item.label}</span>
+            <MenuLabel>{item.label}</MenuLabel>
           </MenuItem>
         );
       })}

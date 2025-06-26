@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+const MainRing = styled.div``;
+
 const Consensus = styled.div`
   display: ${(props) => (props.$visible ? "block" : "none")};
 
@@ -72,4 +74,4 @@ const PercentText = styled.span`
   }
 `;
 
-export { OuterRing, InnerRing, Circle, PercentText, Consensus };
+export { MainRing, OuterRing, InnerRing, Circle, PercentText, Consensus };

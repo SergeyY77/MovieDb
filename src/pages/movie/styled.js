@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import VoteRing from "../../shared/ring";
-import CustomVoteRingBase from "../../shared/ring";
+import VoteRing from "../../components/shared/ring";
+import CustomVoteRingBase from "../../components/shared/ring";
 const SubHeader = styled.div`
   width: 100%;
   height: 2.875rem;
@@ -43,6 +43,11 @@ const Catalog = styled.span`
   z-index: 100;
 `;
 
+const CatalogArrow = styled.img`
+  width: 1rem;
+  height: 1rem;
+`;
+
 const Dropdown = styled.div`
   background-color: red;
   position: absolute;
@@ -55,56 +60,6 @@ const Dropdown = styled.div`
   z-index: 200;
   border-radius: 0.375rem;
   padding: 0.375rem 0;
-`;
-
-const DropdownItem = styled.a`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: #333;
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 400;
-  line-height: 1.5rem;
-  padding: 0.25rem 3rem 0.25rem 1rem;
-  width: 100%;
-  white-space: nowrap;
-  box-sizing: border-box;
-  padding-top: ${(props) => (props.isDivider ? "1.25rem" : ".25rem")};
-
-  &:hover {
-    background-color: #f4f4f4;
-  }
-  &.hovered-nested {
-    background-color: #01b4e4;
-    color: #fff;
-  }
-`;
-
-const ItemLabel = styled.span``;
-
-const ItemCount = styled.span`
-  position: absolute;
-  right: 0.5625rem;
-  font-weight: 300;
-  color: rgba(0, 0, 0, 0.6);
-`;
-
-const VideoImage = styled.div`
-  transform: rotate(-90deg);
-  position: absolute;
-  right: 0.5625rem;
-`;
-
-const VideoSidebar = styled(Dropdown)`
-  position: absolute;
-  top: 0;
-  left: 8rem;
-`;
-
-const VideoSidebarItem = styled(DropdownItem)`
-  color: #333;
 `;
 
 const MainWrapper = styled.div`
@@ -241,14 +196,14 @@ export const MovieImageWrapper = styled.div`
   }
 `;
 
-const MovieBlur = styled.div`
+const MovieBlur = styled.img`
   min-width: 18.75rem;
   min-height: 28.125rem;
 
   z-index: 2;
   transition: filter 0.5s ease;
   &:hover {
-    filter: blur(6px) brightness(0.1) saturate(120%);
+    filter: blur(0.375rem) brightness(0.1) saturate(120%);
   }
 `;
 
@@ -297,30 +252,19 @@ const MovieTitle = styled.h1`
 
   @media (min-width: 48rem) {
     font-size: 2.2rem;
-
-    span {
-      font-size: 2.2rem;
-    }
-  }
-
-  span {
-    font-size: calc(0.2em + 3vw);
-    font-weight: 400;
-    opacity: 0.8;
-  }
-
-  @media (min-width: 48rem) {
     align-items: center;
     justify-content: flex-start;
     padding: 0;
     flex-wrap: wrap;
+  }
+`;
 
-    @media (min-width: 48rem) {
-      span {
-        font-size: 2.2rem;
-        padding-left: 0.5rem;
-      }
-    }
+const ReleaseDate = styled.span`
+  font-size: calc(0.2em + 3vw);
+  opacity: 0.8;
+  @media (min-width: 48rem) {
+    font-size: 2.2rem;
+    padding-left: 0.5rem;
   }
 `;
 
@@ -441,7 +385,7 @@ const Vibe2 = styled.span`
 
 const Vibe3 = styled.span``;
 
-const Vibe4 = styled.span`
+const Vibe4 = styled.img`
   display: flex;
   align-items: center;
 `;
@@ -449,47 +393,46 @@ const Vibe4 = styled.span`
 const MovieToggles = styled.div`
   display: flex;
   gap: 1rem;
-  div {
-    position: relative;
-    width: 2.875rem;
-    height: 2.875rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border-radius: 50%;
-    background-color: #052541;
+`;
 
-    svg {
-      fill: #fff;
-      width: 0.7rem;
-      height: 0.7rem;
-    }
-    &:hover span {
-      opacity: 1;
-      transform: translateY(0);
-    }
+const MovieToggleItem = styled.div`
+  position: relative;
+  width: 2.875rem;
+  height: 2.875rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: #052541;
 
-    @media (min-width: 48rem) {
-    }
+  svg {
+    fill: #fff;
+    width: 0.7rem;
+    height: 0.7rem;
   }
-  span {
-    position: absolute;
-    bottom: -2.5rem;
-    font-size: 0.625rem;
-    background-color: #052541;
-    color: #fff;
-    padding: 0.4rem 0.6rem;
-    border-radius: 0.375rem;
-    font-size: 0.7rem;
-    white-space: nowrap;
-    opacity: 0;
-    transform: translateY(0.3125rem);
-    transition: all 0.2s ease;
-    pointer-events: none;
-    z-index: 1;
+  &:hover span {
+    opacity: 1;
+    transform: translateY(0);
   }
+`;
+
+const MovieToggleLabel = styled.span`
+  position: absolute;
+  bottom: -2.5rem;
+  font-size: 0.625rem;
+  background-color: #052541;
+  color: #fff;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.375rem;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(0.3125rem);
+  transition: all 0.2s ease;
+  pointer-events: none;
+  z-index: 1;
 `;
 
 const MovieDetails = styled.div`
@@ -522,22 +465,26 @@ const PlayTrailers = styled.p`
     opacity: 0.8;
   }
 
-  img {
-    width: 1rem;
-    height: 1rem;
-    margin-right: 0.5rem;
-    transition: transform 0.2s ease-in-out;
+  @media (min-width: 48rem) {
+    color: #fff;
+
+    &:hover {
+      color: gray;
+    }
   }
+`;
+
+const PlayTrailersImg = styled.img`
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  transition: transform 0.2s ease-in-out;
 
   @media (min-width: 48rem) {
     color: #fff;
 
     &:hover {
       color: gray;
-
-      img {
-        color: gray;
-      }
     }
   }
 `;
@@ -546,17 +493,28 @@ const MovieFirstLine = styled.div`
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  span:first-child {
-    border: 0.0625rem solid #fff;
-    padding: 0.0625rem 0.25rem;
-    border-radius: 0.125rem;
-    opacity: 0.7;
-  }
 
   @media (min-width: 48rem) {
     color: #fff;
     margin-bottom: 1.5rem;
   }
+`;
+
+const MovieCategory = styled.span`
+  &:first-child {
+    border: 0.0625rem solid #fff;
+    padding: 0.0625rem 0.25rem;
+    border-radius: 0.125rem;
+    opacity: 0.7;
+  }
+`;
+
+const MovieReleaseDate = styled.span`
+  color: #fff;
+`;
+
+const MovieTime = styled.span`
+  color: #fff;
 `;
 
 const GenreTag = styled.p`
@@ -585,7 +543,6 @@ const MovieOverview = styled.div`
 const TagLine = styled.h2`
   opacity: 0.7;
   font-size: 1.1rem;
-  font-weight: 400;
   font-style: italic;
 `;
 
@@ -598,7 +555,6 @@ const OverView = styled.h3`
 const MovieOverviewText = styled.p`
   font-size: 1rem;
   line-height: 1.5;
-  font-weight: 400;
   opacity: 0.8;
   margin-bottom: 0.625rem;
 `;
@@ -620,12 +576,13 @@ const BottomBar = styled.div`
   margin-bottom: 0;
   transition: padding-bottom 0.3s;
 
-  div {
-    cursor: pointer;
-  }
   @media (min-width: 48rem) {
     display: none;
   }
+`;
+
+const BarItem = styled.div`
+  cursor: pointer;
 `;
 
 export {
@@ -634,12 +591,7 @@ export {
   SubButton,
   Dropdown,
   Catalog,
-  DropdownItem,
-  ItemLabel,
-  ItemCount,
-  VideoImage,
-  VideoSidebar,
-  VideoSidebarItem,
+  CatalogArrow,
   MainWrapper,
   MovieBackground,
   MovieImage,
@@ -647,6 +599,7 @@ export {
   MainContent,
   MovieContent,
   MovieTitle,
+  ReleaseDate,
   MovieBlur,
   MovieScore,
   MovieScoreLeft,
@@ -661,15 +614,22 @@ export {
   Vibe3,
   Vibe4,
   MovieToggles,
+  MovieToggleItem,
+  MovieToggleLabel,
   MovieDetails,
   MovieInnerDetails,
   PlayTrailers,
+  PlayTrailersImg,
   GenreTag,
   GenreTags,
   MovieFirstLine,
+  MovieCategory,
+  MovieReleaseDate,
+  MovieTime,
   MovieOverview,
   TagLine,
   OverView,
   MovieOverviewText,
   BottomBar,
+  BarItem,
 };

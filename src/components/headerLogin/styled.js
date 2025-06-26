@@ -41,23 +41,24 @@ const Dropdown = styled.div`
 
 const DropdownItem = styled.a`
   display: block;
-  padding: ${(props) =>
-    props.$highlight
+  padding: ${({ $highlight, $sub }) =>
+    $highlight
       ? "0.5rem 1.25rem 0"
-      : props.$sub
+      : $sub
       ? "0 1.25rem 0.75rem"
       : "0.375rem 1.25rem"};
-  font-size: ${(props) =>
-    props.$highlight ? "0.85rem" : props.$sub ? "0.7rem" : "0.875rem"};
-  font-weight: ${(props) => (props.$highlight ? 600 : 600)};
-  color: ${(props) =>
-    props.$highlight ? "#000" : props.$sub ? "#888" : "rgba(0, 0, 0, 0.6)"};
-  text-decoration: none;
-  cursor: pointer;
 
-  ${(props) =>
-    !props.$highlight &&
-    !props.$sub &&
+  font-size: ${({ $highlight, $sub }) =>
+    $highlight ? "0.85rem" : $sub ? "0.7rem" : "0.875rem"};
+
+  font-weight: ${({ $highlight }) => ($highlight ? 600 : 600)};
+
+  color: ${({ $highlight, $sub }) =>
+    $highlight ? "#000" : $sub ? "#888" : "rgba(0, 0, 0, 0.6)"};
+
+  ${({ $highlight, $sub }) =>
+    !$highlight &&
+    !$sub &&
     `
     &:hover {
       background-color: rgba(3, 37, 65, 0.8);

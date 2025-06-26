@@ -2,25 +2,25 @@ const MENU_DATA = [
   {
     name: "Movies",
     subMenu: [
-      { name: "Popular", href: "https://www.themoviedb.org/movie/popular" },
+      { name: "Popular", href: "#" },
       {
         name: "Now Playing",
-        href: "https://www.themoviedb.org/movie/now-playing",
+        href: "#",
       },
-      { name: "Upcoming", href: "https://www.themoviedb.org/movie/upcoming" },
-      { name: "Top Rated", href: "https://www.themoviedb.org/movie/top-rated" },
+      { name: "Upcoming", href: "#" },
+      { name: "Top Rated", href: "#" },
     ],
   },
   {
     name: "TV Shows",
     subMenu: [
-      { name: "Popular", href: "https://www.themoviedb.org/tv/popular" },
+      { name: "Popular", href: "#" },
       {
         name: "Airing Today",
-        href: "https://www.themoviedb.org/tv/airing-today",
+        href: "#",
       },
-      { name: "On TV", href: "https://www.themoviedb.org/tv/on-the-air" },
-      { name: "Top Rated", href: "https://www.themoviedb.org/tv/top-rated" },
+      { name: "On TV", href: "#" },
+      { name: "Top Rated", href: "#" },
     ],
   },
   {
@@ -28,18 +28,18 @@ const MENU_DATA = [
     subMenu: [
       {
         name: "Popular People",
-        href: "https://www.themoviedb.org/person/popular",
+        href: "#",
       },
     ],
   },
   {
     name: "More",
     subMenu: [
-      { name: "Discussions", href: "https://www.themoviedb.org/discuss" },
-      { name: "Leaderboard", href: "https://www.themoviedb.org/leaderboard" },
-      { name: "Support", href: "https://www.themoviedb.org/help" },
-      { name: "API", href: "https://developer.themoviedb.org/" },
-      { name: "API for Business", href: "https://developer.themoviedb.org/" },
+      { name: "Discussions", href: "#" },
+      { name: "Leaderboard", href: "#" },
+      { name: "Support", href: "#" },
+      { name: "API", href: "#" },
+      { name: "API for Business", href: "#" },
     ],
   },
 ];

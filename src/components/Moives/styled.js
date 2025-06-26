@@ -1,36 +1,58 @@
 import styled from "styled-components";
 
 const CardContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.3rem;
-  padding: 0 1.375rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11.375rem, 1fr));
+  gap: 2rem;
+  padding-top: 3rem;
+  padding-left: 1.875rem;
 
-  @media (min-width: 48rem) {
-    flex-wrap: wrap;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 2.875rem;
-    padding: 0 0 0 1.875rem;
-    gap: 1.9rem;
+  @media (min-width: 80.125rem) {
+    grid-template-columns: repeat(5, 1fr);
+    height: 100%;
   }
+
+  @media (max-width: 80.125rem) {
+    grid-template-columns: repeat(4, 1fr);
+    height: 100%;
+  }
+
+  @media (max-width: 68.75rem) {
+    grid-template-columns: repeat(3, 1fr);
+    height: 100%;
+  }
+
+  @media (max-width: 57.5rem) {
+    grid-template-columns: repeat(2, 1fr);
+    height: 100%;
+  }
+
+  @media (max-width: 47.9375rem) {
+    grid-template-columns: 1fr;
+    padding: 1rem 1.25rem;
+    gap: 1rem;
+  }
+`;
+
+const CardNoteFound = styled.p`
+  grid-column: 1 / -1;
 `;
 
 const Card = styled.div`
   display: flex;
+  flex-direction: row;
   border: 0.0625rem solid #e3e3e3;
   border-radius: 0.3rem;
   object-fit: cover;
-  z-index: ${({ $open }) => ($open ? 10 : 1)};
-
+  z-index: ${({ $isOpen }) => ($isOpen ? 10 : 1)};
   box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
+
   @media (min-width: 48rem) {
-    border-radius: 0.3125rem !important;
     position: relative;
     border-radius: 0.5rem;
+    min-height: 24.5rem;
     flex-direction: column;
-    width: 11.375rem;
+    width: 100%;
   }
 `;
 
@@ -63,8 +85,15 @@ const ImageWrapper = styled.div`
       height: 17.0625rem;
       width: 100%;
       border-radius: 0.3125rem 0.3125rem 0 0;
+      object-position: center;
+      object-fit: cover;
     }
   }
+`;
+
+const ImagePoster = styled.img`
+  width: 5.875rem;
+  height: 100%;
 `;
 
 const Content = styled.div`
@@ -78,7 +107,7 @@ const Content = styled.div`
   }
 
   @media (min-width: 48rem) {
-    width: 11.25rem;
+    width: 100%;
     padding: 1.625rem 0.625rem 0.75rem;
     display: flex;
     flex-direction: row;
@@ -138,12 +167,6 @@ const Title = styled.a`
 `;
 
 const Description = styled.div`
-  p {
-    font-size: 1rem;
-    color: #999;
-    margin-bottom: 1rem;
-  }
-
   @media (min-width: 48rem) {
     display: flex;
     flex-direction: column;
@@ -152,22 +175,26 @@ const Description = styled.div`
   }
 `;
 
-const Overview = styled.div`
-  p {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 0.9rem;
-    line-height: 1.2rem;
+const OriginDate = styled.p`
+  font-size: 1rem;
+  color: #999;
+  margin-bottom: 1rem;
+`;
 
-    @media (min-width: 48rem) {
-      color: rgba(0, 0, 0, 0.6);
-      margin: 0;
-      padding: 0;
-      display: none;
-    }
+const Overview = styled.div`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+
+  @media (min-width: 48rem) {
+    color: rgba(0, 0, 0, 0.6);
+    margin: 0;
+    padding: 0;
+    display: none;
   }
 `;
 
@@ -187,7 +214,6 @@ const LoadMoreButton = styled.button`
   border: none;
   border-radius: 0.3rem;
   cursor: pointer;
-  margin-bottom: 1.25rem;
 
   &:hover span {
     color: #222;
@@ -199,6 +225,9 @@ const LoadMoreButton = styled.button`
     max-width: 63.875rem;
   }
 `;
+const LoadMoreWrapper = styled.div`
+  grid-column: 1 / -1;
+`;
 
 const LoadMoreText = styled.span`
   font-size: 1.5rem;
@@ -209,8 +238,10 @@ const LoadMoreText = styled.span`
 export {
   Card,
   ImageWrapper,
+  ImagePoster,
   Content,
   Title,
+  OriginDate,
   Description,
   Overview,
   CardContainer,
@@ -219,4 +250,6 @@ export {
   LoadMoreText,
   Options,
   CardHover,
+  CardNoteFound,
+  LoadMoreWrapper,
 };

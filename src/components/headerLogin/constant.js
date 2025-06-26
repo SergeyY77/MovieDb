@@ -1,4 +1,4 @@
-export const profileMenuItems = [
+export const PROFILE_MENU_ITEM = [
   { label: "Sergey1234", highlight: true },
   { label: "View profile", sub: true },
   "divider",

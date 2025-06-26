@@ -2,9 +2,9 @@ import React from "react";
 import { Sidebar, MenuItem } from "./styled";
 import { SIDEBAR_DATA } from "./constant";
 
-const SidebarMenu = ({ open }) => {
+const SidebarMenu = ({ isOpen }) => {
   return (
-    <Sidebar open={open}>
+    <Sidebar isOpen={isOpen}>
       {SIDEBAR_DATA.map((item, index) => (
         <MenuItem
           key={item.id || index}
