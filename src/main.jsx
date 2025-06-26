@@ -6,7 +6,7 @@ import GlobalStyles from "./components/shared/GlobalStyles";
 import HomePage from "./pages/homePage";
 import Movie from "./pages/movie";
 import { MovieProvider } from "./context/MovieContext";
-
+import LineLoader from "./components/shared/lineLoader";
 const root = createRoot(document.getElementById("root"));
 
 root.render(
@@ -20,6 +20,7 @@ root.render(
             <Route path="movie/:id" element={<Movie />} />
           </Route>
         </Routes>
+        <LineLoader />
       </MovieProvider>
     </BrowserRouter>
   </StrictMode>

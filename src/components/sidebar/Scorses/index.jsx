@@ -73,7 +73,7 @@ const ScoreFilters = () => {
           <Bar>{renderBars(VOTES_MARKERS, [0, 2, 4, 6, 8, 10])}</Bar>
           <Slider>
             <Line $percentage={20} />
-            <CenterPoint percentage={20} />
+            <CenterPoint $percentage={20} />
           </Slider>
           <Bar>{renderBottomBars(VOTES_MARKERS, [0, 2, 4, 6, 8, 10])}</Bar>
         </>

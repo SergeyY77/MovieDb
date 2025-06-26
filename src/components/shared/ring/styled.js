@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
-const MainRing = styled.div`
-  width: 100%;
-`;
+const MainRing = styled.div``;
 
 const Consensus = styled.div`
   display: ${(props) => (props.$visible ? "block" : "none")};

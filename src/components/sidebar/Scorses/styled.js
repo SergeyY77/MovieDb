@@ -76,7 +76,7 @@ export const RightPoint = styled(Point)`
 `;
 
 export const CenterPoint = styled(Point)`
-  left: ${({ percentage }) => `${percentage}%`};
+  left: ${({ $percentage }) => `${$percentage}%`};
   transform: translateX(-50%);
 `;
 

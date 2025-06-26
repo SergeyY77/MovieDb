@@ -47,7 +47,7 @@ import { getMovieData } from "../../api";
 import KeywordSearch from "./keywords";
 
 const Sidebar = () => {
-  const { setPage, setMovies, setAutoLoadEnabled } = useMovies();
+  const { setPage, setMovies, setAutoLoadEnabled, setLoading } = useMovies();
   const [showSortResults, setShowSortResults] = useState(false);
   const [showFilter, setShowFilter] = useState(window.innerWidth >= 768);
   const [isOpen, setIsOpen] = useState(false);
@@ -76,9 +76,11 @@ const Sidebar = () => {
   };
 
   const handleSelect = (option) => {
-    setSelected(option);
-    setHasSearched(false);
-    setHasChanges(true);
+    if (option !== selected) {
+      setSelected(option);
+      setHasSearched(false);
+      setHasChanges(true);
+    }
     setIsOpen(false);
   };
 
@@ -90,7 +92,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     if (selectedGenres.length > 0 || selectedKeywords.length > 0) {
-      setHasChanges(true); // ← теперь Search включается!
+      setHasChanges(true);
       setHasSearched(false);
     }
   }, [selectedGenres, selectedKeywords]);
@@ -103,6 +105,7 @@ const Sidebar = () => {
     if (!isSearchEnabled || isLoading) {
       return;
     }
+    setLoading(true);
     setIsLoading(true);
 
     if (triggerRef.current) {
@@ -129,6 +132,9 @@ const Sidebar = () => {
       console.error("Error fetching data:", err);
     } finally {
       setIsLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     }
   };
 
@@ -285,12 +291,12 @@ const Sidebar = () => {
 
           <MobileSearchBar
             disabled={!isSearchEnabled || isLoading || hasSearched}
-            scrolled={isSticky ? "scrolled" : ""}
+            $scrolled={isSticky ? "$scrolled" : ""}
           >
             <MobileSearchButton
               onClick={handleSearchClick}
               disabled={!isSearchEnabled || isLoading || hasSearched}
-              scrolled={isSticky ? "scrolled" : ""}
+              $scrolled={isSticky ? "$scrolled" : ""}
             >
               Search
             </MobileSearchButton>

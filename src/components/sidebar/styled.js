@@ -254,7 +254,7 @@ export const SearchRef = styled.div`
 
 export const MobileSearchBar = styled.div`
   position: ${(props) =>
-    props.disabled ? "relative" : props.scrolled ? "fixed" : "sticky"};
+    props.disabled ? "relative" : props.$scrolled ? "fixed" : "sticky"};
   bottom: 0;
   left: 0;
   right: 0;
@@ -281,8 +281,8 @@ export const MobileSearchButton = styled.button`
   align-items: center;
 
   border: none;
-  height: ${(props) => (props.scrolled ? "unset" : "3.125rem")};
-  border-radius: ${(props) => (props.scrolled ? "0" : "1.875rem")};
+  height: ${(props) => (props.$scrolled ? "unset" : "3.125rem")};
+  border-radius: ${(props) => (props.$scrolled ? "0" : "1.875rem")};
   cursor: pointer;
   transition: border-radius 0.3s ease, height 0.3s ease;
 
